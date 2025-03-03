@@ -1,0 +1,117 @@
+﻿#########################################################
+# Infoblox Operations Log File
+# Created: 2025-03-03 10:26:59
+#########################################################
+
+[2025-03-03 10:26:59] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxDnsRecords.log
+[2025-03-03 10:26:59] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-03 10:26:59] [INFO] Action: Search, RecordType: Host
+[2025-03-03 10:26:59] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:27:02] [ERROR] Failed to connect to Infoblox: Cannot process argument transformation on parameter 'Credential'. userName
+[2025-03-03 10:27:02] [ERROR] ERROR: Failed to connect to Infoblox: Cannot process argument transformation on parameter 'Credential'. userName
+[2025-03-03 10:27:10] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxDnsRecords.log
+[2025-03-03 10:27:10] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-03 10:27:10] [INFO] Action: Search, RecordType: Host
+[2025-03-03 10:27:10] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:27:12] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:27:12] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:27:12] [INFO] Searching for Host records
+[2025-03-03 10:27:12] [INFO] Infoblox connection is active
+[2025-03-03 10:27:12] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-03 10:27:12] [INFO] Response: [{"_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","extattrs":{},"ipv4addrs":["@{ipv4addr=10.10.10.5}"],"name":"server1.example.com","view":"default"},{"_create_time":"2025-03-03T10:10:03.862389","_modify_time":"2025-03-03T10:10:03.862389","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","ipv4addrs":["@{ipv4addr=192.168.1.20}"],"name":"server1.example.com","view":"default"}]
+[2025-03-03 10:27:12] [SUCCESS] Found 2 Host records
+[2025-03-03 10:27:12] [INFO] Infoblox connection is active
+[2025-03-03 10:27:12] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:27:14] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:27:14] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-03 10:27:52] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxDnsRecords.log
+[2025-03-03 10:27:52] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-03 10:27:52] [INFO] Action: Create, RecordType: Host
+[2025-03-03 10:27:52] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:27:52] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:27:52] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:27:52] [INFO] Creating Host record: server1.example.com -> 192.168.1.20
+[2025-03-03 10:27:52] [INFO] Validated hostname format: server1.example.com
+[2025-03-03 10:27:52] [INFO] Validated IP address format: 192.168.1.20
+[2025-03-03 10:27:52] [INFO] Infoblox connection is active
+[2025-03-03 10:27:52] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=server1.example.com
+[2025-03-03 10:27:52] [INFO] Response: 
+[2025-03-03 10:27:52] [INFO] No A record found for server1.example.com
+[2025-03-03 10:27:52] [INFO] Infoblox connection is active
+[2025-03-03 10:27:52] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=server1.example.com
+[2025-03-03 10:27:52] [INFO] Response: [{"_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","extattrs":{},"ipv4addrs":["@{ipv4addr=10.10.10.5}"],"name":"server1.example.com","view":"default"},{"_create_time":"2025-03-03T10:10:03.862389","_modify_time":"2025-03-03T10:10:03.862389","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","ipv4addrs":["@{ipv4addr=192.168.1.20}"],"name":"server1.example.com","view":"default"}]
+[2025-03-03 10:27:52] [INFO] Host record found for server1.example.com
+[2025-03-03 10:27:52] [ERROR] ERROR: Hostname server1.example.com already exists as Host record (record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com) with IP: 10.10.10.5. Use -Force to override.
+[2025-03-03 10:27:52] [INFO] Infoblox connection is active
+[2025-03-03 10:27:52] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:27:52] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:27:52] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-03 10:50:55] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-03 10:50:55] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-03 10:50:55] [INFO] Action: Search, RecordType: Host
+[2025-03-03 10:50:55] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:50:55] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:50:55] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:50:55] [INFO] Searching for Host records
+[2025-03-03 10:50:55] [INFO] Infoblox connection is active
+[2025-03-03 10:50:55] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-03 10:50:55] [INFO] Response: {"_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","extattrs":{},"ipv4addrs":[{"ipv4addr":"10.10.10.5"}],"name":"server1.example.com","view":"default"}
+[2025-03-03 10:50:55] [WARNING] No Host records found matching the criteria
+[2025-03-03 10:50:55] [INFO] Infoblox connection is active
+[2025-03-03 10:50:55] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:50:55] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:50:55] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-03 10:51:02] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-03 10:51:02] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-03 10:51:02] [INFO] Action: Create, RecordType: Host
+[2025-03-03 10:51:02] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:51:02] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:51:02] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:51:02] [INFO] Creating Host record: server1.example.com -> 192.168.1.20
+[2025-03-03 10:51:02] [INFO] Validated hostname format: server1.example.com
+[2025-03-03 10:51:02] [INFO] Validated IP address format: 192.168.1.20
+[2025-03-03 10:51:02] [INFO] Infoblox connection is active
+[2025-03-03 10:51:02] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=server1.example.com
+[2025-03-03 10:51:02] [INFO] Response: 
+[2025-03-03 10:51:02] [INFO] No A record found for server1.example.com
+[2025-03-03 10:51:02] [INFO] Infoblox connection is active
+[2025-03-03 10:51:02] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=server1.example.com
+[2025-03-03 10:51:02] [INFO] Response: {"_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","extattrs":{},"ipv4addrs":[{"ipv4addr":"10.10.10.5"}],"name":"server1.example.com","view":"default"}
+[2025-03-03 10:51:02] [INFO] No host record found for server1.example.com
+[2025-03-03 10:51:02] [INFO] Infoblox connection is active
+[2025-03-03 10:51:02] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/ipv4address?ip_address=192.168.1.20
+[2025-03-03 10:51:02] [INFO] Response: {"ip_address":"192.168.1.20","status":"UNUSED","types":[]}
+[2025-03-03 10:51:02] [INFO] IP address 192.168.1.20 is available
+[2025-03-03 10:51:02] [INFO] Infoblox connection is active
+[2025-03-03 10:51:02] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-03 10:51:02] [INFO] Request body: {
+    "ipv4addrs":  [
+                      {
+                          "ipv4addr":  "192.168.1.20"
+                      }
+                  ],
+    "comment":  "Application Server",
+    "name":  "server1.example.com",
+    "view":  "default"
+}
+[2025-03-03 10:51:02] [INFO] Response: "record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com"
+[2025-03-03 10:51:02] [SUCCESS] Host record server1.example.com -> 192.168.1.20 created successfully with reference record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com
+[2025-03-03 10:51:02] [INFO] Infoblox connection is active
+[2025-03-03 10:51:02] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:51:02] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:51:02] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-03 10:51:03] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-03 10:51:03] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-03 10:51:03] [INFO] Action: Search, RecordType: Host
+[2025-03-03 10:51:03] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:51:03] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:51:03] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:51:03] [INFO] Searching for Host records
+[2025-03-03 10:51:03] [INFO] Infoblox connection is active
+[2025-03-03 10:51:03] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-03 10:51:03] [INFO] Response: [{"_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","extattrs":{},"ipv4addrs":["@{ipv4addr=10.10.10.5}"],"name":"server1.example.com","view":"default"},{"_create_time":"2025-03-03T10:51:02.184971","_modify_time":"2025-03-03T10:51:02.184971","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application Server","ipv4addrs":["@{ipv4addr=192.168.1.20}"],"name":"server1.example.com","view":"default"}]
+[2025-03-03 10:51:03] [SUCCESS] Found 2 Host records
+[2025-03-03 10:51:03] [INFO] Infoblox connection is active
+[2025-03-03 10:51:03] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:51:03] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:51:03] [INFO] ======= Infoblox DNS Record Management Script Completed =======

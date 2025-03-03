@@ -1,0 +1,13 @@
+#########################################################
+# Infoblox Operations Log File
+# Created: 2025-03-03 10:48:21
+#########################################################
+
+[2025-03-03 10:48:21] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Python\InfobloxNetworks.log
+[2025-03-03 10:48:21] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:48:21] [INFO] Action: Search
+[2025-03-03 10:48:21] [INFO] Connecting to Infoblox at http://127.0.0.1:5000:8080/wapi/v2.11
+[2025-03-03 10:48:25] [ERROR] Failed to connect to Infoblox: Failed to parse: http://127.0.0.1:5000:8080/wapi/v2.11/grid/session
+[2025-03-03 10:48:25] [ERROR] ERROR: Failed to connect to Infoblox: Failed to parse: http://127.0.0.1:5000:8080/wapi/v2.11/grid/session
+[2025-03-03 10:48:25] [ERROR] Infoblox connection test failed: Failed to parse: http://127.0.0.1:5000:8080/wapi/v2.11/grid
+[2025-03-03 10:48:25] [INFO] ======= Infoblox Network Management Script Completed =======

@@ -1,0 +1,307 @@
+---
+# DNS Records Management Playbook
+# This playbook manages Infoblox DNS records using the NIOS collection
+
+- name: Validate action for DNS records
+  assert:
+    that: action in ['search', 'create', 'update', 'delete']
+    fail_msg: "Invalid action for DNS records. Must be one of: search, create, update, delete"
+
+- name: Validate record type
+  assert:
+    that: record_type | lower in ['a', 'host']
+    fail_msg: "Invalid record type. Must be one of: a, host"
+
+- name: Set record type to lowercase
+  ansible.builtin.set_fact:
+    record_type: "{{ record_type | lower }}"
+
+# Search for DNS records
+- name: Search for DNS records
+  block:
+    - name: Get A records
+      infoblox.nios_modules.nios_a_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname | default(omit) }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: a_records
+      failed_when: false
+      when: record_type == 'a'
+    
+    - name: Get Host records
+      infoblox.nios_modules.nios_host_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname | default(omit) }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: host_records
+      failed_when: false
+      when: record_type == 'host'
+    
+    - name: Display A records
+      ansible.builtin.debug:
+        var: a_records.result
+      when: record_type == 'a' and a_records.result is defined
+    
+    - name: Display Host records
+      ansible.builtin.debug:
+        var: host_records.result
+      when: record_type == 'host' and host_records.result is defined
+  when: action == 'search'
+
+# Create DNS record
+- name: Create DNS record
+  block:
+    - name: Validate required parameters
+      assert:
+        that: 
+          - hostname is defined
+          - ip_address is defined
+        fail_msg: "Hostname and IP address are required for create action"
+    
+    - name: Validate hostname format
+      ansible.builtin.assert:
+        that: hostname is regex('^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$')
+        fail_msg: "Invalid hostname format: {{ hostname }}"
+    
+    - name: Validate IP address format
+      ansible.builtin.assert:
+        that: ip_address is regex('^([0-9]{1,3}\.){3}[0-9]{1,3}$')
+        fail_msg: "Invalid IP address format: {{ ip_address }}"
+    
+    # Check for existing records
+    - name: Check for existing A record
+      infoblox.nios_modules.nios_a_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: existing_a
+      failed_when: false
+    
+    - name: Check for existing Host record
+      infoblox.nios_modules.nios_host_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: existing_host
+      failed_when: false
+    
+    - name: Display warning if hostname already exists
+      ansible.builtin.debug:
+        msg: "WARNING: Hostname {{ hostname }} already exists as {{ 'A' if existing_a.result is defined else 'Host' }} record. Proceeding due to force flag."
+      when: (existing_a.result is defined or existing_host.result is defined) and force | default(false) | bool
+    
+    - name: Fail if hostname already exists and force is not set
+      ansible.builtin.fail:
+        msg: "Hostname {{ hostname }} already exists as {{ 'A' if existing_a.result is defined else 'Host' }} record. Use force=true to override."
+      when: (existing_a.result is defined or existing_host.result is defined) and not force | default(false) | bool
+    
+    # Create A record
+    - name: Create A record
+      infoblox.nios_modules.nios_a_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        ipv4: "{{ ip_address }}"
+        view: "{{ dns_view | default('default') }}"
+        comment: "{{ comment | default('Created via Ansible') }}"
+        state: present
+      register: create_a_result
+      when: record_type == 'a' and (not existing_a.result is defined or force | default(false) | bool) and not existing_host.result is defined
+    
+    # Create Host record
+    - name: Create Host record
+      infoblox.nios_modules.nios_host_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        ipv4:
+          - ipv4addr: "{{ ip_address }}"
+        view: "{{ dns_view | default('default') }}"
+        comment: "{{ comment | default('Created via Ansible') }}"
+        state: present
+      register: create_host_result
+      when: record_type == 'host' and (not existing_host.result is defined or force | default(false) | bool) and not existing_a.result is defined
+    
+    - name: Display A record creation result
+      ansible.builtin.debug:
+        var: create_a_result
+      when: record_type == 'a' and create_a_result is defined
+    
+    - name: Display Host record creation result
+      ansible.builtin.debug:
+        var: create_host_result
+      when: record_type == 'host' and create_host_result is defined
+  when: action == 'create'
+
+# Update DNS record
+- name: Update DNS record
+  block:
+    - name: Validate required parameters
+      assert:
+        that: hostname is defined
+        fail_msg: "Hostname is required for update action"
+    
+    - name: Validate hostname format
+      ansible.builtin.assert:
+        that: hostname is regex('^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$')
+        fail_msg: "Invalid hostname format: {{ hostname }}"
+    
+    - name: Validate IP address format if provided
+      ansible.builtin.assert:
+        that: ip_address is regex('^([0-9]{1,3}\.){3}[0-9]{1,3}$')
+        fail_msg: "Invalid IP address format: {{ ip_address }}"
+      when: ip_address is defined
+    
+    # Check for existing records
+    - name: Check for existing A record
+      infoblox.nios_modules.nios_a_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: existing_a
+      failed_when: false
+      when: record_type == 'a'
+    
+    - name: Check for existing Host record
+      infoblox.nios_modules.nios_host_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: existing_host
+      failed_when: false
+      when: record_type == 'host'
+    
+    - name: Fail if record doesn't exist
+      ansible.builtin.fail:
+        msg: "{{ record_type | upper }} record for {{ hostname }} does not exist"
+      when: (record_type == 'a' and not existing_a.result is defined) or 
+            (record_type == 'host' and not existing_host.result is defined)
+    
+    # Update A record
+    - name: Update A record
+      infoblox.nios_modules.nios_a_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        ipv4: "{{ ip_address | default(omit) }}"
+        view: "{{ dns_view | default('default') }}"
+        comment: "{{ comment | default(omit) }}"
+        state: present
+      register: update_a_result
+      when: record_type == 'a' and existing_a.result is defined and 
+            (ip_address is defined or comment is defined)
+    
+    # Update Host record
+    - name: Update Host record
+      infoblox.nios_modules.nios_host_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        ipv4: "{{ [{'ipv4addr': ip_address}] if ip_address is defined else omit }}"
+        view: "{{ dns_view | default('default') }}"
+        comment: "{{ comment | default(omit) }}"
+        state: present
+      register: update_host_result
+      when: record_type == 'host' and existing_host.result is defined and 
+            (ip_address is defined or comment is defined)
+    
+    - name: Display A record update result
+      ansible.builtin.debug:
+        var: update_a_result
+      when: record_type == 'a' and update_a_result is defined
+    
+    - name: Display Host record update result
+      ansible.builtin.debug:
+        var: update_host_result
+      when: record_type == 'host' and update_host_result is defined
+  when: action == 'update'
+
+# Delete DNS record
+- name: Delete DNS record
+  block:
+    - name: Validate required parameters
+      assert:
+        that: hostname is defined
+        fail_msg: "Hostname is required for delete action"
+    
+    - name: Validate hostname format
+      ansible.builtin.assert:
+        that: hostname is regex('^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$')
+        fail_msg: "Invalid hostname format: {{ hostname }}"
+    
+    # Check for existing records
+    - name: Check for existing A record
+      infoblox.nios_modules.nios_a_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: existing_a
+      failed_when: false
+      when: record_type == 'a'
+    
+    - name: Check for existing Host record
+      infoblox.nios_modules.nios_host_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: present
+        get_object: true
+      register: existing_host
+      failed_when: false
+      when: record_type == 'host'
+    
+    - name: Fail if record doesn't exist
+      ansible.builtin.fail:
+        msg: "{{ record_type | upper }} record for {{ hostname }} does not exist"
+      when: (record_type == 'a' and not existing_a.result is defined) or 
+            (record_type == 'host' and not existing_host.result is defined)
+    
+    # Confirm deletion
+    - name: Confirm deletion
+      ansible.builtin.pause:
+        prompt: "Are you sure you want to delete {{ record_type | upper }} record for {{ hostname }}? (yes/no)"
+      register: confirm_deletion
+      when: not force | default(false) | bool
+    
+    # Delete A record
+    - name: Delete A record
+      infoblox.nios_modules.nios_a_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: absent
+      register: delete_a_result
+      when: record_type == 'a' and existing_a.result is defined and 
+            (force | default(false) | bool or confirm_deletion.user_input | default('no') == 'yes')
+    
+    # Delete Host record
+    - name: Delete Host record
+      infoblox.nios_modules.nios_host_record:
+        provider: "{{ infoblox_provider }}"
+        name: "{{ hostname }}"
+        view: "{{ dns_view | default('default') }}"
+        state: absent
+      register: delete_host_result
+      when: record_type == 'host' and existing_host.result is defined and 
+            (force | default(false) | bool or confirm_deletion.user_input | default('no') == 'yes')
+    
+    - name: Display A record deletion result
+      ansible.builtin.debug:
+        var: delete_a_result
+      when: record_type == 'a' and delete_a_result is defined
+    
+    - name: Display Host record deletion result
+      ansible.builtin.debug:
+        var: delete_host_result
+      when: record_type == 'host' and delete_host_result is defined
+  when: action == 'delete'

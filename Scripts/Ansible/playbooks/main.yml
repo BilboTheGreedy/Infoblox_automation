@@ -1,0 +1,45 @@
+---
+# Main Infoblox Management Playbook
+# This playbook serves as an entry point for managing Infoblox resources
+# Usage: ansible-playbook playbooks/main.yml -e "action=search resource=network network=192.168.1.0/24"
+
+- name: Infoblox Resource Management
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    infoblox_provider:
+      host: "{{ server | default(lookup('env', 'INFOBLOX_HOST')) }}"
+      username: "{{ username | default(lookup('env', 'INFOBLOX_USERNAME')) }}"
+      password: "{{ password | default(lookup('env', 'INFOBLOX_PASSWORD')) }}"
+      validate_certs: "{{ validate_certs | default(true) | bool }}"
+    resource: "{{ resource | default('network') }}"
+    action: "{{ action | default('search') }}"
+  
+  pre_tasks:
+    - name: Validate required variables
+      assert:
+        that:
+          - resource is defined
+          - action is defined
+          - infoblox_provider.username is defined
+          - infoblox_provider.password is defined
+        fail_msg: "Missing required variables. Please provide resource, action, and credentials."
+    
+    - name: Validate resource type
+      assert:
+        that: resource in ['network', 'ip_address', 'dns_record']
+        fail_msg: "Invalid resource type. Must be one of: network, ip_address, dns_record"
+  
+  tasks:
+    - name: Include Networks Management Tasks
+      ansible.builtin.include_tasks: manage_networks.yml
+      when: resource == 'network'
+    
+    - name: Include IP Addresses Management Tasks
+      ansible.builtin.include_tasks: manage_ip_addresses.yml
+      when: resource == 'ip_address'
+    
+    - name: Include DNS Records Management Tasks
+      ansible.builtin.include_tasks: manage_dns_records.yml
+      when: resource == 'dns_record'

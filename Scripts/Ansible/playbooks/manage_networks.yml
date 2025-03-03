@@ -1,0 +1,108 @@
+---
+# Networks Management Playbook
+# This playbook manages Infoblox network objects using the NIOS collection
+
+- name: Validate action for networks
+  assert:
+    that: action in ['search', 'create', 'delete', 'update']
+    fail_msg: "Invalid action for networks. Must be one of: search, create, delete, update"
+
+- name: Validate network for non-search actions
+  assert:
+    that: network is defined
+    fail_msg: "Network parameter is required for this action"
+  when: action != 'search' or network is defined
+
+# Search networks
+- name: Search for networks
+  block:
+    - name: Get all networks
+      infoblox.nios_modules.nios_network:
+        provider: "{{ infoblox_provider }}"
+        network: "{{ network | default(omit) }}"
+        comment: "{{ comment | default(omit) }}"
+        state: present
+        get_object: true
+      register: nios_networks
+      failed_when: false
+      when: action == 'search'
+    
+    - name: Display networks found
+      ansible.builtin.debug:
+        var: nios_networks.result
+      when: action == 'search' and nios_networks.result is defined
+  when: action == 'search'
+
+# Create network
+- name: Create network
+  block:
+    - name: Validate network format
+      ansible.builtin.assert:
+        that: network is regex('^([0-9]{1,3}\.){3}[0-9]{1,3}\/[0-9]{1,2}$')
+        fail_msg: "Invalid network format: {{ network }}. Must be in CIDR notation (e.g., 192.168.1.0/24)."
+    
+    - name: Create Infoblox network
+      infoblox.nios_modules.nios_network:
+        provider: "{{ infoblox_provider }}"
+        network: "{{ network }}"
+        comment: "{{ comment | default('Created by Ansible') }}"
+        options:
+          - name: domain-name
+            value: "{{ domain_name | default('example.com') }}"
+        state: present
+      register: create_result
+    
+    - name: Display creation result
+      ansible.builtin.debug:
+        var: create_result
+  when: action == 'create'
+
+# Update network
+- name: Update network
+  block:
+    - name: Validate network format
+      ansible.builtin.assert:
+        that: network is regex('^([0-9]{1,3}\.){3}[0-9]{1,3}\/[0-9]{1,2}$')
+        fail_msg: "Invalid network format: {{ network }}. Must be in CIDR notation (e.g., 192.168.1.0/24)."
+    
+    - name: Update Infoblox network
+      infoblox.nios_modules.nios_network:
+        provider: "{{ infoblox_provider }}"
+        network: "{{ network }}"
+        comment: "{{ comment | default(omit) }}"
+        options: "{{ options | default(omit) }}"
+        state: present
+      register: update_result
+    
+    - name: Display update result
+      ansible.builtin.debug:
+        var: update_result
+  when: action == 'update'
+
+# Delete network
+- name: Delete network
+  block:
+    - name: Validate network format
+      ansible.builtin.assert:
+        that: network is regex('^([0-9]{1,3}\.){3}[0-9]{1,3}\/[0-9]{1,2}$')
+        fail_msg: "Invalid network format: {{ network }}. Must be in CIDR notation (e.g., 192.168.1.0/24)."
+    
+    - name: Confirm deletion
+      ansible.builtin.pause:
+        prompt: "Are you sure you want to delete network {{ network }}? (yes/no)"
+      register: confirm_deletion
+      when: not force | default(false) | bool
+    
+    - name: Delete Infoblox network
+      infoblox.nios_modules.nios_network:
+        provider: "{{ infoblox_provider }}"
+        network: "{{ network }}"
+        state: absent
+      register: delete_result
+      when: force | default(false) | bool or confirm_deletion.user_input | default('no') == 'yes'
+    
+    - name: Display deletion result
+      ansible.builtin.debug:
+        var: delete_result
+      when: force | default(false) | bool or confirm_deletion.user_input | default('no') == 'yes'
+  when: action == 'delete'

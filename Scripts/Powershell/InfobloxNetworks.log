@@ -1,0 +1,254 @@
+﻿#########################################################
+# Infoblox Operations Log File
+# Created: 2025-03-03 10:23:18
+#########################################################
+
+[2025-03-03 10:23:18] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxNetworks.log
+[2025-03-03 10:23:18] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:23:18] [INFO] Action: Search
+[2025-03-03 10:23:18] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:23:24] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:23:24] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:23:24] [INFO] Searching for networks
+[2025-03-03 10:23:24] [INFO] Infoblox connection is active
+[2025-03-03 10:23:24] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?_return_fields=network%2ccomment%2cnetwork_view%2cextattrs
+[2025-03-03 10:23:24] [INFO] Response: 
+[2025-03-03 10:23:24] [WARNING] No networks found matching the criteria
+[2025-03-03 10:23:24] [INFO] Infoblox connection is active
+[2025-03-03 10:23:24] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:23:24] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:23:24] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:23:40] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxNetworks.log
+[2025-03-03 10:23:40] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:23:40] [INFO] Action: Create
+[2025-03-03 10:23:40] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:23:46] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:23:46] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:23:46] [INFO] Creating network: 192.168.2.0/24
+[2025-03-03 10:23:46] [INFO] Validated IP address format: 192.168.2.0
+[2025-03-03 10:23:46] [INFO] Validated network format: 192.168.2.0/24
+[2025-03-03 10:23:46] [INFO] Infoblox connection is active
+[2025-03-03 10:23:46] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.2.0%2f24
+[2025-03-03 10:23:46] [INFO] Response: 
+[2025-03-03 10:23:46] [INFO] Network 192.168.2.0/24 not found
+[2025-03-03 10:23:46] [INFO] Infoblox connection is active
+[2025-03-03 10:23:46] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/network
+[2025-03-03 10:23:46] [INFO] Request body: {
+    "network_view":  "default",
+    "comment":  "Test Network",
+    "network":  "192.168.2.0/24"
+}
+[2025-03-03 10:23:46] [INFO] Response: "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24"
+[2025-03-03 10:23:46] [SUCCESS] Network 192.168.2.0/24 created successfully with reference network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24
+[2025-03-03 10:23:46] [INFO] Infoblox connection is active
+[2025-03-03 10:23:46] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:23:46] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:23:46] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:23:49] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxNetworks.log
+[2025-03-03 10:23:49] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:23:49] [INFO] Action: Search
+[2025-03-03 10:23:49] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:23:52] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:23:52] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:23:52] [INFO] Searching for networks
+[2025-03-03 10:23:52] [INFO] Infoblox connection is active
+[2025-03-03 10:23:52] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?_return_fields=network%2ccomment%2cnetwork_view%2cextattrs
+[2025-03-03 10:23:52] [INFO] Response: 
+[2025-03-03 10:23:52] [WARNING] No networks found matching the criteria
+[2025-03-03 10:23:52] [INFO] Infoblox connection is active
+[2025-03-03 10:23:52] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:23:52] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:23:52] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:24:55] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxNetworks.log
+[2025-03-03 10:24:55] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:24:55] [INFO] Action: Create
+[2025-03-03 10:24:55] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:24:55] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:24:55] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:24:55] [INFO] Creating network: 192.168.2.0/24
+[2025-03-03 10:24:55] [INFO] Validated IP address format: 192.168.2.0
+[2025-03-03 10:24:55] [INFO] Validated network format: 192.168.2.0/24
+[2025-03-03 10:24:55] [INFO] Infoblox connection is active
+[2025-03-03 10:24:55] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.2.0%2f24
+[2025-03-03 10:24:55] [INFO] Response: {"_create_time":"2025-03-03T10:23:46.390994","_modify_time":"2025-03-03T10:23:46.390994","_ref":"network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24","comment":"Test Network","network":"192.168.2.0/24","network_view":"default"}
+[2025-03-03 10:24:55] [INFO] Network 192.168.2.0/24 not found
+[2025-03-03 10:24:55] [INFO] Infoblox connection is active
+[2025-03-03 10:24:55] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/network
+[2025-03-03 10:24:55] [INFO] Request body: {
+    "network_view":  "default",
+    "comment":  "Test Network",
+    "network":  "192.168.2.0/24"
+}
+[2025-03-03 10:24:55] [INFO] Response: "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24"
+[2025-03-03 10:24:55] [SUCCESS] Network 192.168.2.0/24 created successfully with reference network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24
+[2025-03-03 10:24:55] [INFO] Infoblox connection is active
+[2025-03-03 10:24:55] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:24:55] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:24:55] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:24:57] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Powershell scripts\InfobloxNetworks.log
+[2025-03-03 10:24:57] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:24:57] [INFO] Action: Create
+[2025-03-03 10:24:57] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:24:57] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:24:57] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:24:57] [INFO] Creating network: 192.168.2.0/24
+[2025-03-03 10:24:57] [INFO] Validated IP address format: 192.168.2.0
+[2025-03-03 10:24:57] [INFO] Validated network format: 192.168.2.0/24
+[2025-03-03 10:24:57] [INFO] Infoblox connection is active
+[2025-03-03 10:24:57] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.2.0%2f24
+[2025-03-03 10:24:57] [INFO] Response: [{"_create_time":"2025-03-03T10:23:46.390994","_modify_time":"2025-03-03T10:23:46.390994","_ref":"network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24","comment":"Test Network","network":"192.168.2.0/24","network_view":"default"},{"_create_time":"2025-03-03T10:24:55.088850","_modify_time":"2025-03-03T10:24:55.088850","_ref":"network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24","comment":"Test Network","network":"192.168.2.0/24","network_view":"default"}]
+[2025-03-03 10:24:57] [INFO] Network 192.168.2.0/24 found
+[2025-03-03 10:24:57] [ERROR] ERROR: Network 192.168.2.0/24 already exists with reference network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24
+[2025-03-03 10:24:57] [INFO] Infoblox connection is active
+[2025-03-03 10:24:57] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:24:57] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:24:57] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:50:19] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxNetworks.log
+[2025-03-03 10:50:19] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:50:19] [INFO] Action: Create
+[2025-03-03 10:50:19] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:50:25] [ERROR] Failed to connect to Infoblox: Cannot process argument transformation on parameter 'Credential'. userName
+[2025-03-03 10:50:25] [ERROR] ERROR: Failed to connect to Infoblox: Cannot process argument transformation on parameter 'Credential'. userName
+[2025-03-03 10:50:25] [ERROR] Infoblox connection test failed: 
+
+
+    
+    
+    
+    
+    Page not found!
+    
+    
+
+
+
+
+    
+        
+            aultwarden
+            
+                
+            
+            
+                
+            
+        
+    
+
+    
+        Page not found!
+        Sorry, but the page you were looking for could not be found.
+        
+            
+        You can return to the web-vault, or contact us.
+    
+
+    Vaultwarden (unofficial Bitwarden&reg; server)
+
+
+
+[2025-03-03 10:50:25] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:50:42] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxNetworks.log
+[2025-03-03 10:50:42] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:50:42] [INFO] Action: Create
+[2025-03-03 10:50:42] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:50:44] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:50:44] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:50:44] [INFO] Creating network: 192.168.2.0/24
+[2025-03-03 10:50:44] [INFO] Validated IP address format: 192.168.2.0
+[2025-03-03 10:50:44] [INFO] Validated network format: 192.168.2.0/24
+[2025-03-03 10:50:44] [INFO] Infoblox connection is active
+[2025-03-03 10:50:44] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.2.0%2f24
+[2025-03-03 10:50:44] [INFO] Response: 
+[2025-03-03 10:50:44] [INFO] Network 192.168.2.0/24 not found
+[2025-03-03 10:50:44] [INFO] Infoblox connection is active
+[2025-03-03 10:50:44] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/network
+[2025-03-03 10:50:44] [INFO] Request body: {
+    "network_view":  "default",
+    "comment":  "Test Network",
+    "network":  "192.168.2.0/24"
+}
+[2025-03-03 10:50:44] [INFO] Response: "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24"
+[2025-03-03 10:50:44] [SUCCESS] Network 192.168.2.0/24 created successfully with reference network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.2.0/24
+[2025-03-03 10:50:44] [INFO] Infoblox connection is active
+[2025-03-03 10:50:44] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:50:44] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:50:44] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:51:46] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxNetworks.log
+[2025-03-03 10:51:46] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:51:46] [INFO] Action: Create
+[2025-03-03 10:51:46] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:51:46] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:51:46] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:51:46] [INFO] Creating network: 192.168.1.0/24
+[2025-03-03 10:51:46] [INFO] Validated IP address format: 192.168.1.0
+[2025-03-03 10:51:46] [INFO] Validated network format: 192.168.1.0/24
+[2025-03-03 10:51:46] [INFO] Infoblox connection is active
+[2025-03-03 10:51:46] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.1.0%2f24
+[2025-03-03 10:51:46] [INFO] Response: 
+[2025-03-03 10:51:46] [INFO] Network 192.168.1.0/24 not found
+[2025-03-03 10:51:46] [INFO] Infoblox connection is active
+[2025-03-03 10:51:46] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/network
+[2025-03-03 10:51:46] [INFO] Request body: {
+    "network_view":  "default",
+    "comment":  "Test Network",
+    "network":  "192.168.1.0/24"
+}
+[2025-03-03 10:51:46] [INFO] Response: "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.0/24"
+[2025-03-03 10:51:46] [SUCCESS] Network 192.168.1.0/24 created successfully with reference network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.0/24
+[2025-03-03 10:51:46] [INFO] Infoblox connection is active
+[2025-03-03 10:51:46] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:51:46] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:51:46] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:58:37] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxNetworks.log
+[2025-03-03 10:58:37] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:58:37] [INFO] Action: Create
+[2025-03-03 10:58:37] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:58:37] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:58:37] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:58:37] [INFO] Creating network: 192.168.1.0/24
+[2025-03-03 10:58:37] [INFO] Validated IP address format: 192.168.1.0
+[2025-03-03 10:58:37] [INFO] Validated network format: 192.168.1.0/24
+[2025-03-03 10:58:37] [INFO] Infoblox connection is active
+[2025-03-03 10:58:37] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.1.0%2f24
+[2025-03-03 10:58:37] [INFO] Response: 
+[2025-03-03 10:58:37] [INFO] Network 192.168.1.0/24 not found
+[2025-03-03 10:58:37] [INFO] Infoblox connection is active
+[2025-03-03 10:58:37] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/network
+[2025-03-03 10:58:37] [INFO] Request body: {
+    "network_view":  "default",
+    "comment":  "Test Network",
+    "network":  "192.168.1.0/24"
+}
+[2025-03-03 10:58:37] [INFO] Response: "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.0/24"
+[2025-03-03 10:58:37] [SUCCESS] Network 192.168.1.0/24 created successfully with reference network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.0/24
+[2025-03-03 10:58:37] [INFO] Infoblox connection is active
+[2025-03-03 10:58:37] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:58:37] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:58:37] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-03 10:58:40] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxNetworks.log
+[2025-03-03 10:58:40] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-03 10:58:40] [INFO] Action: Create
+[2025-03-03 10:58:40] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-03 10:58:40] [SUCCESS] Successfully connected to Infoblox as admin
+[2025-03-03 10:58:40] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-03 10:58:40] [INFO] Creating network: 192.168.1.0/24
+[2025-03-03 10:58:40] [INFO] Validated IP address format: 192.168.1.0
+[2025-03-03 10:58:40] [INFO] Validated network format: 192.168.1.0/24
+[2025-03-03 10:58:40] [INFO] Infoblox connection is active
+[2025-03-03 10:58:40] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.1.0%2f24
+[2025-03-03 10:58:40] [INFO] Response: {"_create_time":"2025-03-03T10:58:37.619048","_modify_time":"2025-03-03T10:58:37.619048","_ref":"network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.0/24","comment":"Test Network","network":"192.168.1.0/24","network_view":"default"}
+[2025-03-03 10:58:40] [INFO] Network 192.168.1.0/24 not found
+[2025-03-03 10:58:40] [INFO] Infoblox connection is active
+[2025-03-03 10:58:40] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/network
+[2025-03-03 10:58:40] [INFO] Request body: {
+    "network_view":  "default",
+    "comment":  "Test Network",
+    "network":  "192.168.1.0/24"
+}
+[2025-03-03 10:58:40] [INFO] Response: "network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.0/24"
+[2025-03-03 10:58:40] [SUCCESS] Network 192.168.1.0/24 created successfully with reference network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.0/24
+[2025-03-03 10:58:40] [INFO] Infoblox connection is active
+[2025-03-03 10:58:40] [INFO] Disconnecting from Infoblox
+[2025-03-03 10:58:40] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-03 10:58:40] [INFO] ======= Infoblox Network Management Script Completed =======

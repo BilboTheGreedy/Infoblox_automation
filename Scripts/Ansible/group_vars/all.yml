@@ -1,0 +1,15 @@
+---
+# Infoblox provider configuration
+infoblox_provider:
+  host: "{{ lookup('env', 'INFOBLOX_HOST') | default('localhost') }}"
+  username: "{{ lookup('env', 'INFOBLOX_USERNAME') }}"
+  password: "{{ lookup('env', 'INFOBLOX_PASSWORD') }}"
+  validate_certs: "{{ lookup('env', 'INFOBLOX_VALIDATE_CERTS') | default('yes') }}"
+  http_request_timeout: 60
+  max_retries: 3
+  http_wapi_version: "{{ lookup('env', 'INFOBLOX_WAPI_VERSION') | default('2.11') }}"
+  port: "{{ lookup('env', 'INFOBLOX_PORT') | default('443') }}"
+
+# Logging configuration
+log_file: "{{ lookup('env', 'INFOBLOX_LOG_FILE') | default('infoblox_operations.log') }}"
+verbose_logging: "{{ lookup('env', 'INFOBLOX_VERBOSE_LOGGING') | default('no') }}"
