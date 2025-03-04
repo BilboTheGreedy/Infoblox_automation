@@ -1,0 +1,27 @@
+2025-03-04 17:53:29,785 [INFO] Database initialized with default data
+2025-03-04 17:53:29,801 [INFO] UI routes initialized
+2025-03-04 17:53:29,801 [INFO] API endpoints initialized
+2025-03-04 17:53:29,802 [INFO] Infoblox Mock Server initialized with Web UI
+2025-03-04 17:53:29,842 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.76:8080
+2025-03-04 17:53:29,843 [INFO] [33mPress CTRL+C to quit[0m
+2025-03-04 17:53:29,845 [INFO]  * Restarting with stat
+2025-03-04 17:53:30,136 [INFO] Database initialized with default data
+2025-03-04 17:53:30,145 [INFO] UI routes initialized
+2025-03-04 17:53:30,145 [INFO] API endpoints initialized
+2025-03-04 17:53:30,145 [INFO] Infoblox Mock Server initialized with Web UI
+2025-03-04 17:53:30,163 [WARNING]  * Debugger is active!
+2025-03-04 17:53:30,167 [INFO]  * Debugger PIN: 678-140-214
+2025-03-04 17:53:33,390 [INFO] 127.0.0.1 - - [04/Mar/2025 17:53:33] "[32mGET / HTTP/1.1[0m" 302 -
+2025-03-04 17:53:33,440 [INFO] 127.0.0.1 - - [04/Mar/2025 17:53:33] "GET /login HTTP/1.1" 200 -
+2025-03-04 17:53:33,555 [INFO] 127.0.0.1 - - [04/Mar/2025 17:53:33] "GET /static/css/styles.css HTTP/1.1" 200 -
+2025-03-04 17:53:33,631 [INFO] 127.0.0.1 - - [04/Mar/2025 17:53:33] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-03-04 17:53:33,653 [INFO] 127.0.0.1 - - [04/Mar/2025 17:53:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-03-04 17:54:26,660 [INFO] 127.0.0.1 - - [04/Mar/2025 17:54:26] "POST /login HTTP/1.1" 200 -
+2025-03-04 17:54:26,690 [INFO] 127.0.0.1 - - [04/Mar/2025 17:54:26] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-03-04 17:54:26,693 [INFO] 127.0.0.1 - - [04/Mar/2025 17:54:26] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-03-04 17:54:37,410 [INFO] 127.0.0.1 - - [04/Mar/2025 17:54:37] "POST /login HTTP/1.1" 200 -
+2025-03-04 17:54:37,445 [INFO] 127.0.0.1 - - [04/Mar/2025 17:54:37] "[36mGET /static/css/styles.css HTTP/1.1[0m" 304 -
+2025-03-04 17:54:37,445 [INFO] 127.0.0.1 - - [04/Mar/2025 17:54:37] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -

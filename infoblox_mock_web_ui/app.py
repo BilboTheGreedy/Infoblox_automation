@@ -8,7 +8,7 @@ import os
 import logging
 from flask import Flask
 from mock_server.server import setup_mock_server
-from web_ui.routes import setup_web_ui
+from web_ui import setup_web_ui
 
 # Configure logging
 log_format = '%(asctime)s [%(levelname)s] %(message)s'

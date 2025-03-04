@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}Infoblox Mock Server - Tools{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Next Available IP</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('next_available_ip_find') }}">
+                    <div class="mb-3">
+                        <label for="network" class="form-label">Select Network</label>
+                        <select class="form-select" id="network" name="network" required>
+                            <option value="">Select a network</option>
+                            {% for network in networks %}
+                            <option value="{{ network.network }}">
+                                {{ network.network }} {% if network.comment %}({{ network.comment }}){% endif %}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search me-1"></i> Find Next Available IP
+                    </button>
+                </form>
+                
+                {% if next_ip %}
+                <div class="mt-4 p-3 bg-light rounded">
+                    <h6>Next Available IP:</h6>
+                    <div class="d-flex align-items-center">
+                        <code class="fs-4">{{ next_ip }}</code>
+                        <button type="button" class="btn btn-sm btn-outline-secondary ms-3" onclick="copyToClipboard('{{ next_ip }}')">
+                            <i class="bi bi-clipboard"></i> Copy
+                        </button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Database Management</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-3">
+                    <form method="post" action="{{ url_for('reset_database') }}" onsubmit="return confirm('Are you sure you want to reset the database? This will delete all data and restore defaults.');">
+                        <button type="submit" class="btn btn-danger w-100">
+                            <i class="bi bi-arrow-repeat me-1"></i> Reset Database
+                        </button>
+                    </form>
+                    
+                    <a href="{{ url_for('export_database') }}" class="btn btn-success">
+                        <i class="bi bi-download me-1"></i> Export Database
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Grid Information</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 20%">Name</th>
+                        <td>{{ grid.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Version</th>
+                        <td>{{ grid.version }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            {% if grid.status == 'ONLINE' %}
+                                <span class="badge bg-success">{{ grid.status }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ grid.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>License Type</th>
+                        <td>{{ grid.license_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Support Email</th>
+                        <td>{{ grid.support_email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Allow Recursive Deletion</th>
+                        <td>
+                            {% if grid.allow_recursive_deletion %}
+                                <span class="badge bg-success">Yes</span>
+                            {% else %}
+                                <span class="badge bg-danger">No</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Restart Required</th>
+                        <td>
+                            {% if grid.restart_status and grid.restart_status.restart_required %}
+                                <span class="badge bg-warning text-dark">Yes</span>
+                            {% else %}
+                                <span class="badge bg-success">No</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function copyToClipboard(text) {
+        // Create a temporary input
+        const input = document.createElement('input');
+        input.setAttribute('value', text);
+        document.body.appendChild(input);
+        
+        // Select and copy the text
+        input.select();
+        document.execCommand('copy');
+        
+        // Remove the temporary input
+        document.body.removeChild(input);
+        
+        // Show a temporary notification
+        const button = event.currentTarget;
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="bi bi-check2"></i> Copied!';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+        }, 2000);
+    }
+</script>
+{% endblock %}

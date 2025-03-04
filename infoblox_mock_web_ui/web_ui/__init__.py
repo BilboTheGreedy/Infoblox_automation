@@ -3,9 +3,6 @@ Web UI package for the Infoblox Mock Server.
 Provides a graphical interface for managing the mock server.
 """
 
-from web_ui.routes import setup_ui_routes
-from web_ui.api import setup_api_routes
-
 def setup_web_ui(app, db, CONFIG):
     """
     Setup the web UI by initializing both UI routes and API endpoints
@@ -18,6 +15,10 @@ def setup_web_ui(app, db, CONFIG):
     Returns:
     - The configured Flask application
     """
+    # Import here to avoid circular imports
+    from web_ui.routes import setup_ui_routes
+    from web_ui.api import setup_api_routes
+    
     # Setup UI routes
     app = setup_ui_routes(app)
     

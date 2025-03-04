@@ -1,0 +1,13 @@
+2025-03-03 17:37:11,857 [INFO] Infoblox mock server initialized
+2025-03-03 17:37:11,857 [INFO] Starting Infoblox mock server on 0.0.0.0:8080
+2025-03-03 17:37:11,871 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.76:8080
+2025-03-03 17:37:11,872 [INFO] [33mPress CTRL+C to quit[0m
+2025-03-03 17:38:01,077 [INFO] Database saved to infoblox_mock_db.json
+2025-03-03 17:38:01,077 [INFO] Infoblox mock server initialized
+2025-03-03 17:38:01,079 [INFO] Starting Infoblox mock server on localhost:8080
+2025-03-03 17:38:01,092 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://localhost:8080
+2025-03-03 17:38:01,092 [INFO] [33mPress CTRL+C to quit[0m

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Infoblox Mock Server - Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title">Infoblox Mock Server</h2>
+            </div>
+            <div class="card-body">
+                <h3>Welcome to the Infoblox WAPI Mock Server</h3>
+                <p class="lead">
+                    A comprehensive mock server for simulating Infoblox API interactions.
+                </p>
+                
+                <h4 class="mt-4">Quick Stats</h4>
+                <div class="row mt-3">
+                    <div class="col-md-3 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>{{ network_count }}</h3>
+                                <p class="card-text">Networks</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>{{ host_count }}</h3>
+                                <p class="card-text">Host Records</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>{{ record_count }}</h3>
+                                <p class="card-text">A Records</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>{{ fixed_count }}</h3>
+                                <p class="card-text">Fixed Addresses</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4 class="mt-4">Grid Status</h4>
+                <table class="table table-bordered mt-3">
+                    <tbody>
+                        <tr>
+                            <th style="width: 30%">Name</th>
+                            <td>{{ grid.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Version</th>
+                            <td>{{ grid.version }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                                {% if grid.status == 'ONLINE' %}
+                                    <span class="badge bg-success">{{ grid.status }}</span>
+                                {% else %}
+                                    <span class="badge bg-danger">{{ grid.status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>License Type</th>
+                            <td>{{ grid.license_type }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="mt-4">
+                    <h4>Quick Actions</h4>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <a href="{{ url_for('networks') }}" class="btn btn-primary">
+                            <i class="bi bi-diagram-3"></i> Manage Networks
+                        </a>
+                        <a href="{{ url_for('hosts') }}" class="btn btn-secondary">
+                            <i class="bi bi-hdd-network"></i> Manage Host Records
+                        </a>
+                        <a href="{{ url_for('tools') }}" class="btn btn-info text-white">
+                            <i class="bi bi-tools"></i> Utilities
+                        </a>
+                        <a href="{{ url_for('config') }}" class="btn btn-success">
+                            <i class="bi bi-gear"></i> Server Configuration
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

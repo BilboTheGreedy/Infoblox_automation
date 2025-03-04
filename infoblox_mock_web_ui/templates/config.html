@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Infoblox Mock Server - Configuration{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">Server Configuration</h5>
+        <div>
+            <a href="{{ url_for('config') }}" class="btn btn-sm btn-outline-primary me-2">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('config_update') }}">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h6 class="mb-3">Simulation Options</h6>
+                    <div class="mb-3 form">
+                    <h6 class="mb-3">Simulation Options</h6>
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="simulate_delay" name="simulate_delay" value="1" {% if config.simulate_delay %}checked{% endif %}>
+                        <label class="form-check-label" for="simulate_delay">Simulate Network Delay</label>
+                    </div>
+                    
+                    <div class="row mb-3" id="delay_options" {% if not config.simulate_delay %}style="display: none;"{% endif %}>
+                        <div class="col-6">
+                            <label for="min_delay_ms" class="form-label">Min Delay (ms)</label>
+                            <input type="number" class="form-control" id="min_delay_ms" name="min_delay_ms" value="{{ config.min_delay_ms }}">
+                        </div>
+                        <div class="col-6">
+                            <label for="max_delay_ms" class="form-label">Max Delay (ms)</label>
+                            <input type="number" class="form-control" id="max_delay_ms" name="max_delay_ms" value="{{ config.max_delay_ms }}">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="simulate_failures" name="simulate_failures" value="1" {% if config.simulate_failures %}checked{% endif %}>
+                        <label class="form-check-label" for="simulate_failures">Simulate Server Failures</label>
+                    </div>
+                    
+                    <div class="mb-3" id="failure_options" {% if not config.simulate_failures %}style="display: none;"{% endif %}>
+                        <label for="failure_rate" class="form-label">Failure Rate (0-1)</label>
+                        <input type="number" step="0.01" min="0" max="1" class="form-control" id="failure_rate" name="failure_rate" value="{{ config.failure_rate }}">
+                    </div>
+                    
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="simulate_db_lock" name="simulate_db_lock" value="1" {% if config.simulate_db_lock %}checked{% endif %}>
+                        <label class="form-check-label" for="simulate_db_lock">Simulate Database Locks</label>
+                    </div>
+                    
+                    <div class="mb-3" id="lock_options" {% if not config.simulate_db_lock %}style="display: none;"{% endif %}>
+                        <label for="lock_probability" class="form-label">Lock Probability (0-1)</label>
+                        <input type="number" step="0.01" min="0" max="1" class="form-control" id="lock_probability" name="lock_probability" value="{{ config.lock_probability }}">
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <h6 class="mb-3">Security & Performance</h6>
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="auth_required" name="auth_required" value="1" {% if config.auth_required %}checked{% endif %}>
+                        <label class="form-check-label" for="auth_required">Require Authentication</label>
+                    </div>
+                    
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="rate_limit" name="rate_limit" value="1" {% if config.rate_limit %}checked{% endif %}>
+                        <label class="form-check-label" for="rate_limit">Enable Rate Limiting</label>
+                    </div>
+                    
+                    <div class="mb-3" id="rate_limit_options" {% if not config.rate_limit %}style="display: none;"{% endif %}>
+                        <label for="rate_limit_requests" class="form-label">Requests per Minute</label>
+                        <input type="number" class="form-control" id="rate_limit_requests" name="rate_limit_requests" value="{{ config.rate_limit_requests }}">
+                    </div>
+                    
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="detailed_logging" name="detailed_logging" value="1" {% if config.detailed_logging %}checked{% endif %}>
+                        <label class="form-check-label" for="detailed_logging">Detailed Request Logging</label>
+                    </div>
+                    
+                    <div class="mb-3 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="persistent_storage" name="persistent_storage" value="1" {% if config.persistent_storage %}checked{% endif %}>
+                        <label class="form-check-label" for="persistent_storage">Persistent Storage</label>
+                    </div>
+                    
+                    <div class="mb-3" id="storage_options" {% if not config.persistent_storage %}style="display: none;"{% endif %}>
+                        <label for="storage_file" class="form-label">Storage File</label>
+                        <input type="text" class="form-control" id="storage_file" name="storage_file" value="{{ config.storage_file }}">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-end">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save me-1"></i> Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Toggle visibility of related options when checkboxes are clicked
+    document.addEventListener('DOMContentLoaded', function() {
+        // Delay options
+        const simulateDelayCheckbox = document.getElementById('simulate_delay');
+        const delayOptions = document.getElementById('delay_options');
+        
+        simulateDelayCheckbox.addEventListener('change', function() {
+            delayOptions.style.display = this.checked ? 'flex' : 'none';
+        });
+        
+        // Failure options
+        const simulateFailuresCheckbox = document.getElementById('simulate_failures');
+        const failureOptions = document.getElementById('failure_options');
+        
+        simulateFailuresCheckbox.addEventListener('change', function() {
+            failureOptions.style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Lock options
+        const simulateDbLockCheckbox = document.getElementById('simulate_db_lock');
+        const lockOptions = document.getElementById('lock_options');
+        
+        simulateDbLockCheckbox.addEventListener('change', function() {
+            lockOptions.style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Rate limit options
+        const rateLimitCheckbox = document.getElementById('rate_limit');
+        const rateLimitOptions = document.getElementById('rate_limit_options');
+        
+        rateLimitCheckbox.addEventListener('change', function() {
+            rateLimitOptions.style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Storage options
+        const persistentStorageCheckbox = document.getElementById('persistent_storage');
+        const storageOptions = document.getElementById('storage_options');
+        
+        persistentStorageCheckbox.addEventListener('change', function() {
+            storageOptions.style.display = this.checked ? 'block' : 'none';
+        });
+    });
+</script>
+{% endblock %}
