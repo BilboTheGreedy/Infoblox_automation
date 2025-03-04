@@ -1,0 +1,74 @@
+/* static/css/custom.css */
+.dashboard-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.stat-card {
+    flex: 1 1 200px;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.stat-card .stat-label {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.bg-network {
+    background-color: #4285F4;
+    color: white;
+}
+
+.bg-host {
+    background-color: #34A853;
+    color: white;
+}
+
+.bg-record {
+    background-color: #FBBC05;
+    color: white;
+}
+
+.bg-range {
+    background-color: #EA4335;
+    color: white;
+}
+
+/* Custom icon styles */
+.sidebar .nav-link i {
+    margin-right: 0.5rem;
+}
+
+/* JSON formatting */
+pre {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    max-height: 400px;
+    overflow: auto;
+}
+
+/* API console styling */
+.endpoint-examples {
+    font-size: 0.9rem;
+}
+
+.endpoint-examples code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.85rem;
+}

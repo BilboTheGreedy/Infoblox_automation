@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}API Console - Infoblox Mock Server{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">API Console</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">API Request</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="method" class="form-label">HTTP Method</label>
+                        <select class="form-select" id="method" name="method">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="path" class="form-label">Path</label>
+                        <input type="text" class="form-control" id="path" name="path" placeholder="network" required>
+                        <div class="form-text">Path relative to /wapi/v2.11/ (e.g., network, record:host)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="params" class="form-label">Query Parameters (JSON)</label>
+                        <textarea class="form-control" id="params" name="params" rows="3" placeholder='{"network": "10.0.0.0/8"}'></textarea>
+                        <div class="form-text">JSON object of query parameters</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="data" class="form-label">Request Body (JSON)</label>
+                        <textarea class="form-control" id="data" name="data" rows="5" placeholder='{"network": "192.168.100.0/24", "comment": "Test network"}'></textarea>
+                        <div class="form-text">JSON object for POST/PUT requests</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Send Request</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Common API Paths</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item"><code>network</code> - Get all networks</li>
+                    <li class="list-group-item"><code>record:host</code> - Get all host records</li>
+                    <li class="list-group-item"><code>record:a</code> - Get all A records</li>
+                    <li class="list-group-item"><code>grid</code> - Get grid information</li>
+                    <li class="list-group-item"><code>member</code> - Get grid members</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">API Response</h5>
+            </div>
+            <div class="card-body">
+                {% if result %}
+                <pre class="bg-light p-3 rounded"><code>{{ result|tojson(indent=2) }}</code></pre>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> Send a request to see the response here
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Automatically adjust method dropdown based on selected path
+        const methodSelect = document.getElementById('method');
+        const pathInput = document.getElementById('path');
+        const dataTextarea = document.getElementById('data');
+        
+        pathInput.addEventListener('input', function() {
+            const path = pathInput.value.trim();
+            
+            // If it looks like a reference, suggest GET/PUT/DELETE
+            if (path.includes('/')) {
+                methodSelect.value = 'GET';
+            } else {
+                // For collection endpoints, suggest GET/POST
+                methodSelect.value = 'GET';
+            }
+        });
+        
+        // Show/hide data textarea based on method
+        methodSelect.addEventListener('change', function() {
+            if (methodSelect.value === 'GET' || methodSelect.value === 'DELETE') {
+                dataTextarea.parentElement.style.display = 'none';
+            } else {
+                dataTextarea.parentElement.style.display = 'block';
+            }
+        });
+        
+        // Initial setup
+        if (methodSelect.value === 'GET' || methodSelect.value === 'DELETE') {
+            dataTextarea.parentElement.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

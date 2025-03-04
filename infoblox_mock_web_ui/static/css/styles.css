@@ -1,0 +1,101 @@
+/**
+ * Infoblox Mock Server - Web UI Styles
+ */
+
+/* General styles */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Loading indicator */
+#loader {
+    z-index: 9999;
+}
+
+/* Card styles */
+.card {
+    margin-bottom: 1rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* Toast positioning */
+.toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1050;
+}
+
+/* Table styles */
+.table th {
+    background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Form styles */
+label {
+    font-weight: 500;
+}
+
+.form-switch .form-check-input {
+    width: 2.5em;
+}
+
+/* Button spacing for inline actions */
+.btn-group .btn {
+    margin-right: 0.25rem;
+}
+
+/* Config section styles */
+.config-section {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.config-section h6 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 1.25rem;
+    }
+    
+    .btn {
+        padding: 0.375rem 0.5rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .navbar, .btn, .card-header button {
+        display: none !important;
+    }
+    
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+    
+    .card-header {
+        background-color: transparent !important;
+        border-bottom: 1px solid #000 !important;
+    }
+    
+    body {
+        font-size: 12pt;
+    }
+}

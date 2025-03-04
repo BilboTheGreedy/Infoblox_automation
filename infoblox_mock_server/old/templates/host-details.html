@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Host Record Details - Infoblox Mock Server{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Host Record Details</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('hosts') }}" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-arrow-left"></i> Back to Host Records
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Basic Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">Hostname:</div>
+                    <div class="col-md-9">{{ host.name }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">DNS View:</div>
+                    <div class="col-md-9">{{ host.view }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">IP Addresses:</div>
+                    <div class="col-md-9">
+                        {% if host.ipv4addrs %}
+                        <ul class="list-unstyled">
+                            {% for addr in host.ipv4addrs %}
+                            <li>{{ addr.ipv4addr }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <span class="text-muted">No IP addresses</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">Comment:</div>
+                    <div class="col-md-9">{{ host.comment }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">Created:</div>
+                    <div class="col-md-9">{{ host._create_time }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">Last Modified:</div>
+                    <div class="col-md-9">{{ host._modify_time }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Reference</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-2"><strong>Object Reference:</strong></p>
+                <div class="bg-light p-2 mb-3 rounded">
+                    <code>{{ host._ref }}</code>
+                </div>
+                <p class="mb-2"><strong>API Endpoint:</strong></p>
+                <div class="bg-light p-2 rounded">
+                    <code>/wapi/v2.11/{{ host._ref }}</code>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
