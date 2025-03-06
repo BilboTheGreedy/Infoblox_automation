@@ -740,3 +740,10 @@
 2025-03-06 06:44:37,330 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:37] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
 2025-03-06 06:44:37,332 [INFO] User admin logged out from 127.0.0.1
 2025-03-06 06:44:37,333 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:37] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:56:58,387 [INFO] Database initialized with default data
+2025-03-06 06:56:58,390 [INFO] Infoblox Mock Server initialized with config: {'simulate_delay': False, 'min_delay_ms': 50, 'max_delay_ms': 300, 'simulate_failures': False, 'failure_rate': 0.05, 'detailed_logging': True, 'persistent_storage': False, 'storage_file': 'data/infoblox_mock_db.json', 'auth_required': True, 'rate_limit': True, 'rate_limit_requests': 100, 'simulate_db_lock': False, 'lock_probability': 0.01, 'wapi_version': 'v2.11'}
+2025-03-06 06:56:58,417 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.76:8080
+2025-03-06 06:56:58,417 [INFO] [33mPress CTRL+C to quit[0m
