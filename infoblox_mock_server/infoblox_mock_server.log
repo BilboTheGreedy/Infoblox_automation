@@ -5,3 +5,738 @@
  * Running on http://127.0.0.1:8080
  * Running on http://192.168.10.76:8080
 2025-03-04 17:54:21,303 [INFO] [33mPress CTRL+C to quit[0m
+2025-03-04 18:35:27,061 [WARNING] Login attempt without credentials from 127.0.0.1
+2025-03-04 18:35:27,062 [INFO] 127.0.0.1 - - [04/Mar/2025 18:35:27] "[31m[1mPOST /wapi/v2.11/grid/session HTTP/1.1[0m" 401 -
+2025-03-04 18:35:27,178 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-04 18:35:27,178 [INFO] Headers: {'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-04 18:35:27,178 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:35:27,179 [WARNING] Unauthorized access attempt from 127.0.0.1
+2025-03-04 18:35:27,179 [INFO] 127.0.0.1 - - [04/Mar/2025 18:35:27] "[31m[1mGET /wapi/v2.11/grid HTTP/1.1[0m" 401 -
+2025-03-04 18:39:42,875 [INFO] User admin logged in from 127.0.0.1
+2025-03-04 18:39:42,875 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:42] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-04 18:39:44,908 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-04 18:39:44,908 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:44,908 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:44,908 [INFO] GET grid info
+2025-03-04 18:39:44,909 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:44] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-04 18:39:46,945 [INFO] Request: GET /wapi/v2.11/network
+2025-03-04 18:39:46,945 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:46,945 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:46,945 [INFO] GET network: Found 2 objects matching query
+2025-03-04 18:39:46,946 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:46] "GET /wapi/v2.11/network HTTP/1.1" 200 -
+2025-03-04 18:39:49,000 [INFO] Request: POST /wapi/v2.11/network
+2025-03-04 18:39:49,000 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '170', 'Content-Type': 'application/json', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:49,000 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:49,001 [INFO] Body: {'network': '192.168.100.0/24', 'comment': 'Test network created by basic client', 'extattrs': {'Environment': {'value': 'Development'}, 'Owner': {'value': 'Test Team'}}}
+2025-03-04 18:39:49,001 [INFO] Created new network: network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.100.0/24
+2025-03-04 18:39:49,001 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:49] "POST /wapi/v2.11/network HTTP/1.1" 200 -
+2025-03-04 18:39:51,029 [INFO] Request: GET /wapi/v2.11/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.100.0/24
+2025-03-04 18:39:51,029 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:51,029 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:51,030 [INFO] GET object: network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.100.0/24
+2025-03-04 18:39:51,030 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:51] "GET /wapi/v2.11/network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.100.0/24 HTTP/1.1" 200 -
+2025-03-04 18:39:53,062 [INFO] Request: POST /wapi/v2.11/network/192.168.100.0/24/next_available_ip
+2025-03-04 18:39:53,062 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:53,062 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:53,062 [INFO] Found next available IP in 192.168.100.0/24: 192.168.100.2
+2025-03-04 18:39:53,063 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:53] "POST /wapi/v2.11/network/192.168.100.0/24/next_available_ip HTTP/1.1" 200 -
+2025-03-04 18:39:55,106 [INFO] Request: POST /wapi/v2.11/record:host
+2025-03-04 18:39:55,106 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '131', 'Content-Type': 'application/json', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:55,106 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:55,107 [INFO] Body: {'name': 'test-server.example.com', 'ipv4addrs': [{'ipv4addr': '192.168.100.2'}], 'comment': 'Test server created by basic client'}
+2025-03-04 18:39:55,107 [INFO] Created new record:host: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com
+2025-03-04 18:39:55,107 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:55] "POST /wapi/v2.11/record:host HTTP/1.1" 200 -
+2025-03-04 18:39:57,153 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-04 18:39:57,153 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:57,153 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:57,154 [INFO] GET record:host: Found 2 objects matching query
+2025-03-04 18:39:57,154 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:57] "GET /wapi/v2.11/record:host HTTP/1.1" 200 -
+2025-03-04 18:39:59,178 [INFO] Request: PUT /wapi/v2.11/record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com
+2025-03-04 18:39:59,179 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '42', 'Content-Type': 'application/json', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:39:59,179 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:39:59,179 [INFO] Body: {'comment': 'Updated test server comment'}
+2025-03-04 18:39:59,179 [INFO] Updated object: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com
+2025-03-04 18:39:59,180 [INFO] 127.0.0.1 - - [04/Mar/2025 18:39:59] "PUT /wapi/v2.11/record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com HTTP/1.1" 200 -
+2025-03-04 18:40:01,222 [INFO] Request: GET /wapi/v2.11/record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com
+2025-03-04 18:40:01,222 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:40:01,222 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:40:01,222 [INFO] GET object: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com
+2025-03-04 18:40:01,223 [INFO] 127.0.0.1 - - [04/Mar/2025 18:40:01] "GET /wapi/v2.11/record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com HTTP/1.1" 200 -
+2025-03-04 18:40:03,253 [INFO] Request: POST /wapi/v2.11/record:a
+2025-03-04 18:40:03,253 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '91', 'Content-Type': 'application/json', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:40:03,253 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:40:03,253 [INFO] Body: {'name': 'www.example.com', 'ipv4addr': '192.168.100.50', 'comment': 'Web server A record'}
+2025-03-04 18:40:03,254 [WARNING] Duplicate DNS record: www.example.com
+2025-03-04 18:40:03,254 [INFO] 127.0.0.1 - - [04/Mar/2025 18:40:03] "[31m[1mPOST /wapi/v2.11/record:a HTTP/1.1[0m" 400 -
+2025-03-04 18:40:05,290 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-04 18:40:05,290 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:40:05,290 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:40:05,291 [INFO] GET record:a: Found 1 objects matching query
+2025-03-04 18:40:05,291 [INFO] 127.0.0.1 - - [04/Mar/2025 18:40:05] "GET /wapi/v2.11/record:a HTTP/1.1" 200 -
+2025-03-04 18:40:07,331 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-04 18:40:07,331 [INFO] Headers: {'Host': 'localhost:8080', 'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g='}
+2025-03-04 18:40:07,331 [INFO] Query Params: ImmutableMultiDict([('name', 'www.example.com')])
+2025-03-04 18:40:07,331 [INFO] GET record:a: Found 1 objects matching query
+2025-03-04 18:40:07,332 [INFO] 127.0.0.1 - - [04/Mar/2025 18:40:07] "GET /wapi/v2.11/record:a?name=www.example.com HTTP/1.1" 200 -
+2025-03-04 18:40:09,356 [INFO] User admin logged out from 127.0.0.1
+2025-03-04 18:40:09,356 [INFO] 127.0.0.1 - - [04/Mar/2025 18:40:09] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-04 18:41:04,558 [WARNING] Login attempt without credentials from 127.0.0.1
+2025-03-04 18:41:04,558 [INFO] 127.0.0.1 - - [04/Mar/2025 18:41:04] "[31m[1mPOST /wapi/v2.11/grid/session HTTP/1.1[0m" 401 -
+2025-03-04 18:41:04,573 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-04 18:41:04,574 [INFO] Headers: {'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-04 18:41:04,574 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-04 18:41:04,574 [WARNING] Unauthorized access attempt from 127.0.0.1
+2025-03-04 18:41:04,574 [INFO] 127.0.0.1 - - [04/Mar/2025 18:41:04] "[31m[1mGET /wapi/v2.11/grid HTTP/1.1[0m" 401 -
+2025-03-06 06:05:57,388 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:05:57,389 [INFO] 127.0.0.1 - - [06/Mar/2025 06:05:57] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:18:41,402 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:18:41,402 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:18:41,418 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:18:41,418 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,418 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,419 [INFO] GET grid info
+2025-03-06 06:18:41,419 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:18:41,464 [INFO] Request: GET /wapi/v2.11/ipv4address
+2025-03-06 06:18:41,464 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,464 [INFO] Query Params: ImmutableMultiDict([('ip_address', '192.168.1.52')])
+2025-03-06 06:18:41,465 [INFO] GET ipv4address: Found 0 objects matching query
+2025-03-06 06:18:41,465 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/ipv4address?ip_address=192.168.1.52 HTTP/1.1" 200 -
+2025-03-06 06:18:41,474 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:18:41,474 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,474 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,475 [INFO] GET grid info
+2025-03-06 06:18:41,475 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:18:41,479 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:18:41,479 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,480 [INFO] Query Params: ImmutableMultiDict([('name', 'printerr.example.com')])
+2025-03-06 06:18:41,480 [INFO] GET record:a: Found 0 objects matching query
+2025-03-06 06:18:41,480 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/record:a?name=printerr.example.com HTTP/1.1" 200 -
+2025-03-06 06:18:41,485 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:18:41,485 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,485 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,485 [INFO] GET grid info
+2025-03-06 06:18:41,486 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:18:41,490 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:18:41,490 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,490 [INFO] Query Params: ImmutableMultiDict([('name', 'printerr.example.com')])
+2025-03-06 06:18:41,490 [INFO] GET record:host: Found 0 objects matching query
+2025-03-06 06:18:41,491 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/record:host?name=printerr.example.com HTTP/1.1" 200 -
+2025-03-06 06:18:41,497 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:18:41,497 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,497 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,498 [INFO] GET grid info
+2025-03-06 06:18:41,498 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:18:41,513 [INFO] Request: POST /wapi/v2.11/fixedaddress
+2025-03-06 06:18:41,513 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '145'}
+2025-03-06 06:18:41,514 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,514 [INFO] Body: {'comment': 'Network Printer', 'name': 'printerr.example.com', 'mac': '00:11:22:33:44:88', 'ipv4addr': '192.168.1.52'}
+2025-03-06 06:18:41,514 [INFO] Created new fixedaddress: fixedaddress/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.52
+2025-03-06 06:18:41,514 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "POST /wapi/v2.11/fixedaddress HTTP/1.1" 200 -
+2025-03-06 06:18:41,529 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:18:41,529 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,530 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,530 [INFO] GET grid info
+2025-03-06 06:18:41,530 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:18:41,536 [INFO] Request: POST /wapi/v2.11/record:host
+2025-03-06 06:18:41,536 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '250'}
+2025-03-06 06:18:41,537 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,537 [INFO] Body: {'ipv4addrs': [{'ipv4addr': '192.168.1.52'}], 'comment': 'Network Printer', 'name': 'printerr.example.com', 'view': 'default'}
+2025-03-06 06:18:41,537 [INFO] Created new record:host: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:printerr.example.com
+2025-03-06 06:18:41,538 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "POST /wapi/v2.11/record:host HTTP/1.1" 200 -
+2025-03-06 06:18:41,545 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:18:41,545 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:18:41,546 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:18:41,546 [INFO] GET grid info
+2025-03-06 06:18:41,546 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:18:41,551 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:18:41,551 [INFO] 127.0.0.1 - - [06/Mar/2025 06:18:41] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:34:30,685 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:34:30,686 [INFO] 127.0.0.1 - - [06/Mar/2025 06:34:30] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:34:30,695 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:34:30,696 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:34:30,696 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:34:30,696 [INFO] GET grid info
+2025-03-06 06:34:30,697 [INFO] 127.0.0.1 - - [06/Mar/2025 06:34:30] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:34:30,708 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:34:30,708 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:34:30,708 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:34:30,709 [INFO] GET record:host: Found 3 objects matching query
+2025-03-06 06:34:30,709 [INFO] 127.0.0.1 - - [06/Mar/2025 06:34:30] "GET /wapi/v2.11/record:host HTTP/1.1" 200 -
+2025-03-06 06:34:30,742 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:34:30,742 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:34:30,743 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:34:30,743 [INFO] GET grid info
+2025-03-06 06:34:30,744 [INFO] 127.0.0.1 - - [06/Mar/2025 06:34:30] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:34:30,749 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:34:30,749 [INFO] 127.0.0.1 - - [06/Mar/2025 06:34:30] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:43:36,941 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:43:36,942 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:36] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:43:36,949 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:36,949 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:36,949 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:36,950 [INFO] GET grid info
+2025-03-06 06:43:36,950 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:36] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:36,954 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 06:43:36,954 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:43:36,954 [INFO] Query Params: ImmutableMultiDict([('_return_fields', 'network,comment,network_view,extattrs')])
+2025-03-06 06:43:36,955 [INFO] GET network: Found 3 objects matching query
+2025-03-06 06:43:36,955 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:36] "GET /wapi/v2.11/network?_return_fields=network,comment,network_view,extattrs HTTP/1.1" 200 -
+2025-03-06 06:43:36,974 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:36,975 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:36,975 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:36,975 [INFO] GET grid info
+2025-03-06 06:43:36,975 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:36] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:36,979 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:43:36,980 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:36] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:43:40,687 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:43:40,687 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:40] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:43:40,695 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:40,695 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:40,696 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:40,696 [INFO] GET grid info
+2025-03-06 06:43:40,696 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:40] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:40,700 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 06:43:40,700 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:43:40,700 [INFO] Query Params: ImmutableMultiDict([('_return_fields', 'network,comment,network_view,extattrs'), ('network', '10.10.10.0/24')])
+2025-03-06 06:43:40,700 [INFO] GET network: Found 1 objects matching query
+2025-03-06 06:43:40,701 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:40] "GET /wapi/v2.11/network?_return_fields=network,comment,network_view,extattrs&network=10.10.10.0/24 HTTP/1.1" 200 -
+2025-03-06 06:43:40,708 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:40,709 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:40,709 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:40,709 [INFO] GET grid info
+2025-03-06 06:43:40,709 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:40] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:40,714 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:43:40,714 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:40] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:43:45,680 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:43:45,680 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:45] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:43:45,695 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:45,695 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:45,695 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:45,696 [INFO] GET grid info
+2025-03-06 06:43:45,696 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:45] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:45,700 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 06:43:45,700 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:43:45,700 [INFO] Query Params: ImmutableMultiDict([('network', '192.168.200.0/24')])
+2025-03-06 06:43:45,700 [INFO] GET network: Found 0 objects matching query
+2025-03-06 06:43:45,701 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:45] "GET /wapi/v2.11/network?network=192.168.200.0/24 HTTP/1.1" 200 -
+2025-03-06 06:43:45,705 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:45,705 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:45,705 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:45,706 [INFO] GET grid info
+2025-03-06 06:43:45,706 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:45] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:45,710 [INFO] Request: POST /wapi/v2.11/network
+2025-03-06 06:43:45,710 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '129'}
+2025-03-06 06:43:45,710 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:45,710 [INFO] Body: {'network_view': 'default', 'comment': 'Demo Network for PowerShell Scripts', 'network': '192.168.200.0/24'}
+2025-03-06 06:43:45,711 [INFO] Created new network: network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.200.0/24
+2025-03-06 06:43:45,711 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:45] "POST /wapi/v2.11/network HTTP/1.1" 200 -
+2025-03-06 06:43:45,718 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:45,718 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:45,719 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:45,719 [INFO] GET grid info
+2025-03-06 06:43:45,720 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:45] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:45,724 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:43:45,724 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:45] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:43:49,232 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:43:49,232 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:49] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:43:49,238 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:49,238 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:49,239 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:49,239 [INFO] GET grid info
+2025-03-06 06:43:49,239 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:49] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:49,241 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 06:43:49,243 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:43:49,243 [INFO] Query Params: ImmutableMultiDict([('network', '192.168.200.0/24')])
+2025-03-06 06:43:49,243 [INFO] GET network: Found 1 objects matching query
+2025-03-06 06:43:49,244 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:49] "GET /wapi/v2.11/network?network=192.168.200.0/24 HTTP/1.1" 200 -
+2025-03-06 06:43:49,258 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:49,258 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:49,259 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:49,259 [INFO] GET grid info
+2025-03-06 06:43:49,259 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:49] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:49,267 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:43:49,267 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:49] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:43:59,276 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:43:59,276 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:59] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:43:59,285 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:59,285 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:59,285 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:59,286 [INFO] GET grid info
+2025-03-06 06:43:59,286 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:59] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:59,289 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 06:43:59,289 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:43:59,290 [INFO] Query Params: ImmutableMultiDict([('_return_fields', 'network,comment,network_view,extattrs'), ('network', '192.168.200.0/24')])
+2025-03-06 06:43:59,290 [INFO] GET network: Found 1 objects matching query
+2025-03-06 06:43:59,290 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:59] "GET /wapi/v2.11/network?_return_fields=network,comment,network_view,extattrs&network=192.168.200.0/24 HTTP/1.1" 200 -
+2025-03-06 06:43:59,295 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:43:59,296 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:43:59,296 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:43:59,296 [INFO] GET grid info
+2025-03-06 06:43:59,297 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:59] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:43:59,300 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:43:59,300 [INFO] 127.0.0.1 - - [06/Mar/2025 06:43:59] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:04,055 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:04,055 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:04,063 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:04,063 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:04,063 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:04,064 [INFO] GET grid info
+2025-03-06 06:44:04,064 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:04,068 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 06:44:04,068 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:04,068 [INFO] Query Params: ImmutableMultiDict([('network', '192.168.200.0/24')])
+2025-03-06 06:44:04,069 [INFO] GET network: Found 1 objects matching query
+2025-03-06 06:44:04,069 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "GET /wapi/v2.11/network?network=192.168.200.0/24 HTTP/1.1" 200 -
+2025-03-06 06:44:04,079 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:04,079 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:04,080 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:04,080 [INFO] GET grid info
+2025-03-06 06:44:04,080 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:04,084 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:04,084 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:04,118 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:04,119 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:04,126 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:04,126 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:04,127 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:04,127 [INFO] GET grid info
+2025-03-06 06:44:04,127 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:04,131 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:04,131 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:04,131 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:04,132 [INFO] GET record:a: Found 1 objects matching query
+2025-03-06 06:44:04,132 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "GET /wapi/v2.11/record:a HTTP/1.1" 200 -
+2025-03-06 06:44:04,137 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:04,137 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:04,137 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:04,137 [INFO] GET grid info
+2025-03-06 06:44:04,138 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:04,140 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:04,142 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:04] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:06,950 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:06,950 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:06] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:06,957 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:06,958 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:06,958 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:06,958 [INFO] GET grid info
+2025-03-06 06:44:06,958 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:06] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:06,962 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:06,963 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:06,963 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:06,963 [INFO] GET record:host: Found 3 objects matching query
+2025-03-06 06:44:06,963 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:06] "GET /wapi/v2.11/record:host HTTP/1.1" 200 -
+2025-03-06 06:44:06,982 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:06,982 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:06,983 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:06,983 [INFO] GET grid info
+2025-03-06 06:44:06,983 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:06] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:06,987 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:06,987 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:06] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:08,426 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:08,427 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:08,435 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:08,436 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,436 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:08,436 [INFO] GET grid info
+2025-03-06 06:44:08,436 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:08,439 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:08,440 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,440 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-a.example.com')])
+2025-03-06 06:44:08,440 [INFO] GET record:a: Found 0 objects matching query
+2025-03-06 06:44:08,441 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/record:a?name=demo-a.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:08,444 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:08,445 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,445 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:08,445 [INFO] GET grid info
+2025-03-06 06:44:08,445 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:08,448 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:08,449 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,449 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-a.example.com')])
+2025-03-06 06:44:08,449 [INFO] GET record:host: Found 0 objects matching query
+2025-03-06 06:44:08,450 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/record:host?name=demo-a.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:08,454 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:08,454 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,454 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:08,454 [INFO] GET grid info
+2025-03-06 06:44:08,455 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:08,458 [INFO] Request: GET /wapi/v2.11/ipv4address
+2025-03-06 06:44:08,458 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,458 [INFO] Query Params: ImmutableMultiDict([('ip_address', '192.168.1.100')])
+2025-03-06 06:44:08,458 [INFO] GET ipv4address: Found 0 objects matching query
+2025-03-06 06:44:08,459 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/ipv4address?ip_address=192.168.1.100 HTTP/1.1" 200 -
+2025-03-06 06:44:08,462 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:08,462 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,462 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:08,462 [INFO] GET grid info
+2025-03-06 06:44:08,462 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:08,466 [INFO] Request: POST /wapi/v2.11/record:a
+2025-03-06 06:44:08,466 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '135'}
+2025-03-06 06:44:08,467 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:08,467 [INFO] Body: {'comment': 'Demo DNS Record', 'name': 'demo-a.example.com', 'ipv4addr': '192.168.1.100', 'view': 'default'}
+2025-03-06 06:44:08,467 [INFO] Created new record:a: record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-a.example.com
+2025-03-06 06:44:08,467 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "POST /wapi/v2.11/record:a HTTP/1.1" 200 -
+2025-03-06 06:44:08,474 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:08,474 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:08,474 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:08,475 [INFO] GET grid info
+2025-03-06 06:44:08,475 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:08,478 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:08,478 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:08] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:09,724 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:09,725 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:09,734 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:09,734 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,734 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:09,734 [INFO] GET grid info
+2025-03-06 06:44:09,735 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:09,738 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:09,738 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,739 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-host.example.com')])
+2025-03-06 06:44:09,739 [INFO] GET record:a: Found 0 objects matching query
+2025-03-06 06:44:09,739 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/record:a?name=demo-host.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:09,744 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:09,744 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,745 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:09,745 [INFO] GET grid info
+2025-03-06 06:44:09,745 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:09,749 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:09,749 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,750 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-host.example.com')])
+2025-03-06 06:44:09,750 [INFO] GET record:host: Found 0 objects matching query
+2025-03-06 06:44:09,750 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/record:host?name=demo-host.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:09,754 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:09,754 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,755 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:09,755 [INFO] GET grid info
+2025-03-06 06:44:09,755 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:09,758 [INFO] Request: GET /wapi/v2.11/ipv4address
+2025-03-06 06:44:09,758 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,759 [INFO] Query Params: ImmutableMultiDict([('ip_address', '192.168.1.101')])
+2025-03-06 06:44:09,759 [INFO] GET ipv4address: Found 0 objects matching query
+2025-03-06 06:44:09,759 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/ipv4address?ip_address=192.168.1.101 HTTP/1.1" 200 -
+2025-03-06 06:44:09,762 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:09,762 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,762 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:09,763 [INFO] GET grid info
+2025-03-06 06:44:09,763 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:09,767 [INFO] Request: POST /wapi/v2.11/record:host
+2025-03-06 06:44:09,767 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '252'}
+2025-03-06 06:44:09,767 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:09,768 [INFO] Body: {'ipv4addrs': [{'ipv4addr': '192.168.1.101'}], 'comment': 'Demo DNS Record', 'name': 'demo-host.example.com', 'view': 'default'}
+2025-03-06 06:44:09,768 [INFO] Created new record:host: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-host.example.com
+2025-03-06 06:44:09,768 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "POST /wapi/v2.11/record:host HTTP/1.1" 200 -
+2025-03-06 06:44:09,776 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:09,776 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:09,776 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:09,776 [INFO] GET grid info
+2025-03-06 06:44:09,776 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:09,779 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:09,779 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:09] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:10,614 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:10,614 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:10] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:10,623 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:10,623 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:10,624 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:10,624 [INFO] GET grid info
+2025-03-06 06:44:10,624 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:10] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:10,628 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:10,628 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:10,628 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-a.example.com')])
+2025-03-06 06:44:10,628 [INFO] GET record:a: Found 1 objects matching query
+2025-03-06 06:44:10,629 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:10] "GET /wapi/v2.11/record:a?name=demo-a.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:10,634 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:10,634 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:10,634 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:10,634 [INFO] GET grid info
+2025-03-06 06:44:10,634 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:10] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:10,638 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:10,638 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:10] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:11,684 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:11,684 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:11] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:11,691 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:11,691 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:11,692 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:11,692 [INFO] GET grid info
+2025-03-06 06:44:11,692 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:11] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:11,696 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:11,696 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:11,696 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-host.example.com')])
+2025-03-06 06:44:11,697 [INFO] GET record:host: Found 1 objects matching query
+2025-03-06 06:44:11,697 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:11] "GET /wapi/v2.11/record:host?name=demo-host.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:11,703 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:11,703 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:11,703 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:11,703 [INFO] GET grid info
+2025-03-06 06:44:11,704 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:11] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:11,707 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:11,707 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:11] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:15,476 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:15,477 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:15] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:15,488 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:15,488 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:15,488 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:15,488 [INFO] GET grid info
+2025-03-06 06:44:15,489 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:15] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:15,493 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:15,494 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:15,494 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-a.example.com')])
+2025-03-06 06:44:15,494 [INFO] GET record:a: Found 1 objects matching query
+2025-03-06 06:44:15,494 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:15] "GET /wapi/v2.11/record:a?name=demo-a.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:15,504 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:15,504 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:15,505 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:15,505 [INFO] GET grid info
+2025-03-06 06:44:15,505 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:15] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:15,509 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:15,509 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:15] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:23,070 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:23,070 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:23] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:23,078 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:23,078 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:23,078 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:23,078 [INFO] GET grid info
+2025-03-06 06:44:23,079 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:23] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:23,081 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:23,082 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:23,082 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-host.example.com')])
+2025-03-06 06:44:23,082 [INFO] GET record:host: Found 1 objects matching query
+2025-03-06 06:44:23,083 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:23] "GET /wapi/v2.11/record:host?name=demo-host.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:23,093 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:23,093 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:23,094 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:23,094 [INFO] GET grid info
+2025-03-06 06:44:23,094 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:23] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:23,098 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:23,099 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:23] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:25,536 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:25,537 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:25,547 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:25,548 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:25,548 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:25,548 [INFO] GET grid info
+2025-03-06 06:44:25,548 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:25,552 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:25,552 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:25,552 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-a.example.com')])
+2025-03-06 06:44:25,554 [INFO] GET record:a: Found 1 objects matching query
+2025-03-06 06:44:25,554 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "GET /wapi/v2.11/record:a?name=demo-a.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:25,560 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:25,561 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:25,561 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:25,561 [INFO] GET grid info
+2025-03-06 06:44:25,561 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:25,565 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:25,566 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:25,595 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:25,596 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:25,604 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:25,606 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:25,606 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:25,606 [INFO] GET grid info
+2025-03-06 06:44:25,606 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:25,611 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:25,612 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:25,612 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-host.example.com')])
+2025-03-06 06:44:25,612 [INFO] GET record:host: Found 1 objects matching query
+2025-03-06 06:44:25,613 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "GET /wapi/v2.11/record:host?name=demo-host.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:25,619 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:25,620 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:25,620 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:25,620 [INFO] GET grid info
+2025-03-06 06:44:25,621 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:25,625 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:25,625 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:25] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:26,171 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:26,171 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:26,179 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:26,179 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,179 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:26,179 [INFO] GET grid info
+2025-03-06 06:44:26,180 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:26,183 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:26,184 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,184 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-a.example.com')])
+2025-03-06 06:44:26,184 [INFO] GET record:a: Found 1 objects matching query
+2025-03-06 06:44:26,185 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/record:a?name=demo-a.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:26,196 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:26,196 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,197 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:26,197 [INFO] GET grid info
+2025-03-06 06:44:26,197 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:26,201 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:26,202 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:26,753 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:26,755 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:26,762 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:26,762 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,762 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:26,762 [INFO] GET grid info
+2025-03-06 06:44:26,763 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:26,766 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:26,767 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,767 [INFO] Query Params: ImmutableMultiDict([('name', 'demo-host.example.com')])
+2025-03-06 06:44:26,767 [INFO] GET record:host: Found 1 objects matching query
+2025-03-06 06:44:26,768 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/record:host?name=demo-host.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:26,778 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:26,778 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,778 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:26,778 [INFO] GET grid info
+2025-03-06 06:44:26,779 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:26,782 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:26,783 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:26,822 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:26,822 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:26,831 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:26,832 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,832 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:26,832 [INFO] GET grid info
+2025-03-06 06:44:26,833 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:26,837 [INFO] Request: GET /wapi/v2.11/ipv4address
+2025-03-06 06:44:26,837 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,837 [INFO] Query Params: ImmutableMultiDict([('network', '10.10.10.0/24')])
+2025-03-06 06:44:26,838 [INFO] GET ipv4address: Found 0 objects matching query
+2025-03-06 06:44:26,838 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/ipv4address?network=10.10.10.0/24 HTTP/1.1" 200 -
+2025-03-06 06:44:26,844 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:26,845 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:26,845 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:26,845 [INFO] GET grid info
+2025-03-06 06:44:26,846 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:26,849 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:26,849 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:26] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:27,263 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:27,264 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:27] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:27,274 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:27,274 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:27,275 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:27,275 [INFO] GET grid info
+2025-03-06 06:44:27,275 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:27] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:27,279 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 06:44:27,280 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:27,280 [INFO] Query Params: ImmutableMultiDict([('network', '10.10.10.0/24')])
+2025-03-06 06:44:27,281 [INFO] GET network: Found 1 objects matching query
+2025-03-06 06:44:27,281 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:27] "GET /wapi/v2.11/network?network=10.10.10.0/24 HTTP/1.1" 200 -
+2025-03-06 06:44:27,294 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:27,294 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:27,295 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:27,295 [INFO] GET grid info
+2025-03-06 06:44:27,295 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:27] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:27,299 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:27,300 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:27] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:28,214 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:28,214 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:28,223 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:28,223 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:28,223 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:28,223 [INFO] GET grid info
+2025-03-06 06:44:28,224 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:28,227 [INFO] Request: GET /wapi/v2.11/ipv4address
+2025-03-06 06:44:28,228 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:28,228 [INFO] Query Params: ImmutableMultiDict([('ip_address', '10.10.10.150')])
+2025-03-06 06:44:28,228 [INFO] GET ipv4address: Found 0 objects matching query
+2025-03-06 06:44:28,228 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "GET /wapi/v2.11/ipv4address?ip_address=10.10.10.150 HTTP/1.1" 200 -
+2025-03-06 06:44:28,235 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:28,235 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:28,235 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:28,236 [INFO] GET grid info
+2025-03-06 06:44:28,236 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:28,239 [INFO] Request: GET /wapi/v2.11/record:a
+2025-03-06 06:44:28,239 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:28,240 [INFO] Query Params: ImmutableMultiDict([('name', 'reserved-ip.example.com')])
+2025-03-06 06:44:28,240 [INFO] GET record:a: Found 0 objects matching query
+2025-03-06 06:44:28,240 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "GET /wapi/v2.11/record:a?name=reserved-ip.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:28,243 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:28,243 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:28,244 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:28,244 [INFO] GET grid info
+2025-03-06 06:44:28,244 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:28,248 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:28,249 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:28,249 [INFO] Query Params: ImmutableMultiDict([('name', 'reserved-ip.example.com')])
+2025-03-06 06:44:28,249 [INFO] GET record:host: Found 0 objects matching query
+2025-03-06 06:44:28,250 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "GET /wapi/v2.11/record:host?name=reserved-ip.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:28,254 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:28,254 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:28,255 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:28,255 [INFO] GET grid info
+2025-03-06 06:44:28,255 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:28,259 [INFO] Request: POST /wapi/v2.11/fixedaddress
+2025-03-06 06:44:28,259 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '151'}
+2025-03-06 06:44:28,259 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:28,259 [INFO] Body: {'comment': 'Demo Fixed Address', 'name': 'reserved-ip.example.com', 'mac': 'aa:bb:cc:dd:ee:ff', 'ipv4addr': '10.10.10.150'}
+2025-03-06 06:44:28,260 [INFO] Created new fixedaddress: fixedaddress/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:10.10.10.150
+2025-03-06 06:44:28,260 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:28] "POST /wapi/v2.11/fixedaddress HTTP/1.1" 200 -
+2025-03-06 06:44:32,820 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:32,821 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:32,821 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:32,821 [INFO] GET grid info
+2025-03-06 06:44:32,821 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:32] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:32,826 [INFO] Request: POST /wapi/v2.11/record:host
+2025-03-06 06:44:32,826 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '256'}
+2025-03-06 06:44:32,826 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:32,827 [INFO] Body: {'ipv4addrs': [{'ipv4addr': '10.10.10.150'}], 'comment': 'Demo Fixed Address', 'name': 'reserved-ip.example.com', 'view': 'default'}
+2025-03-06 06:44:32,827 [INFO] Created new record:host: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:reserved-ip.example.com
+2025-03-06 06:44:32,827 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:32] "POST /wapi/v2.11/record:host HTTP/1.1" 200 -
+2025-03-06 06:44:32,836 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:32,836 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:32,837 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:32,837 [INFO] GET grid info
+2025-03-06 06:44:32,837 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:32] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:32,841 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:32,842 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:32] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:35,548 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:35,548 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:35] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:35,557 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:35,557 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:35,558 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:35,558 [INFO] GET grid info
+2025-03-06 06:44:35,558 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:35] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:35,562 [INFO] Request: GET /wapi/v2.11/ipv4address
+2025-03-06 06:44:35,563 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:35,563 [INFO] Query Params: ImmutableMultiDict([('ip_address', '10.10.10.150')])
+2025-03-06 06:44:35,563 [INFO] GET ipv4address: Found 0 objects matching query
+2025-03-06 06:44:35,564 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:35] "GET /wapi/v2.11/ipv4address?ip_address=10.10.10.150 HTTP/1.1" 200 -
+2025-03-06 06:44:35,570 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:35,571 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:35,571 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:35,571 [INFO] GET grid info
+2025-03-06 06:44:35,571 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:35] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:35,575 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:35,575 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:35] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:36,596 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:36,596 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:36] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:36,605 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:36,605 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:36,606 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:36,606 [INFO] GET grid info
+2025-03-06 06:44:36,607 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:36] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:36,611 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:36,611 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:36,611 [INFO] Query Params: ImmutableMultiDict([('name', 'reserved-ip.example.com')])
+2025-03-06 06:44:36,612 [INFO] GET record:host: Found 1 objects matching query
+2025-03-06 06:44:36,612 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:36] "GET /wapi/v2.11/record:host?name=reserved-ip.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:36,618 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:36,618 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:36,618 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:36,619 [INFO] GET grid info
+2025-03-06 06:44:36,619 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:36] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:36,623 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:36,624 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:36] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 06:44:37,300 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 06:44:37,300 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:37] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 06:44:37,307 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:37,307 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:37,308 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:37,308 [INFO] GET grid info
+2025-03-06 06:44:37,309 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:37] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:37,315 [INFO] Request: GET /wapi/v2.11/record:host
+2025-03-06 06:44:37,315 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 06:44:37,315 [INFO] Query Params: ImmutableMultiDict([('name', 'reserved-ip.example.com')])
+2025-03-06 06:44:37,316 [INFO] GET record:host: Found 1 objects matching query
+2025-03-06 06:44:37,316 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:37] "GET /wapi/v2.11/record:host?name=reserved-ip.example.com HTTP/1.1" 200 -
+2025-03-06 06:44:37,328 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 06:44:37,329 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 06:44:37,329 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 06:44:37,329 [INFO] GET grid info
+2025-03-06 06:44:37,330 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:37] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 06:44:37,332 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 06:44:37,333 [INFO] 127.0.0.1 - - [06/Mar/2025 06:44:37] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -

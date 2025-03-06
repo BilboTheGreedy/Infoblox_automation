@@ -4,6 +4,7 @@
 .DESCRIPTION
     This script provides functions to search for IP addresses, get next available IP from a network,
     and reserve fixed addresses. It includes thorough validation, error handling, and detailed logging.
+    Modified to work with the Infoblox Mock Server.
 .NOTES
     File Name      : Manage-InfobloxIPAddresses.ps1
     Prerequisite   : InfobloxCommon.psm1 module
@@ -16,12 +17,6 @@
 .EXAMPLE
     .\Manage-InfobloxIPAddresses.ps1 -Action Reserve -IPAddress "192.168.1.50" -MACAddress "00:11:22:33:44:55" -Hostname "printer.example.com"
     Reserves an IP address as a fixed address with specified MAC address.
-.EXAMPLE
-    .\Manage-InfobloxIPAddresses.ps1 -Action Reserve -IPAddress "192.168.1.50" -MACAddress "00:11:22:33:44:55" -Hostname "printer.example.com" -CreateDNS
-    Reserves an IP address and automatically creates a DNS record for the hostname.
-.EXAMPLE
-    .\Manage-InfobloxIPAddresses.ps1 -Action Reserve -IPAddress "192.168.1.50" -MACAddress "00:11:22:33:44:55" -Hostname "printer.example.com" -CreateDNS -DNSView "external"
-    Reserves an IP address and automatically creates a DNS record in the specified DNS view.
 #>
 
 [CmdletBinding()]
@@ -67,7 +62,10 @@ param (
     [switch]$CreateDNS,
     
     [Parameter(Mandatory=$false)]
-    [string]$DNSView = "default"
+    [string]$DNSView = "default",
+    
+    [Parameter(Mandatory=$false)]
+    [switch]$VerboseLogging
 )
 
 # Ensure InfobloxCommon module is imported
@@ -83,7 +81,7 @@ Import-Module $moduleFile -Force
 $loggingParams = @{
     LogFilePath = if ($LogFilePath) { $LogFilePath } else { Join-Path (Split-Path $MyInvocation.MyCommand.Path) "InfobloxIPAddresses.log" }
 }
-if ($VerbosePreference -eq 'Continue') { $loggingParams.Verbose = $true }
+if ($VerboseLogging) { $loggingParams.VerboseLogging = $true }
 Initialize-InfobloxLogging @loggingParams
 
 # Script start
@@ -127,7 +125,7 @@ try {
                 
                 $results = Invoke-InfobloxRequest @searchParams
                 
-                if ($results.Count -gt 0) {
+                if ($results -and $results.Count -gt 0) {
                     Write-InfobloxLog "Found information for IP address $IPAddress" -Level "SUCCESS"
                     
                     # Enhance results with detailed information
@@ -160,6 +158,7 @@ try {
                     Format-InfobloxResult -InputObject $results -Title "IP Address Information"
                 } else {
                     Write-InfobloxLog "No information found for IP address $IPAddress" -Level "WARNING"
+                    Write-Host "No information found for IP address $IPAddress" -ForegroundColor Yellow
                 }
             }
             
@@ -180,22 +179,26 @@ try {
                 
                 $results = Invoke-InfobloxRequest @searchParams
                 
-                if ($results.Count -gt 0) {
+                if ($results -and $results.Count -gt 0) {
                     Write-InfobloxLog "Found $($results.Count) IP addresses in network $Network" -Level "SUCCESS"
                     
                     # Group results by status
                     $usedIPs = $results | Where-Object { $_.status -eq "USED" }
                     $unusedIPs = $results | Where-Object { $_.status -eq "UNUSED" }
                     
+                    $usedCount = if ($usedIPs) { $usedIPs.Count } else { 0 }
+                    $unusedCount = if ($unusedIPs) { $unusedIPs.Count } else { 0 }
+                    
                     Write-Host "`nNetwork: $Network" -ForegroundColor Cyan
                     Write-Host "Total IPs: $($results.Count)" -ForegroundColor Cyan
-                    Write-Host "Used IPs: $($usedIPs.Count)" -ForegroundColor Yellow
-                    Write-Host "Unused IPs: $($unusedIPs.Count)" -ForegroundColor Green
+                    Write-Host "Used IPs: $usedCount" -ForegroundColor Yellow
+                    Write-Host "Unused IPs: $unusedCount" -ForegroundColor Green
                     Write-Host "`nIP Usage Details:" -ForegroundColor Cyan
                     
                     Format-InfobloxResult -InputObject $results -Title "Network IP Usage"
                 } else {
                     Write-InfobloxLog "No information found for network $Network" -Level "WARNING"
+                    Write-Host "No information found for network $Network" -ForegroundColor Yellow
                 }
             }
         }
@@ -240,6 +243,7 @@ try {
                 return $nextIP
             } else {
                 Write-InfobloxLog "No available IP addresses found in network $Network" -Level "WARNING"
+                Write-Host "No available IP addresses found in network $Network" -ForegroundColor Yellow
                 return $null
             }
         }
@@ -268,10 +272,10 @@ try {
             
             # Check if IP is already in use
             $existingIP = Get-InfobloxIPAddress -IPAddress $IPAddress
-            if ($existingIP -and -not $Force) {
-                $existingObjects = $existingIP[0].objects -join ", "
+            if ($existingIP -and $existingIP.Count -gt 0 -and (-not $Force)) {
+                $existingObjects = if ($existingIP[0].objects) { $existingIP[0].objects -join ", " } else { "Unknown records" }
                 throw "IP address $IPAddress is already in use by: $existingObjects. Use -Force to override."
-            } elseif ($existingIP) {
+            } elseif ($existingIP -and $existingIP.Count -gt 0) {
                 Write-InfobloxLog "WARNING: IP address $IPAddress is already in use. Proceeding due to -Force flag." -Level "WARNING"
             }
             

@@ -206,3 +206,98 @@ def validate_and_prepare_data(obj_type, data):
     # Additional record types validation will be similar
     
     return validated_data, None
+
+
+def validate_and_prepare_ipv6_data(obj_type, data):
+    """Validate and prepare IPv6 data based on object type"""
+    validated_data = dict(data)
+    time_now = datetime.now().isoformat()
+    
+    # Common timestamps
+    validated_data["_create_time"] = time_now
+    validated_data["_modify_time"] = time_now
+    
+    # Validate by object type
+    if obj_type == "ipv6network":
+        if "network" not in data:
+            return None, "Missing required field 'network'"
+        
+        if not validate_ipv6_network(data["network"]):
+            return None, "Invalid IPv6 network format"
+        
+        if "network_view" not in data:
+            validated_data["network_view"] = "default"
+    
+    elif obj_type == "ipv6networkcontainer":
+        if "network" not in data:
+            return None, "Missing required field 'network'"
+        
+        if not validate_ipv6_network(data["network"]):
+            return None, "Invalid IPv6 network format"
+        
+        if "network_view" not in data:
+            validated_data["network_view"] = "default"
+    
+    elif obj_type == "ipv6range":
+        if "start_addr" not in data:
+            return None, "Missing required field 'start_addr'"
+        
+        if "end_addr" not in data:
+            return None, "Missing required field 'end_addr'"
+        
+        if not validate_ipv6(data["start_addr"]):
+            return None, "Invalid IPv6 address format for start_addr"
+        
+        if not validate_ipv6(data["end_addr"]):
+            return None, "Invalid IPv6 address format for end_addr"
+        
+        # Ensure start address is less than or equal to end address
+        try:
+            start = ipaddress.IPv6Address(data["start_addr"])
+            end = ipaddress.IPv6Address(data["end_addr"])
+            if start > end:
+                return None, f"Start address {data['start_addr']} is greater than end address {data['end_addr']}"
+        except Exception as e:
+            return None, f"Error comparing IPv6 addresses: {str(e)}"
+        
+        if "network_view" not in data:
+            validated_data["network_view"] = "default"
+    
+    elif obj_type == "ipv6fixedaddress":
+        if "ipv6addr" not in data:
+            return None, "Missing required field 'ipv6addr'"
+        
+        if not validate_ipv6(data["ipv6addr"]):
+            return None, "Invalid IPv6 address format"
+        
+        if "duid" not in data and "mac" not in data:
+            return None, "Either 'duid' or 'mac' field is required"
+        
+        if "mac" in data and not validate_mac_address(data["mac"]):
+            return None, "Invalid MAC address format"
+        
+        if "network_view" not in data:
+            validated_data["network_view"] = "default"
+    
+    elif obj_type == "record:host" and "ipv6addrs" in data:
+        # Validate IPv6 addresses in host record
+        if not data["ipv6addrs"]:
+            return None, "Empty ipv6addrs field"
+        
+        for addr in data["ipv6addrs"]:
+            if "ipv6addr" not in addr:
+                return None, "Missing ipv6addr in ipv6addrs"
+            
+            if not validate_ipv6(addr["ipv6addr"]):
+                return None, f"Invalid IPv6 address format: {addr['ipv6addr']}"
+    
+    return validated_data, None
+
+def validate_ipv6_network(network):
+    """Validate IPv6 network CIDR format"""
+    try:
+        # Ensure it's an IPv6 network
+        net = ipaddress.ip_network(network, strict=False)
+        return net.version == 6
+    except ValueError:
+        return False

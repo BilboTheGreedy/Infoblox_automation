@@ -113,3 +113,85 @@ def get_ptr_name_from_ip(ip):
     except Exception as e:
         logger.error(f"Error generating PTR name from IP {ip}: {str(e)}")
         return None
+
+
+
+def find_next_available_ipv6(network_cidr, used_ips):
+    """Find the next available IPv6 in a network"""
+    try:
+        net = ipaddress.ip_network(network_cidr, strict=False)
+        
+        # For IPv6, we'll typically allocate from the beginning of the range
+        # but skip some special addresses
+        
+        # Generate a list of available addresses (limited to first 1000 to avoid performance issues)
+        available_addrs = []
+        count = 0
+        for ip in net.hosts():
+            # Skip the network address, all-zeros, and other special addresses
+            if ip == net.network_address or str(ip).endswith("::"):
+                continue
+                
+            ip_str = str(ip)
+            if ip_str not in used_ips:
+                available_addrs.append(ip_str)
+                count += 1
+            
+            # Limit to first 1000 addresses to avoid performance issues
+            if count >= 1000:
+                break
+        
+        if available_addrs:
+            logger.debug(f"Found next available IPv6 in {network_cidr}: {available_addrs[0]}")
+            return available_addrs[0]
+        
+        # No available IPs
+        logger.warning(f"No available IPv6 addresses in network: {network_cidr}")
+        return None
+    
+    except Exception as e:
+        logger.error(f"Error finding next available IPv6: {str(e)}")
+        return None
+
+def get_used_ipv6_in_db(db):
+    """Get all used IPv6 addresses from the database"""
+    used_ips = set()
+    
+    # Collect IPs from various record types
+    for obj_type in ["record:aaaa", "ipv6fixedaddress", "record:host"]:
+        for obj in db.get(obj_type, []):
+            if obj_type == "record:aaaa":
+                used_ips.add(obj.get("ipv6addr", ""))
+            elif obj_type == "ipv6fixedaddress":
+                used_ips.add(obj.get("ipv6addr", ""))
+            elif obj_type == "record:host":
+                # Check for ipv6addrs array
+                for addr in obj.get("ipv6addrs", []):
+                    used_ips.add(addr.get("ipv6addr", ""))
+    
+    # Remove empty strings
+    used_ips.discard("")
+    
+    return used_ips
+
+def generate_ptr_name_from_ipv6(ipv6):
+    """Generate PTR record name from IPv6 address"""
+    try:
+        ip_obj = ipaddress.IPv6Address(ipv6)
+        # Expand the address, reverse nibbles, and append ip6.arpa
+        expanded = ip_obj.exploded
+        expanded = expanded.replace(':', '')
+        nibbles = [expanded[i] for i in range(0, len(expanded))]
+        return f"{'.'.join(reversed(nibbles))}.ip6.arpa"
+    except Exception as e:
+        logger.error(f"Error generating PTR name from IPv6 {ipv6}: {str(e)}")
+        return None
+    
+def is_ipv6_in_network(ip, network):
+    """Check if an IPv6 is within a given network"""
+    try:
+        ip_obj = ipaddress.IPv6Address(ip)
+        net_obj = ipaddress.ip_network(network, strict=False)
+        return ip_obj in net_obj
+    except ValueError:
+        return False

@@ -5,10 +5,10 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Module-scoped variables
-$script:InfobloxSession = $null
 $script:BaseUrl = $null
 $script:LogFile = $null
-$script:Credential = $null
+$script:Username = $null
+$script:Password = $null
 $script:VerboseLogging = $false
 
 #region Logging Functions
@@ -101,41 +101,78 @@ function Connect-Infoblox {
         # Build the base URL
         $protocol = if ($UseSSL) { "https" } else { "http" }
         $script:BaseUrl = "${protocol}://${Server}:${Port}/wapi/${ApiVersion}"
-        Write-InfobloxLog "Connecting to Infoblox at $script:BaseUrl"
+        Write-Host "Connecting to Infoblox at $script:BaseUrl"
         
         # Store credential
         if ($Credential) {
-            $script:Credential = $Credential
+            $script:Username = $Credential.UserName
+            $script:Password = $Credential.GetNetworkCredential().Password
         }
         else {
-            $script:Credential = Get-Credential -Message "Enter Infoblox credentials"
+            $credentialInput = Get-Credential -Message "Enter Infoblox credentials"
+            $script:Username = $credentialInput.UserName
+            $script:Password = $credentialInput.GetNetworkCredential().Password
         }
         
-        # Initialize web session
-        $script:InfobloxSession = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+        # For the mock server, use standard credentials (admin/infoblox)
+        if ($Server -eq "localhost" -or $Server -eq "127.0.0.1") {
+            $script:Username = "admin"
+            $script:Password = "infoblox"
+            Write-InfobloxLog "Using default credentials for mock server" -Level "INFO"
+        }
         
-        # Test connection with grid info request
+        # Prepare authentication headers
+        $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(
+            "${script:Username}:${script:Password}"
+        ))
+        
+        # Establish session with mock server
         $params = @{
             Uri = "$script:BaseUrl/grid/session"
             Method = 'POST'
-            Credential = $script:Credential
-            SessionVariable = 'script:InfobloxSession'
+            Headers = @{
+                Authorization = "Basic $base64AuthInfo"
+            }
+            ContentType = 'application/json'
             ErrorAction = 'Stop'
         }
         
+        # Mock server doesn't return session cookies like real Infoblox
+        # It just validates credentials and keeps track of sessions internally
         $response = Invoke-RestMethod @params
-        Write-InfobloxLog "Successfully connected to Infoblox as $($script:Credential.UserName)" -Level "SUCCESS"
+        
+        Write-Host "Successfully connected to Infoblox as $script:Username" -ForegroundColor Green
+        Write-InfobloxLog "Successfully connected to Infoblox at $script:BaseUrl as $script:Username" -Level "SUCCESS"
         
         # Return connection info
         return @{
             BaseUrl = $script:BaseUrl
-            Username = $script:Credential.UserName
+            Username = $script:Username
             Connected = $true
         }
     }
     catch {
-        Write-InfobloxLog "Failed to connect to Infoblox: $_" -Level "ERROR"
-        throw "Failed to connect to Infoblox: $_"
+        $errorMessage = $_.Exception.Message
+        Write-Host "Failed to connect to Infoblox: $errorMessage" -ForegroundColor Red
+        Write-InfobloxLog "Connection failed: $errorMessage" -Level "ERROR"
+        
+        # Provide more detailed error information
+        if ($_.Exception.Response) {
+            try {
+                $reader = New-Object System.IO.StreamReader($_.Exception.Response.GetResponseStream())
+                $reader.BaseStream.Position = 0
+                $reader.DiscardBufferedData()
+                $responseBody = $reader.ReadToEnd()
+                Write-Host "Response Body: $responseBody" -ForegroundColor Yellow
+                Write-InfobloxLog "Error response: $responseBody" -Level "ERROR"
+            }
+            catch {
+                Write-Host "Could not read response body" -ForegroundColor Yellow
+                Write-InfobloxLog "Could not read error response body" -Level "ERROR"
+            }
+        }
+        
+        throw "Connection Failed: $errorMessage"
     }
 }
 
@@ -144,25 +181,38 @@ function Disconnect-Infoblox {
     param()
     
     try {
-        if ($script:BaseUrl -and $script:InfobloxSession) {
-            Write-InfobloxLog "Disconnecting from Infoblox"
-            
-            $params = @{
-                Uri = "$script:BaseUrl/grid/session"
-                Method = 'DELETE'
-                WebSession = $script:InfobloxSession
-                ErrorAction = 'Stop'
-            }
-            
-            $null = Invoke-RestMethod @params
-            $script:InfobloxSession = $null
-            Write-InfobloxLog "Successfully disconnected from Infoblox" -Level "SUCCESS"
-            return $true
-        }
-        else {
-            Write-InfobloxLog "No active Infoblox session to disconnect" -Level "WARNING"
+        if (-not $script:BaseUrl) {
+            Write-InfobloxLog "No active Infoblox connection to disconnect" -Level "WARNING"
             return $false
         }
+        
+        # Prepare authentication headers
+        $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(
+            "${script:Username}:${script:Password}"
+        ))
+        
+        Write-InfobloxLog "Disconnecting from Infoblox" -Level "INFO"
+        
+        $params = @{
+            Uri = "$script:BaseUrl/grid/session"
+            Method = 'DELETE'
+            Headers = @{
+                Authorization = "Basic $base64AuthInfo"
+            }
+            ErrorAction = 'Stop'
+        }
+        
+        # Mock server DELETE session endpoint returns 200 not 204
+        $response = Invoke-RestMethod @params
+        
+        # Clear session variables
+        $script:BaseUrl = $null
+        $script:Username = $null
+        $script:Password = $null
+        
+        Write-InfobloxLog "Successfully disconnected from Infoblox" -Level "SUCCESS"
+        Write-Host "Successfully disconnected from Infoblox" -ForegroundColor Green
+        return $true
     }
     catch {
         Write-InfobloxLog "Error disconnecting from Infoblox: $_" -Level "ERROR"
@@ -174,17 +224,24 @@ function Test-InfobloxConnection {
     [CmdletBinding()]
     param()
     
-    if (-not $script:BaseUrl -or -not $script:InfobloxSession) {
+    if (-not $script:BaseUrl) {
         Write-InfobloxLog "No active Infoblox connection" -Level "WARNING"
         return $false
     }
     
     try {
+        # Prepare authentication headers
+        $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(
+            "${script:Username}:${script:Password}"
+        ))
+        
         # Attempt to get grid info as a connection test
         $params = @{
             Uri = "$script:BaseUrl/grid"
             Method = 'GET'
-            WebSession = $script:InfobloxSession
+            Headers = @{
+                Authorization = "Basic $base64AuthInfo"
+            }
             ErrorAction = 'Stop'
         }
         
@@ -242,10 +299,17 @@ function Invoke-InfobloxRequest {
     Write-InfobloxLog "Sending $Method request to $uri"
     
     try {
+        # Prepare authentication headers
+        $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(
+            "${script:Username}:${script:Password}"
+        ))
+        
         $params = @{
             Uri = $uri
             Method = $Method
-            WebSession = $script:InfobloxSession
+            Headers = @{
+                Authorization = "Basic $base64AuthInfo"
+            }
             ContentType = 'application/json'
             ErrorAction = 'Stop'
         }
@@ -263,9 +327,14 @@ function Invoke-InfobloxRequest {
         $response = Invoke-RestMethod @params
         
         # Log response (truncate if too long)
-        $responseJson = $response | ConvertTo-Json -Compress
-        $logResponse = if ($responseJson.Length -gt 500) { "$($responseJson.Substring(0, 497))..." } else { $responseJson }
-        Write-InfobloxLog "Response: $logResponse"
+        if ($response) {
+            $responseJson = if ($response -is [string]) { $response } else { $response | ConvertTo-Json -Compress }
+            $logResponse = if ($responseJson.Length -gt 500) { "$($responseJson.Substring(0, 497))..." } else { $responseJson }
+            Write-InfobloxLog "Response: $logResponse"
+        }
+        else {
+            Write-InfobloxLog "Response: Empty or null response"
+        }
         
         # If ReturnRef is specified and response is a reference string, return it
         if ($ReturnRef -and $response -is [string] -and $response -match "^[a-zA-Z0-9_]+/[^:]+:.+$") {
@@ -515,12 +584,12 @@ function Get-InfobloxIPAddress {
         
         $result = Invoke-InfobloxRequest @params
         
-        if ($result -and $result.Count -gt 0 -and $result[0].status -eq "USED") {
-            Write-InfobloxLog "IP address $IPAddress is already in use" -Level "INFO"
+        if ($result -and $result.Count -gt 0) {
+            Write-InfobloxLog "IP address $IPAddress lookup returned results" -Level "INFO"
             return $result
         }
         else {
-            Write-InfobloxLog "IP address $IPAddress is available" -Level "INFO"
+            Write-InfobloxLog "IP address $IPAddress lookup returned no results" -Level "INFO"
             return $null
         }
     }

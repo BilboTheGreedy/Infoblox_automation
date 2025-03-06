@@ -106,6 +106,57 @@ def load_db_from_file():
 def initialize_db():
     """Initialize the database with default data"""
     with db_lock:
+        # Add IPv6 networks if they don't exist
+        if not db.get("ipv6network", None):
+            db["ipv6network"] = []
+        
+        # Add IPv6 network container if they don't exist
+        if not db.get("ipv6networkcontainer", None):
+            db["ipv6networkcontainer"] = []
+        
+        # Add IPv6 range if they don't exist
+        if not db.get("ipv6range", None):
+            db["ipv6range"] = []
+        
+        # Add IPv6 fixed address if they don't exist
+        if not db.get("ipv6fixedaddress", None):
+            db["ipv6fixedaddress"] = []
+        
+        # Add example IPv6 data
+        if not db["ipv6network"]:
+            db["ipv6network"].append({
+                "_ref": f"ipv6network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:2001:db8::/64",
+                "network": "2001:db8::/64",
+                "network_view": "default",
+                "comment": "Example IPv6 network",
+                "extattrs": {},
+                "_create_time": datetime.now().isoformat(),
+                "_modify_time": datetime.now().isoformat()
+            })
+        
+        if not db["ipv6networkcontainer"]:
+            db["ipv6networkcontainer"].append({
+                "_ref": f"ipv6networkcontainer/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:2001:db8::/48",
+                "network": "2001:db8::/48",
+                "network_view": "default",
+                "comment": "Example IPv6 network container",
+                "extattrs": {},
+                "_create_time": datetime.now().isoformat(),
+                "_modify_time": datetime.now().isoformat()
+            })
+        
+        if not db["ipv6range"]:
+            db["ipv6range"].append({
+                "_ref": f"ipv6range/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:2001:db8::1-2001:db8::100",
+                "network": "2001:db8::/64",
+                "network_view": "default",
+                "start_addr": "2001:db8::1",
+                "end_addr": "2001:db8::100",
+                "comment": "Example IPv6 range",
+                "extattrs": {},
+                "_create_time": datetime.now().isoformat(),
+                "_modify_time": datetime.now().isoformat()
+            })        
         # Add a network container if none exists
         if not db["network_container"]:
             db["network_container"].append({

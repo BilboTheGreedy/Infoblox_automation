@@ -680,3 +680,192 @@
 [2025-03-03 13:02:55] [INFO] Disconnecting from Infoblox
 [2025-03-03 13:02:55] [SUCCESS] Successfully disconnected from Infoblox
 [2025-03-03 13:02:55] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-04 18:40:54] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-04 18:40:54] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-04 18:40:54] [INFO] Action: Reserve
+[2025-03-04 18:40:54] [INFO] Connecting to Infoblox at http://--force:8080/wapi/v2.11
+[2025-03-04 18:40:56] [ERROR] Failed to connect to Infoblox: The remote name could not be resolved: '--force'
+[2025-03-04 18:40:56] [ERROR] ERROR: Failed to connect to Infoblox: The remote name could not be resolved: '--force'
+[2025-03-04 18:40:59] [ERROR] Infoblox connection test failed: The remote name could not be resolved: '--force'
+[2025-03-04 18:40:59] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-04 18:41:02] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-04 18:41:02] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-04 18:41:02] [INFO] Action: Reserve
+[2025-03-04 18:41:02] [INFO] Connecting to Infoblox at http://localhost:8080/wapi/v2.11
+[2025-03-04 18:41:04] [ERROR] Failed to connect to Infoblox: {"Error":"Authentication required"}
+
+[2025-03-04 18:41:04] [ERROR] ERROR: Failed to connect to Infoblox: {"Error":"Authentication required"}
+
+[2025-03-04 18:41:04] [ERROR] Infoblox connection test failed: {"Error":"Unauthorized","text":"Authentication required"}
+
+[2025-03-04 18:41:04] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-06 06:05:51] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 06:05:51] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 06:05:51] [INFO] Action: Reserve
+[2025-03-06 06:05:57] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:05:57] [INFO] Reserving IP address 192.168.1.52 with MAC address 00:11:22:33:44:88
+[2025-03-06 06:05:57] [INFO] Validated IP address format: 192.168.1.52
+[2025-03-06 06:05:57] [INFO] Validated MAC address format: 00:11:22:33:44:88
+[2025-03-06 06:05:57] [WARNING] No active Infoblox connection
+[2025-03-06 06:05:57] [ERROR] Error checking IP address: No active Infoblox connection. Please run Connect-Infoblox first.
+[2025-03-06 06:05:57] [ERROR] ERROR: Error checking IP address: No active Infoblox connection. Please run Connect-Infoblox first.
+[2025-03-06 06:05:57] [WARNING] No active Infoblox connection
+[2025-03-06 06:05:57] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-06 06:18:35] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 06:18:35] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 06:18:35] [INFO] Action: Reserve
+[2025-03-06 06:18:39] [INFO] Using default credentials for mock server
+[2025-03-06 06:18:41] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:18:41] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:18:41] [INFO] Reserving IP address 192.168.1.52 with MAC address 00:11:22:33:44:88
+[2025-03-06 06:18:41] [INFO] Validated IP address format: 192.168.1.52
+[2025-03-06 06:18:41] [INFO] Validated MAC address format: 00:11:22:33:44:88
+[2025-03-06 06:18:41] [INFO] Infoblox connection is active
+[2025-03-06 06:18:41] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/ipv4address?ip_address=192.168.1.52
+[2025-03-06 06:18:41] [INFO] Response: Empty or null response
+[2025-03-06 06:18:41] [INFO] IP address 192.168.1.52 lookup returned no results
+[2025-03-06 06:18:41] [INFO] Checking if hostname printerr.example.com already exists in view 'default'
+[2025-03-06 06:18:41] [INFO] Validated hostname format: printerr.example.com
+[2025-03-06 06:18:41] [INFO] Infoblox connection is active
+[2025-03-06 06:18:41] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=printerr.example.com
+[2025-03-06 06:18:41] [INFO] Response: Empty or null response
+[2025-03-06 06:18:41] [INFO] No A record found for printerr.example.com
+[2025-03-06 06:18:41] [INFO] Infoblox connection is active
+[2025-03-06 06:18:41] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=printerr.example.com
+[2025-03-06 06:18:41] [INFO] Response: Empty or null response
+[2025-03-06 06:18:41] [INFO] No host record found for printerr.example.com
+[2025-03-06 06:18:41] [INFO] Setting hostname for fixed address: printerr.example.com
+[2025-03-06 06:18:41] [INFO] Infoblox connection is active
+[2025-03-06 06:18:41] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/fixedaddress
+[2025-03-06 06:18:41] [INFO] Request body: {
+    "comment":  "Network Printer",
+    "name":  "printerr.example.com",
+    "mac":  "00:11:22:33:44:88",
+    "ipv4addr":  "192.168.1.52"
+}
+[2025-03-06 06:18:41] [INFO] Response: fixedaddress/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:192.168.1.52
+[2025-03-06 06:18:41] [SUCCESS] IP address 192.168.1.52 reserved successfully with MAC 00:11:22:33:44:88
+[2025-03-06 06:18:41] [INFO] Automatically creating DNS record in view 'default' due to -CreateDNS parameter
+[2025-03-06 06:18:41] [INFO] Creating Host record for printerr.example.com with IP 192.168.1.52 in view 'default'
+[2025-03-06 06:18:41] [INFO] Infoblox connection is active
+[2025-03-06 06:18:41] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-06 06:18:41] [INFO] Request body: {
+    "ipv4addrs":  [
+                      {
+                          "ipv4addr":  "192.168.1.52"
+                      }
+                  ],
+    "comment":  "Network Printer",
+    "name":  "printerr.example.com",
+    "view":  "default"
+}
+[2025-03-06 06:18:41] [INFO] Response: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:printerr.example.com
+[2025-03-06 06:18:41] [SUCCESS] Host record printerr.example.com -> 192.168.1.52 created successfully in view 'default' with reference record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:printerr.example.com
+[2025-03-06 06:18:41] [INFO] Infoblox connection is active
+[2025-03-06 06:18:41] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:18:41] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:18:41] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-06 06:44:26] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 06:44:26] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 06:44:26] [INFO] Action: Search
+[2025-03-06 06:44:26] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:26] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:26] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:26] [INFO] Searching for network: 10.10.10.0/24
+[2025-03-06 06:44:26] [INFO] Validated IP address format: 10.10.10.0
+[2025-03-06 06:44:26] [INFO] Validated network format: 10.10.10.0/24
+[2025-03-06 06:44:26] [INFO] Infoblox connection is active
+[2025-03-06 06:44:26] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/ipv4address?network=10.10.10.0%2f24
+[2025-03-06 06:44:26] [INFO] Response: Empty or null response
+[2025-03-06 06:44:26] [WARNING] No information found for network 10.10.10.0/24
+[2025-03-06 06:44:26] [INFO] Infoblox connection is active
+[2025-03-06 06:44:26] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:26] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:26] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-06 06:44:27] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 06:44:27] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 06:44:27] [INFO] Action: NextAvailable
+[2025-03-06 06:44:27] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:27] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:27] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:27] [INFO] Finding next available IP address in network: 10.10.10.0/24
+[2025-03-06 06:44:27] [INFO] Validated IP address format: 10.10.10.0
+[2025-03-06 06:44:27] [INFO] Validated network format: 10.10.10.0/24
+[2025-03-06 06:44:27] [INFO] Infoblox connection is active
+[2025-03-06 06:44:27] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=10.10.10.0%2f24
+[2025-03-06 06:44:27] [INFO] Response: {"_create_time":"2025-03-04T17:54:21.284129","_modify_time":"2025-03-04T17:54:21.284129","_ref":"network/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:10.10.10.0/24","comment":"Development network","extattrs":{},"network":"10.10.10.0/24","network_view":"default"}
+[2025-03-06 06:44:27] [INFO] Network 10.10.10.0/24 not found
+[2025-03-06 06:44:27] [ERROR] ERROR: Network 10.10.10.0/24 does not exist
+[2025-03-06 06:44:27] [INFO] Infoblox connection is active
+[2025-03-06 06:44:27] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:27] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:27] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-06 06:44:28] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 06:44:28] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 06:44:28] [INFO] Action: Reserve
+[2025-03-06 06:44:28] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:28] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:28] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:28] [INFO] Reserving IP address 10.10.10.150 with MAC address aa:bb:cc:dd:ee:ff
+[2025-03-06 06:44:28] [INFO] Validated IP address format: 10.10.10.150
+[2025-03-06 06:44:28] [INFO] Validated MAC address format: aa:bb:cc:dd:ee:ff
+[2025-03-06 06:44:28] [INFO] Infoblox connection is active
+[2025-03-06 06:44:28] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/ipv4address?ip_address=10.10.10.150
+[2025-03-06 06:44:28] [INFO] Response: Empty or null response
+[2025-03-06 06:44:28] [INFO] IP address 10.10.10.150 lookup returned no results
+[2025-03-06 06:44:28] [INFO] Checking if hostname reserved-ip.example.com already exists in view 'default'
+[2025-03-06 06:44:28] [INFO] Validated hostname format: reserved-ip.example.com
+[2025-03-06 06:44:28] [INFO] Infoblox connection is active
+[2025-03-06 06:44:28] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=reserved-ip.example.com
+[2025-03-06 06:44:28] [INFO] Response: Empty or null response
+[2025-03-06 06:44:28] [INFO] No A record found for reserved-ip.example.com
+[2025-03-06 06:44:28] [INFO] Infoblox connection is active
+[2025-03-06 06:44:28] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=reserved-ip.example.com
+[2025-03-06 06:44:28] [INFO] Response: Empty or null response
+[2025-03-06 06:44:28] [INFO] No host record found for reserved-ip.example.com
+[2025-03-06 06:44:28] [INFO] Setting hostname for fixed address: reserved-ip.example.com
+[2025-03-06 06:44:28] [INFO] Infoblox connection is active
+[2025-03-06 06:44:28] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/fixedaddress
+[2025-03-06 06:44:28] [INFO] Request body: {
+    "comment":  "Demo Fixed Address",
+    "name":  "reserved-ip.example.com",
+    "mac":  "aa:bb:cc:dd:ee:ff",
+    "ipv4addr":  "10.10.10.150"
+}
+[2025-03-06 06:44:28] [INFO] Response: fixedaddress/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:10.10.10.150
+[2025-03-06 06:44:28] [SUCCESS] IP address 10.10.10.150 reserved successfully with MAC aa:bb:cc:dd:ee:ff
+[2025-03-06 06:44:32] [INFO] Creating Host record for reserved-ip.example.com with IP 10.10.10.150 in view 'default'
+[2025-03-06 06:44:32] [INFO] Infoblox connection is active
+[2025-03-06 06:44:32] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-06 06:44:32] [INFO] Request body: {
+    "ipv4addrs":  [
+                      {
+                          "ipv4addr":  "10.10.10.150"
+                      }
+                  ],
+    "comment":  "Demo Fixed Address",
+    "name":  "reserved-ip.example.com",
+    "view":  "default"
+}
+[2025-03-06 06:44:32] [INFO] Response: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:reserved-ip.example.com
+[2025-03-06 06:44:32] [SUCCESS] Host record reserved-ip.example.com -> 10.10.10.150 created successfully in view 'default' with reference record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:reserved-ip.example.com
+[2025-03-06 06:44:32] [INFO] Infoblox connection is active
+[2025-03-06 06:44:32] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:32] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:32] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-06 06:44:35] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 06:44:35] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 06:44:35] [INFO] Action: Search
+[2025-03-06 06:44:35] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:35] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:35] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:35] [INFO] Searching for IP address: 10.10.10.150
+[2025-03-06 06:44:35] [INFO] Validated IP address format: 10.10.10.150
+[2025-03-06 06:44:35] [INFO] Infoblox connection is active
+[2025-03-06 06:44:35] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/ipv4address?ip_address=10.10.10.150
+[2025-03-06 06:44:35] [INFO] Response: Empty or null response
+[2025-03-06 06:44:35] [WARNING] No information found for IP address 10.10.10.150
+[2025-03-06 06:44:35] [INFO] Infoblox connection is active
+[2025-03-06 06:44:35] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:35] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:35] [INFO] ======= Infoblox IP Address Management Script Completed =======

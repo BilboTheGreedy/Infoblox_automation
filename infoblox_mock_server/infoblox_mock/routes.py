@@ -238,3 +238,120 @@ def register_routes(app):
     def handle_500(error):
         logger.error(f"500 error: {str(error)}")
         return jsonify({"Error": "Internal Server Error", "text": str(error)}), 500
+    
+
+    # Add new route handling for IPv6 next available IP
+    @app.route(f'/wapi/{CONFIG["wapi_version"]}/ipv6network/<path:network>/next_available_ip', methods=['POST'])
+    @api_route
+    def next_available_ipv6(network):
+        """Get next available IPv6 in a network"""
+        # Find network
+        network_obj = None
+        for net in db["ipv6network"]:
+            if net["network"] == network:
+                network_obj = net
+                break
+        
+        if not network_obj:
+            logger.warning(f"IPv6 network not found: {network}")
+            return jsonify({"Error": "IPv6 network not found"}), 404
+        
+        # Find used IPv6 addresses
+        used_ips = get_used_ipv6_in_db(db)
+        
+        # Find next available IPv6
+        ip_str = find_next_available_ipv6(network_obj["network"], used_ips)
+        
+        if ip_str:
+            logger.info(f"Found next available IPv6 in {network}: {ip_str}")
+            return jsonify({"ips": [ip_str]})
+        else:
+            logger.warning(f"No available IPv6 addresses in network: {network}")
+            return jsonify({"Error": "No available IPv6 addresses in network"}), 400
+
+    # Add route for IPv6 address search
+    @app.route(f'/wapi/{CONFIG["wapi_version"]}/ipv6address', methods=['GET'])
+    @api_route
+    def search_ipv6():
+        """Search for IPv6 addresses"""
+        query_params = request.args.to_dict()
+        
+        # Handle search by specific IPv6 address
+        if 'ip_address' in query_params:
+            ip = query_params['ip_address']
+            results = []
+            
+            # Search in all IPv6-related collections
+            for collection_type in ["record:aaaa", "ipv6fixedaddress"]:
+                for obj in db.get(collection_type, []):
+                    if obj.get("ipv6addr") == ip:
+                        results.append({
+                            "objects": [obj["_ref"]],
+                            "ip_address": ip,
+                            "types": [collection_type]
+                        })
+            
+            # Search in host records with IPv6 addresses
+            for obj in db.get("record:host", []):
+                for addr in obj.get("ipv6addrs", []):
+                    if addr.get("ipv6addr") == ip:
+                        results.append({
+                            "objects": [obj["_ref"]],
+                            "ip_address": ip,
+                            "types": ["record:host"]
+                        })
+            
+            return jsonify(results)
+        
+        # Handle search by network
+        elif 'network' in query_params:
+            network = query_params['network']
+            results = []
+            
+            try:
+                net = ipaddress.ip_network(network, strict=False)
+                if net.version != 6:
+                    return jsonify({"Error": "Not an IPv6 network"}), 400
+                
+                # Collect all IPv6 addresses in collections
+                all_ips = []
+                
+                # From AAAA records
+                for obj in db.get("record:aaaa", []):
+                    ip = obj.get("ipv6addr", "")
+                    if ip and is_ipv6_in_network(ip, network):
+                        all_ips.append({
+                            "objects": [obj["_ref"]],
+                            "ip_address": ip,
+                            "types": ["record:aaaa"]
+                        })
+                
+                # From fixed addresses
+                for obj in db.get("ipv6fixedaddress", []):
+                    ip = obj.get("ipv6addr", "")
+                    if ip and is_ipv6_in_network(ip, network):
+                        all_ips.append({
+                            "objects": [obj["_ref"]],
+                            "ip_address": ip,
+                            "types": ["ipv6fixedaddress"]
+                        })
+                
+                # From host records
+                for obj in db.get("record:host", []):
+                    for addr in obj.get("ipv6addrs", []):
+                        ip = addr.get("ipv6addr", "")
+                        if ip and is_ipv6_in_network(ip, network):
+                            all_ips.append({
+                                "objects": [obj["_ref"]],
+                                "ip_address": ip,
+                                "types": ["record:host"]
+                            })
+                
+                return jsonify(all_ips)
+                
+            except Exception as e:
+                logger.error(f"Error searching IPv6 network: {str(e)}")
+                return jsonify({"Error": str(e)}), 400
+        
+        else:
+            return jsonify({"Error": "Missing search criteria"}), 400

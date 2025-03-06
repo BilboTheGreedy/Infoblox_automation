@@ -115,3 +115,283 @@
 [2025-03-03 10:51:03] [INFO] Disconnecting from Infoblox
 [2025-03-03 10:51:03] [SUCCESS] Successfully disconnected from Infoblox
 [2025-03-03 10:51:03] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:34:22] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:34:22] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:34:22] [INFO] Action: Search, RecordType: Host
+[2025-03-06 06:34:28] [INFO] Using default credentials for mock server
+[2025-03-06 06:34:30] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:34:30] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:34:30] [INFO] Searching for Host records
+[2025-03-06 06:34:30] [INFO] Infoblox connection is active
+[2025-03-06 06:34:30] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-06 06:34:30] [INFO] Response: [{"_create_time":"2025-03-04T17:54:21.284129","_modify_time":"2025-03-04T17:54:21.284129","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","extattrs":{},"ipv4addrs":["@{ipv4addr=10.10.10.5}"],"name":"server1.example.com","view":"default"},{"_create_time":"2025-03-04T18:39:55.107719","_modify_time":"2025-03-04T18:39:59.179722","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com","comment":"Updated test server ...
+[2025-03-06 06:34:30] [SUCCESS] Found 3 Host records
+[2025-03-06 06:34:30] [INFO] Infoblox connection is active
+[2025-03-06 06:34:30] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:34:30] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:34:30] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:04] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:04] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:04] [INFO] Action: Search, RecordType: A
+[2025-03-06 06:44:04] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:04] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:04] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:04] [INFO] Searching for A records
+[2025-03-06 06:44:04] [INFO] Infoblox connection is active
+[2025-03-06 06:44:04] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a
+[2025-03-06 06:44:04] [INFO] Response: {"_create_time":"2025-03-04T17:54:21.284129","_modify_time":"2025-03-04T17:54:21.284129","_ref":"record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:www.example.com","comment":"Web server","extattrs":{},"ipv4addr":"10.10.10.6","name":"www.example.com","view":"default"}
+[2025-03-06 06:44:04] [WARNING] No A records found matching the criteria
+[2025-03-06 06:44:04] [INFO] Infoblox connection is active
+[2025-03-06 06:44:04] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:04] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:04] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:06] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:06] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:06] [INFO] Action: Search, RecordType: Host
+[2025-03-06 06:44:06] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:06] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:06] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:06] [INFO] Searching for Host records
+[2025-03-06 06:44:06] [INFO] Infoblox connection is active
+[2025-03-06 06:44:06] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-06 06:44:06] [INFO] Response: [{"_create_time":"2025-03-04T17:54:21.284129","_modify_time":"2025-03-04T17:54:21.284129","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:server1.example.com","comment":"Application server","extattrs":{},"ipv4addrs":["@{ipv4addr=10.10.10.5}"],"name":"server1.example.com","view":"default"},{"_create_time":"2025-03-04T18:39:55.107719","_modify_time":"2025-03-04T18:39:59.179722","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:test-server.example.com","comment":"Updated test server ...
+[2025-03-06 06:44:06] [SUCCESS] Found 3 Host records
+[2025-03-06 06:44:06] [INFO] Infoblox connection is active
+[2025-03-06 06:44:06] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:06] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:06] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:08] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:08] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:08] [INFO] Action: Create, RecordType: A
+[2025-03-06 06:44:08] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:08] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:08] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:08] [INFO] Creating A record: demo-a.example.com -> 192.168.1.100
+[2025-03-06 06:44:08] [INFO] Validated hostname format: demo-a.example.com
+[2025-03-06 06:44:08] [INFO] Validated IP address format: 192.168.1.100
+[2025-03-06 06:44:08] [INFO] Infoblox connection is active
+[2025-03-06 06:44:08] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=demo-a.example.com
+[2025-03-06 06:44:08] [INFO] Response: Empty or null response
+[2025-03-06 06:44:08] [INFO] No A record found for demo-a.example.com
+[2025-03-06 06:44:08] [INFO] Infoblox connection is active
+[2025-03-06 06:44:08] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=demo-a.example.com
+[2025-03-06 06:44:08] [INFO] Response: Empty or null response
+[2025-03-06 06:44:08] [INFO] No host record found for demo-a.example.com
+[2025-03-06 06:44:08] [INFO] Infoblox connection is active
+[2025-03-06 06:44:08] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/ipv4address?ip_address=192.168.1.100
+[2025-03-06 06:44:08] [INFO] Response: Empty or null response
+[2025-03-06 06:44:08] [INFO] IP address 192.168.1.100 lookup returned no results
+[2025-03-06 06:44:08] [INFO] Infoblox connection is active
+[2025-03-06 06:44:08] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/record:a
+[2025-03-06 06:44:08] [INFO] Request body: {
+    "comment":  "Demo DNS Record",
+    "name":  "demo-a.example.com",
+    "ipv4addr":  "192.168.1.100",
+    "view":  "default"
+}
+[2025-03-06 06:44:08] [INFO] Response: record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-a.example.com
+[2025-03-06 06:44:08] [SUCCESS] A record demo-a.example.com -> 192.168.1.100 created successfully with reference record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-a.example.com
+[2025-03-06 06:44:08] [INFO] Infoblox connection is active
+[2025-03-06 06:44:08] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:08] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:08] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:09] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:09] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:09] [INFO] Action: Create, RecordType: Host
+[2025-03-06 06:44:09] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:09] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:09] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:09] [INFO] Creating Host record: demo-host.example.com -> 192.168.1.101
+[2025-03-06 06:44:09] [INFO] Validated hostname format: demo-host.example.com
+[2025-03-06 06:44:09] [INFO] Validated IP address format: 192.168.1.101
+[2025-03-06 06:44:09] [INFO] Infoblox connection is active
+[2025-03-06 06:44:09] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=demo-host.example.com
+[2025-03-06 06:44:09] [INFO] Response: Empty or null response
+[2025-03-06 06:44:09] [INFO] No A record found for demo-host.example.com
+[2025-03-06 06:44:09] [INFO] Infoblox connection is active
+[2025-03-06 06:44:09] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=demo-host.example.com
+[2025-03-06 06:44:09] [INFO] Response: Empty or null response
+[2025-03-06 06:44:09] [INFO] No host record found for demo-host.example.com
+[2025-03-06 06:44:09] [INFO] Infoblox connection is active
+[2025-03-06 06:44:09] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/ipv4address?ip_address=192.168.1.101
+[2025-03-06 06:44:09] [INFO] Response: Empty or null response
+[2025-03-06 06:44:09] [INFO] IP address 192.168.1.101 lookup returned no results
+[2025-03-06 06:44:09] [INFO] Infoblox connection is active
+[2025-03-06 06:44:09] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/record:host
+[2025-03-06 06:44:09] [INFO] Request body: {
+    "ipv4addrs":  [
+                      {
+                          "ipv4addr":  "192.168.1.101"
+                      }
+                  ],
+    "comment":  "Demo DNS Record",
+    "name":  "demo-host.example.com",
+    "view":  "default"
+}
+[2025-03-06 06:44:09] [INFO] Response: record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-host.example.com
+[2025-03-06 06:44:09] [SUCCESS] Host record demo-host.example.com -> 192.168.1.101 created successfully with reference record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-host.example.com
+[2025-03-06 06:44:09] [INFO] Infoblox connection is active
+[2025-03-06 06:44:09] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:09] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:09] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:10] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:10] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:10] [INFO] Action: Search, RecordType: A
+[2025-03-06 06:44:10] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:10] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:10] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:10] [INFO] Searching for A records
+[2025-03-06 06:44:10] [INFO] Filtering by hostname: demo-a.example.com
+[2025-03-06 06:44:10] [INFO] Infoblox connection is active
+[2025-03-06 06:44:10] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=demo-a.example.com
+[2025-03-06 06:44:10] [INFO] Response: {"_create_time":"2025-03-06T06:44:08.467826","_modify_time":"2025-03-06T06:44:08.467826","_ref":"record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-a.example.com","comment":"Demo DNS Record","ipv4addr":"192.168.1.100","name":"demo-a.example.com","view":"default"}
+[2025-03-06 06:44:10] [WARNING] No A records found matching the criteria
+[2025-03-06 06:44:10] [INFO] Infoblox connection is active
+[2025-03-06 06:44:10] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:10] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:10] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:11] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:11] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:11] [INFO] Action: Search, RecordType: Host
+[2025-03-06 06:44:11] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:11] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:11] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:11] [INFO] Searching for Host records
+[2025-03-06 06:44:11] [INFO] Filtering by hostname: demo-host.example.com
+[2025-03-06 06:44:11] [INFO] Infoblox connection is active
+[2025-03-06 06:44:11] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=demo-host.example.com
+[2025-03-06 06:44:11] [INFO] Response: {"_create_time":"2025-03-06T06:44:09.768863","_modify_time":"2025-03-06T06:44:09.768863","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-host.example.com","comment":"Demo DNS Record","ipv4addrs":[{"ipv4addr":"192.168.1.101"}],"name":"demo-host.example.com","view":"default"}
+[2025-03-06 06:44:11] [WARNING] No Host records found matching the criteria
+[2025-03-06 06:44:11] [INFO] Infoblox connection is active
+[2025-03-06 06:44:11] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:11] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:11] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:15] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:15] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:15] [INFO] Action: Update, RecordType: A
+[2025-03-06 06:44:15] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:15] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:15] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:15] [INFO] Updating A record: demo-a.example.com
+[2025-03-06 06:44:15] [INFO] Infoblox connection is active
+[2025-03-06 06:44:15] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=demo-a.example.com
+[2025-03-06 06:44:15] [INFO] Response: {"_create_time":"2025-03-06T06:44:08.467826","_modify_time":"2025-03-06T06:44:08.467826","_ref":"record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-a.example.com","comment":"Demo DNS Record","ipv4addr":"192.168.1.100","name":"demo-a.example.com","view":"default"}
+[2025-03-06 06:44:15] [INFO] No A record found for demo-a.example.com
+[2025-03-06 06:44:15] [ERROR] ERROR: A record for demo-a.example.com does not exist
+[2025-03-06 06:44:15] [INFO] Infoblox connection is active
+[2025-03-06 06:44:15] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:15] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:15] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:23] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:23] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:23] [INFO] Action: Update, RecordType: Host
+[2025-03-06 06:44:23] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:23] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:23] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:23] [INFO] Updating Host record: demo-host.example.com
+[2025-03-06 06:44:23] [INFO] Infoblox connection is active
+[2025-03-06 06:44:23] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=demo-host.example.com
+[2025-03-06 06:44:23] [INFO] Response: {"_create_time":"2025-03-06T06:44:09.768863","_modify_time":"2025-03-06T06:44:09.768863","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-host.example.com","comment":"Demo DNS Record","ipv4addrs":[{"ipv4addr":"192.168.1.101"}],"name":"demo-host.example.com","view":"default"}
+[2025-03-06 06:44:23] [INFO] No host record found for demo-host.example.com
+[2025-03-06 06:44:23] [ERROR] ERROR: Host record for demo-host.example.com does not exist
+[2025-03-06 06:44:23] [INFO] Infoblox connection is active
+[2025-03-06 06:44:23] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:23] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:23] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:25] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:25] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:25] [INFO] Action: Search, RecordType: A
+[2025-03-06 06:44:25] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:25] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:25] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:25] [INFO] Searching for A records
+[2025-03-06 06:44:25] [INFO] Filtering by hostname: demo-a.example.com
+[2025-03-06 06:44:25] [INFO] Infoblox connection is active
+[2025-03-06 06:44:25] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=demo-a.example.com
+[2025-03-06 06:44:25] [INFO] Response: {"_create_time":"2025-03-06T06:44:08.467826","_modify_time":"2025-03-06T06:44:08.467826","_ref":"record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-a.example.com","comment":"Demo DNS Record","ipv4addr":"192.168.1.100","name":"demo-a.example.com","view":"default"}
+[2025-03-06 06:44:25] [WARNING] No A records found matching the criteria
+[2025-03-06 06:44:25] [INFO] Infoblox connection is active
+[2025-03-06 06:44:25] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:25] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:25] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:25] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:25] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:25] [INFO] Action: Search, RecordType: Host
+[2025-03-06 06:44:25] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:25] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:25] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:25] [INFO] Searching for Host records
+[2025-03-06 06:44:25] [INFO] Filtering by hostname: demo-host.example.com
+[2025-03-06 06:44:25] [INFO] Infoblox connection is active
+[2025-03-06 06:44:25] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=demo-host.example.com
+[2025-03-06 06:44:25] [INFO] Response: {"_create_time":"2025-03-06T06:44:09.768863","_modify_time":"2025-03-06T06:44:09.768863","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-host.example.com","comment":"Demo DNS Record","ipv4addrs":[{"ipv4addr":"192.168.1.101"}],"name":"demo-host.example.com","view":"default"}
+[2025-03-06 06:44:25] [WARNING] No Host records found matching the criteria
+[2025-03-06 06:44:25] [INFO] Infoblox connection is active
+[2025-03-06 06:44:25] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:25] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:25] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:26] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:26] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:26] [INFO] Action: Delete, RecordType: A
+[2025-03-06 06:44:26] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:26] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:26] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:26] [INFO] Deleting A record: demo-a.example.com
+[2025-03-06 06:44:26] [INFO] Infoblox connection is active
+[2025-03-06 06:44:26] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:a?name=demo-a.example.com
+[2025-03-06 06:44:26] [INFO] Response: {"_create_time":"2025-03-06T06:44:08.467826","_modify_time":"2025-03-06T06:44:08.467826","_ref":"record:a/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-a.example.com","comment":"Demo DNS Record","ipv4addr":"192.168.1.100","name":"demo-a.example.com","view":"default"}
+[2025-03-06 06:44:26] [INFO] No A record found for demo-a.example.com
+[2025-03-06 06:44:26] [ERROR] ERROR: A record for demo-a.example.com does not exist
+[2025-03-06 06:44:26] [INFO] Infoblox connection is active
+[2025-03-06 06:44:26] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:26] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:26] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:26] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:26] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:26] [INFO] Action: Delete, RecordType: Host
+[2025-03-06 06:44:26] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:26] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:26] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:26] [INFO] Deleting Host record: demo-host.example.com
+[2025-03-06 06:44:26] [INFO] Infoblox connection is active
+[2025-03-06 06:44:26] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=demo-host.example.com
+[2025-03-06 06:44:26] [INFO] Response: {"_create_time":"2025-03-06T06:44:09.768863","_modify_time":"2025-03-06T06:44:09.768863","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:demo-host.example.com","comment":"Demo DNS Record","ipv4addrs":[{"ipv4addr":"192.168.1.101"}],"name":"demo-host.example.com","view":"default"}
+[2025-03-06 06:44:26] [INFO] No host record found for demo-host.example.com
+[2025-03-06 06:44:26] [ERROR] ERROR: Host record for demo-host.example.com does not exist
+[2025-03-06 06:44:26] [INFO] Infoblox connection is active
+[2025-03-06 06:44:26] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:26] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:26] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:36] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:36] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:36] [INFO] Action: Search, RecordType: Host
+[2025-03-06 06:44:36] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:36] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:36] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:36] [INFO] Searching for Host records
+[2025-03-06 06:44:36] [INFO] Filtering by hostname: reserved-ip.example.com
+[2025-03-06 06:44:36] [INFO] Infoblox connection is active
+[2025-03-06 06:44:36] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=reserved-ip.example.com
+[2025-03-06 06:44:36] [INFO] Response: {"_create_time":"2025-03-06T06:44:32.827937","_modify_time":"2025-03-06T06:44:32.827937","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:reserved-ip.example.com","comment":"Demo Fixed Address","ipv4addrs":[{"ipv4addr":"10.10.10.150"}],"name":"reserved-ip.example.com","view":"default"}
+[2025-03-06 06:44:36] [WARNING] No Host records found matching the criteria
+[2025-03-06 06:44:36] [INFO] Infoblox connection is active
+[2025-03-06 06:44:36] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:36] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:36] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:37] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxDnsRecords.log
+[2025-03-06 06:44:37] [INFO] ======= Infoblox DNS Record Management Script Started =======
+[2025-03-06 06:44:37] [INFO] Action: Delete, RecordType: Host
+[2025-03-06 06:44:37] [INFO] Using default credentials for mock server
+[2025-03-06 06:44:37] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:37] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 06:44:37] [INFO] Deleting Host record: reserved-ip.example.com
+[2025-03-06 06:44:37] [INFO] Infoblox connection is active
+[2025-03-06 06:44:37] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/record:host?name=reserved-ip.example.com
+[2025-03-06 06:44:37] [INFO] Response: {"_create_time":"2025-03-06T06:44:32.827937","_modify_time":"2025-03-06T06:44:32.827937","_ref":"record:host/ZG5zLm5ldHdvcmskMTAuMTAuMTAuMC8yNA:reserved-ip.example.com","comment":"Demo Fixed Address","ipv4addrs":[{"ipv4addr":"10.10.10.150"}],"name":"reserved-ip.example.com","view":"default"}
+[2025-03-06 06:44:37] [INFO] No host record found for reserved-ip.example.com
+[2025-03-06 06:44:37] [ERROR] ERROR: Host record for reserved-ip.example.com does not exist
+[2025-03-06 06:44:37] [INFO] Infoblox connection is active
+[2025-03-06 06:44:37] [INFO] Disconnecting from Infoblox
+[2025-03-06 06:44:37] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 06:44:37] [INFO] ======= Infoblox DNS Record Management Script Completed =======
+[2025-03-06 06:44:37] [INFO] ======= Infoblox Demo Script Completed =======

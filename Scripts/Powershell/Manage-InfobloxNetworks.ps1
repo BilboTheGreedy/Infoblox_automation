@@ -4,6 +4,7 @@
 .DESCRIPTION
     This script provides functions to create, search, and manage Infoblox network objects.
     It includes thorough validation, error handling, and detailed logging.
+    Modified to work with the Infoblox Mock Server.
 .NOTES
     File Name      : Manage-InfobloxNetworks.ps1
     Prerequisite   : InfobloxCommon.psm1 module
@@ -59,7 +60,7 @@ Import-Module $moduleFile -Force
 $loggingParams = @{
     LogFilePath = if ($LogFilePath) { $LogFilePath } else { Join-Path (Split-Path $MyInvocation.MyCommand.Path) "InfobloxNetworks.log" }
 }
-if ($VerboseLogging) { $loggingParams.Verbose = $true }
+if ($VerboseLogging) { $loggingParams.VerboseLogging = $true }
 Initialize-InfobloxLogging @loggingParams
 
 # Script start
@@ -98,11 +99,12 @@ try {
             
             $networks = Invoke-InfobloxRequest @searchParams
             
-            if ($networks.Count -gt 0) {
+            if ($networks -and $networks.Count -gt 0) {
                 Write-InfobloxLog "Found $($networks.Count) networks" -Level "SUCCESS"
                 Format-InfobloxResult -InputObject $networks -Title "Networks"
             } else {
                 Write-InfobloxLog "No networks found matching the criteria" -Level "WARNING"
+                Write-Host "No networks found matching the criteria" -ForegroundColor Yellow
             }
         }
         

@@ -1,0 +1,7 @@
+﻿#########################################################
+# Infoblox Operations Log File
+# Created: 2025-03-06 06:43:34
+#########################################################
+
+[2025-03-06 06:43:34] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\Infoblox-Demo.log
+[2025-03-06 06:43:34] [INFO] ======= Infoblox Demo Script Started =======

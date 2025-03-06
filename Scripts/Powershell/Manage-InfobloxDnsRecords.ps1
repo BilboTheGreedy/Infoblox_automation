@@ -4,6 +4,7 @@
 .DESCRIPTION
     This script provides functions to create, search, update, and delete Infoblox DNS A and Host records.
     It includes thorough validation, error handling, detailed logging, and verification of existing records.
+    Modified to work with the Infoblox Mock Server.
 .NOTES
     File Name      : Manage-InfobloxDnsRecords.ps1
     Prerequisite   : InfobloxCommon.psm1 module
@@ -50,9 +51,10 @@ param (
     [System.Management.Automation.PSCredential]$Credential,
     
     [Parameter(Mandatory=$false)]
-    [string]$LogFilePath
+    [string]$LogFilePath,
     
-    # Removed the duplicate Verbose parameter here
+    [Parameter(Mandatory=$false)]
+    [switch]$VerboseLogging
 )
 
 # Ensure InfobloxCommon module is imported
@@ -68,7 +70,7 @@ Import-Module $moduleFile -Force
 $loggingParams = @{
     LogFilePath = if ($LogFilePath) { $LogFilePath } else { Join-Path (Split-Path $MyInvocation.MyCommand.Path) "InfobloxDnsRecords.log" }
 }
-if ($VerbosePreference -eq 'Continue') { $loggingParams.Verbose = $true }
+if ($VerboseLogging) { $loggingParams.VerboseLogging = $true }
 Initialize-InfobloxLogging @loggingParams
 
 # Script start
@@ -84,263 +86,277 @@ try {
     if ($UseSSL) { $connectionParams.UseSSL = $true }
     if ($Credential) { $connectionParams.Credential = $Credential }
     
-# Connect to Infoblox (continued)
-$connection = Connect-Infoblox @connectionParams
-Write-InfobloxLog "Connected to $($connection.BaseUrl) as $($connection.Username)" -Level "SUCCESS"
+    # Connect to Infoblox
+    $connection = Connect-Infoblox @connectionParams
+    Write-InfobloxLog "Connected to $($connection.BaseUrl) as $($connection.Username)" -Level "SUCCESS"
 
-# Perform the requested action
-switch ($Action) {
-    'Search' {
-        Write-InfobloxLog "Searching for $RecordType records" -Level "INFO"
-        
-        $searchParams = @{
-            EndpointUrl = "record:$($RecordType.ToLower())"
-        }
-        
-        # Apply hostname filter if specified
-        if ($Hostname) {
-            $searchParams.QueryParams = @{ name = $Hostname }
-            Write-InfobloxLog "Filtering by hostname: $Hostname" -Level "INFO"
-        }
-        
-        $records = Invoke-InfobloxRequest @searchParams
-        
-        if ($records.Count -gt 0) {
-            Write-InfobloxLog "Found $($records.Count) $RecordType records" -Level "SUCCESS"
-            Format-InfobloxResult -InputObject $records -Title "$RecordType Records"
-        } else {
-            Write-InfobloxLog "No $RecordType records found matching the criteria" -Level "WARNING"
-        }
-    }
-    
-    'Create' {
-        # Validate required parameters
-        if (-not $Hostname) {
-            throw "Hostname parameter is required for Create action"
-        }
-        
-        if (-not $IPAddress) {
-            throw "IPAddress parameter is required for Create action"
-        }
-        
-        Write-InfobloxLog "Creating $RecordType record: $Hostname -> $IPAddress" -Level "INFO"
-        
-        # Validate hostname format
-        if (-not (Test-InfobloxHostname -Hostname $Hostname)) {
-            throw "Invalid hostname format: $Hostname"
-        }
-        
-        # Validate IP address format
-        if (-not (Test-InfobloxIPAddress -IPAddress $IPAddress)) {
-            throw "Invalid IP address format: $IPAddress"
-        }
-        
-        # Check for existing DNS records with same hostname (both A and Host records)
-        $existingARecord = Get-InfobloxARecord -Hostname $Hostname
-        $existingHostRecord = Get-InfobloxHostRecord -Hostname $Hostname
-        
-        if ($existingARecord -or $existingHostRecord) {
-            $existingRecordType = if ($existingARecord) { "A" } else { "Host" }
-            $existingRecordRef = if ($existingARecord) { $existingARecord[0]._ref } else { $existingHostRecord[0]._ref }
-            $existingRecordIP = if ($existingARecord) { $existingARecord[0].ipv4addr } else { $existingHostRecord[0].ipv4addrs[0].ipv4addr }
+    # Perform the requested action
+    switch ($Action) {
+        'Search' {
+            Write-InfobloxLog "Searching for $RecordType records" -Level "INFO"
             
-            if (-not $Force) {
-                throw "Hostname $Hostname already exists as $existingRecordType record ($existingRecordRef) with IP: $existingRecordIP. Use -Force to override."
+            $searchParams = @{
+                EndpointUrl = "record:$($RecordType.ToLower())"
             }
             
-            Write-InfobloxLog "WARNING: Hostname $Hostname already exists as $existingRecordType record. Proceeding due to -Force flag." -Level "WARNING"
-        }
-        
-        # Check if IP address is already in use
-        $existingIP = Get-InfobloxIPAddress -IPAddress $IPAddress
-        if ($existingIP -and -not $Force) {
-            $existingObjects = $existingIP[0].objects -join ", "
-            throw "IP address $IPAddress is already in use by: $existingObjects. Use -Force to override."
-        } elseif ($existingIP) {
-            Write-InfobloxLog "WARNING: IP address $IPAddress is already in use. Proceeding due to -Force flag." -Level "WARNING"
-        }
-        
-        # Prepare record data based on type
-        if ($RecordType -eq "A") {
-            $recordData = @{
-                name = $Hostname
-                ipv4addr = $IPAddress
-                view = "default"
+            # Apply hostname filter if specified
+            if ($Hostname) {
+                $searchParams.QueryParams = @{ name = $Hostname }
+                Write-InfobloxLog "Filtering by hostname: $Hostname" -Level "INFO"
             }
             
-            if ($Comment) {
-                $recordData.comment = $Comment
+            $records = Invoke-InfobloxRequest @searchParams
+            
+            if ($records -and $records.Count -gt 0) {
+                Write-InfobloxLog "Found $($records.Count) $RecordType records" -Level "SUCCESS"
+                Format-InfobloxResult -InputObject $records -Title "$RecordType Records"
+            } else {
+                Write-InfobloxLog "No $RecordType records found matching the criteria" -Level "WARNING"
+                Write-Host "No $RecordType records found matching the criteria" -ForegroundColor Yellow
             }
-            
-            # Create the A record
-            $createParams = @{
-                EndpointUrl = "record:a"
-                Method = "POST"
-                Body = $recordData
-                ReturnRef = $true
-            }
-            
-            $result = Invoke-InfobloxRequest @createParams
-            
-            Write-InfobloxLog "A record $Hostname -> $IPAddress created successfully with reference $result" -Level "SUCCESS"
-            Format-InfobloxResult -InputObject $result -Title "A Record Created"
-        }
-        elseif ($RecordType -eq "Host") {
-            $recordData = @{
-                name = $Hostname
-                ipv4addrs = @(
-                    @{
-                        ipv4addr = $IPAddress
-                    }
-                )
-                view = "default"
-            }
-            
-            if ($Comment) {
-                $recordData.comment = $Comment
-            }
-            
-            # Create the Host record
-            $createParams = @{
-                EndpointUrl = "record:host"
-                Method = "POST"
-                Body = $recordData
-                ReturnRef = $true
-            }
-            
-            $result = Invoke-InfobloxRequest @createParams
-            
-            Write-InfobloxLog "Host record $Hostname -> $IPAddress created successfully with reference $result" -Level "SUCCESS"
-            Format-InfobloxResult -InputObject $result -Title "Host Record Created"
-        }
-    }
-    
-    'Update' {
-        # Validate required parameters
-        if (-not $Hostname) {
-            throw "Hostname parameter is required for Update action"
         }
         
-        Write-InfobloxLog "Updating $RecordType record: $Hostname" -Level "INFO"
-        
-        # Get existing record
-        $existingRecord = if ($RecordType -eq "A") {
-            Get-InfobloxARecord -Hostname $Hostname
-        } else {
-            Get-InfobloxHostRecord -Hostname $Hostname
-        }
-        
-        if (-not $existingRecord) {
-            throw "$RecordType record for $Hostname does not exist"
-        }
-        
-        # Prepare update data
-        $updateData = @{}
-        
-        if ($IPAddress) {
-            Write-InfobloxLog "Updating IP address to: $IPAddress" -Level "INFO"
+        'Create' {
+            # Validate required parameters
+            if (-not $Hostname) {
+                throw "Hostname parameter is required for Create action"
+            }
+            
+            if (-not $IPAddress) {
+                throw "IPAddress parameter is required for Create action"
+            }
+            
+            Write-InfobloxLog "Creating $RecordType record: $Hostname -> $IPAddress" -Level "INFO"
+            
+            # Validate hostname format
+            if (-not (Test-InfobloxHostname -Hostname $Hostname)) {
+                throw "Invalid hostname format: $Hostname"
+            }
             
             # Validate IP address format
             if (-not (Test-InfobloxIPAddress -IPAddress $IPAddress)) {
                 throw "Invalid IP address format: $IPAddress"
             }
             
-            # Check if IP address is already in use by another record
-            $existingIP = Get-InfobloxIPAddress -IPAddress $IPAddress
-            if ($existingIP -and -not $Force) {
-                $existingObjects = $existingIP[0].objects -join ", "
-                if (-not $existingObjects.Contains($existingRecord[0]._ref)) {
-                    throw "IP address $IPAddress is already in use by: $existingObjects. Use -Force to override."
+            # Check for existing DNS records with same hostname (both A and Host records)
+            $existingARecord = Get-InfobloxARecord -Hostname $Hostname
+            $existingHostRecord = Get-InfobloxHostRecord -Hostname $Hostname
+            
+            if ($existingARecord -or $existingHostRecord) {
+                $existingRecordType = if ($existingARecord) { "A" } else { "Host" }
+                $existingRecordRef = if ($existingARecord) { $existingARecord[0]._ref } else { $existingHostRecord[0]._ref }
+                $existingRecordIP = if ($existingARecord) { $existingARecord[0].ipv4addr } else { $existingHostRecord[0].ipv4addrs[0].ipv4addr }
+                
+                if (-not $Force) {
+                    throw "Hostname $Hostname already exists as $existingRecordType record ($existingRecordRef) with IP: $existingRecordIP. Use -Force to override."
                 }
-            } elseif ($existingIP -and $Force) {
+                
+                Write-InfobloxLog "WARNING: Hostname $Hostname already exists as $existingRecordType record. Proceeding due to -Force flag." -Level "WARNING"
+            }
+            
+            # Check if IP address is already in use
+            $existingIP = Get-InfobloxIPAddress -IPAddress $IPAddress
+            if ($existingIP -and $existingIP.Count -gt 0 -and (-not $Force)) {
+                $existingObjects = if ($existingIP[0].objects) { $existingIP[0].objects -join ", " } else { "Unknown records" }
+                throw "IP address $IPAddress is already in use by: $existingObjects. Use -Force to override."
+            } elseif ($existingIP -and $existingIP.Count -gt 0) {
                 Write-InfobloxLog "WARNING: IP address $IPAddress is already in use. Proceeding due to -Force flag." -Level "WARNING"
             }
             
+            # Prepare record data based on type
             if ($RecordType -eq "A") {
-                $updateData.ipv4addr = $IPAddress
-            } else {
-                $updateData.ipv4addrs = @(
-                    @{
-                        ipv4addr = $IPAddress
-                    }
-                )
+                $recordData = @{
+                    name = $Hostname
+                    ipv4addr = $IPAddress
+                    view = "default"
+                }
+                
+                if ($Comment) {
+                    $recordData.comment = $Comment
+                }
+                
+                # Create the A record
+                $createParams = @{
+                    EndpointUrl = "record:a"
+                    Method = "POST"
+                    Body = $recordData
+                    ReturnRef = $true
+                }
+                
+                $result = Invoke-InfobloxRequest @createParams
+                
+                Write-InfobloxLog "A record $Hostname -> $IPAddress created successfully with reference $result" -Level "SUCCESS"
+                Format-InfobloxResult -InputObject $result -Title "A Record Created"
+            }
+            elseif ($RecordType -eq "Host") {
+                $recordData = @{
+                    name = $Hostname
+                    ipv4addrs = @(
+                        @{
+                            ipv4addr = $IPAddress
+                        }
+                    )
+                    view = "default"
+                }
+                
+                if ($Comment) {
+                    $recordData.comment = $Comment
+                }
+                
+                # Create the Host record
+                $createParams = @{
+                    EndpointUrl = "record:host"
+                    Method = "POST"
+                    Body = $recordData
+                    ReturnRef = $true
+                }
+                
+                $result = Invoke-InfobloxRequest @createParams
+                
+                Write-InfobloxLog "Host record $Hostname -> $IPAddress created successfully with reference $result" -Level "SUCCESS"
+                Format-InfobloxResult -InputObject $result -Title "Host Record Created"
             }
         }
         
-        if ($Comment) {
-            $updateData.comment = $Comment
-            Write-InfobloxLog "Updating comment to: $Comment" -Level "INFO"
+        'Update' {
+            # Validate required parameters
+            if (-not $Hostname) {
+                throw "Hostname parameter is required for Update action"
+            }
+            
+            Write-InfobloxLog "Updating $RecordType record: $Hostname" -Level "INFO"
+            
+            # Get existing record
+            $existingRecord = if ($RecordType -eq "A") {
+                Get-InfobloxARecord -Hostname $Hostname
+            } else {
+                Get-InfobloxHostRecord -Hostname $Hostname
+            }
+            
+            if (-not $existingRecord) {
+                throw "$RecordType record for $Hostname does not exist"
+            }
+            
+            # Prepare update data
+            $updateData = @{}
+            
+            if ($IPAddress) {
+                Write-InfobloxLog "Updating IP address to: $IPAddress" -Level "INFO"
+                
+                # Validate IP address format
+                if (-not (Test-InfobloxIPAddress -IPAddress $IPAddress)) {
+                    throw "Invalid IP address format: $IPAddress"
+                }
+                
+                # Check if IP address is already in use by another record
+                $existingIP = Get-InfobloxIPAddress -IPAddress $IPAddress
+                if ($existingIP -and $existingIP.Count -gt 0 -and (-not $Force)) {
+                    # For the mock server, we have to handle this check differently than the real server
+                    $isInUseByOther = $true
+                    
+                    # Try to determine if this IP is used by our own record or another record
+                    if ($existingIP[0].objects) {
+                        foreach ($objRef in $existingIP[0].objects) {
+                            if ($objRef -eq $existingRecord[0]._ref) {
+                                $isInUseByOther = $false
+                                break
+                            }
+                        }
+                    }
+                    
+                    if ($isInUseByOther) {
+                        $existingObjects = if ($existingIP[0].objects) { $existingIP[0].objects -join ", " } else { "Unknown records" }
+                        throw "IP address $IPAddress is already in use by: $existingObjects. Use -Force to override."
+                    }
+                } elseif ($existingIP -and $existingIP.Count -gt 0 -and $Force) {
+                    Write-InfobloxLog "WARNING: IP address $IPAddress is already in use. Proceeding due to -Force flag." -Level "WARNING"
+                }
+                
+                if ($RecordType -eq "A") {
+                    $updateData.ipv4addr = $IPAddress
+                } else {
+                    $updateData.ipv4addrs = @(
+                        @{
+                            ipv4addr = $IPAddress
+                        }
+                    )
+                }
+            }
+            
+            if ($Comment) {
+                $updateData.comment = $Comment
+                Write-InfobloxLog "Updating comment to: $Comment" -Level "INFO"
+            }
+            
+            if ($updateData.Keys.Count -eq 0) {
+                throw "No updates specified. Please provide at least one field to update."
+            }
+            
+            # Update the record
+            $updateParams = @{
+                EndpointUrl = $existingRecord[0]._ref
+                Method = "PUT"
+                Body = $updateData
+                ReturnRef = $true
+            }
+            
+            $result = Invoke-InfobloxRequest @updateParams
+            
+            Write-InfobloxLog "$RecordType record $Hostname updated successfully" -Level "SUCCESS"
+            Format-InfobloxResult -InputObject $result -Title "$RecordType Record Updated"
         }
         
-        if ($updateData.Keys.Count -eq 0) {
-            throw "No updates specified. Please provide at least one field to update."
+        'Delete' {
+            # Validate required parameters
+            if (-not $Hostname) {
+                throw "Hostname parameter is required for Delete action"
+            }
+            
+            Write-InfobloxLog "Deleting $RecordType record: $Hostname" -Level "INFO"
+            
+            # Get existing record
+            $existingRecord = if ($RecordType -eq "A") {
+                Get-InfobloxARecord -Hostname $Hostname
+            } else {
+                Get-InfobloxHostRecord -Hostname $Hostname
+            }
+            
+            if (-not $existingRecord) {
+                throw "$RecordType record for $Hostname does not exist"
+            }
+            
+            # Confirm deletion
+            Write-Host "Are you sure you want to delete $RecordType record $Hostname ($($existingRecord[0]._ref))? (Y/N)" -ForegroundColor Yellow
+            $confirmation = Read-Host
+            
+            if ($confirmation -ne "Y") {
+                Write-InfobloxLog "$RecordType record deletion cancelled by user" -Level "WARNING"
+                return
+            }
+            
+            # Delete the record
+            $deleteParams = @{
+                EndpointUrl = $existingRecord[0]._ref
+                Method = "DELETE"
+                ReturnRef = $true
+            }
+            
+            $result = Invoke-InfobloxRequest @deleteParams
+            
+            Write-InfobloxLog "$RecordType record $Hostname deleted successfully" -Level "SUCCESS"
+            Format-InfobloxResult -InputObject $result -Title "$RecordType Record Deleted"
         }
-        
-        # Update the record
-        $updateParams = @{
-            EndpointUrl = $existingRecord[0]._ref
-            Method = "PUT"
-            Body = $updateData
-            ReturnRef = $true
-        }
-        
-        $result = Invoke-InfobloxRequest @updateParams
-        
-        Write-InfobloxLog "$RecordType record $Hostname updated successfully" -Level "SUCCESS"
-        Format-InfobloxResult -InputObject $result -Title "$RecordType Record Updated"
     }
-    
-    'Delete' {
-        # Validate required parameters
-        if (-not $Hostname) {
-            throw "Hostname parameter is required for Delete action"
-        }
-        
-        Write-InfobloxLog "Deleting $RecordType record: $Hostname" -Level "INFO"
-        
-        # Get existing record
-        $existingRecord = if ($RecordType -eq "A") {
-            Get-InfobloxARecord -Hostname $Hostname
-        } else {
-            Get-InfobloxHostRecord -Hostname $Hostname
-        }
-        
-        if (-not $existingRecord) {
-            throw "$RecordType record for $Hostname does not exist"
-        }
-        
-        # Confirm deletion
-        Write-Host "Are you sure you want to delete $RecordType record $Hostname ($($existingRecord[0]._ref))? (Y/N)" -ForegroundColor Yellow
-        $confirmation = Read-Host
-        
-        if ($confirmation -ne "Y") {
-            Write-InfobloxLog "$RecordType record deletion cancelled by user" -Level "WARNING"
-            return
-        }
-        
-        # Delete the record
-        $deleteParams = @{
-            EndpointUrl = $existingRecord[0]._ref
-            Method = "DELETE"
-            ReturnRef = $true
-        }
-        
-        $result = Invoke-InfobloxRequest @deleteParams
-        
-        Write-InfobloxLog "$RecordType record $Hostname deleted successfully" -Level "SUCCESS"
-        Format-InfobloxResult -InputObject $result -Title "$RecordType Record Deleted"
-    }
-}
 }
 catch {
-Write-InfobloxLog "ERROR: $_" -Level "ERROR"
-Write-Error $_
+    Write-InfobloxLog "ERROR: $_" -Level "ERROR"
+    Write-Error $_
 }
 finally {
-# Disconnect from Infoblox
-if (Test-InfobloxConnection) {
-    Disconnect-Infoblox | Out-Null
-}
-
-Write-InfobloxLog "======= Infoblox DNS Record Management Script Completed =======" -Level "INFO"
+    # Disconnect from Infoblox
+    if (Test-InfobloxConnection) {
+        Disconnect-Infoblox | Out-Null
+    }
+    
+    Write-InfobloxLog "======= Infoblox DNS Record Management Script Completed =======" -Level "INFO"
 }
