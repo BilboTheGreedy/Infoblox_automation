@@ -107,6 +107,15 @@ def is_ip_in_network(ip, network):
     except ValueError:
         return False
 
+def is_ipv6_in_network(ip, network):
+    """Check if an IPv6 is within a given network"""
+    try:
+        ip_obj = ipaddress.IPv6Address(ip)
+        net_obj = ipaddress.ip_network(network, strict=False)
+        return ip_obj in net_obj
+    except ValueError:
+        return False
+
 def is_network_in_container(network, container):
     """Check if a network is within a container"""
     try:
@@ -133,8 +142,6 @@ def get_ptr_name_from_ip(ip):
     except Exception as e:
         logger.error(f"Error generating PTR name from IP {ip}: {str(e)}")
         return None
-
-
 
 def find_next_available_ipv6(network_cidr, used_ips):
     """Find the next available IPv6 in a network"""
@@ -173,27 +180,6 @@ def find_next_available_ipv6(network_cidr, used_ips):
         logger.error(f"Error finding next available IPv6: {str(e)}")
         return None
 
-def get_used_ipv6_in_db(db):
-    """Get all used IPv6 addresses from the database"""
-    used_ips = set()
-    
-    # Collect IPs from various record types
-    for obj_type in ["record:aaaa", "ipv6fixedaddress", "record:host"]:
-        for obj in db.get(obj_type, []):
-            if obj_type == "record:aaaa":
-                used_ips.add(obj.get("ipv6addr", ""))
-            elif obj_type == "ipv6fixedaddress":
-                used_ips.add(obj.get("ipv6addr", ""))
-            elif obj_type == "record:host":
-                # Check for ipv6addrs array
-                for addr in obj.get("ipv6addrs", []):
-                    used_ips.add(addr.get("ipv6addr", ""))
-    
-    # Remove empty strings
-    used_ips.discard("")
-    
-    return used_ips
-
 def generate_ptr_name_from_ipv6(ipv6):
     """Generate PTR record name from IPv6 address"""
     try:
@@ -206,12 +192,3 @@ def generate_ptr_name_from_ipv6(ipv6):
     except Exception as e:
         logger.error(f"Error generating PTR name from IPv6 {ipv6}: {str(e)}")
         return None
-    
-def is_ipv6_in_network(ip, network):
-    """Check if an IPv6 is within a given network"""
-    try:
-        ip_obj = ipaddress.IPv6Address(ip)
-        net_obj = ipaddress.ip_network(network, strict=False)
-        return ip_obj in net_obj
-    except ValueError:
-        return False

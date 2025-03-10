@@ -1,0 +1,217 @@
+Metadata-Version: 2.2
+Name: infoblox_mock_server
+Version: 0.1.0
+Summary: A comprehensive mock server for Infoblox WAPI
+Home-page: https://github.com/bilbothegreedy/infoblox-mock-server
+Author: Daniel Rapp
+Author-email: daniel.rapp@live.se
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Topic :: Software Development :: Testing
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: Flask>=2.0.0
+Requires-Dist: Werkzeug>=2.0.0
+Requires-Dist: requests>=2.25.0
+Requires-Dist: ipaddress>=1.0.23
+Requires-Dist: python-dateutil>=2.8.2
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# Infoblox Mock Server
+
+A comprehensive mock server that simulates the Infoblox WAPI (Web API) for development and testing purposes.
+
+## Overview
+
+The Infoblox Mock Server provides a lightweight, configurable implementation of the Infoblox WAPI, allowing developers to build and test applications that interact with Infoblox without requiring access to an actual Infoblox grid.
+
+Key features:
+
+- Simulates core Infoblox WAPI functionality
+- Supports network, IPAM, and DNS record management
+- Provides authentication and session management
+- Configurable delay and failure simulation for testing edge cases
+- Persistent storage option for maintaining state between runs
+- Rate limiting and detailed logging
+- Extensible architecture for adding new features
+
+## Installation
+
+### Prerequisites
+
+- Python 3.6 or later
+- pip (Python package manager)
+
+### Setup
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/infoblox-mock-server.git
+   cd infoblox-mock-server
+   ```
+
+2. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+### Starting the Server
+
+Run the server with default settings:
+
+```
+python run_server.py
+```
+
+Run with custom options:
+
+```
+python run_server.py --host 127.0.0.1 --port 8080 --debug --config config.json
+```
+
+### Configuration Options
+
+The server can be configured either by passing a configuration file or by updating the configuration through the API. Available configuration options:
+
+- `simulate_delay`: Add random delay to responses (boolean)
+- `min_delay_ms`: Minimum delay in milliseconds (integer)
+- `max_delay_ms`: Maximum delay in milliseconds (integer)
+- `simulate_failures`: Randomly simulate server failures (boolean)
+- `failure_rate`: Failure rate if simulation enabled (float, 0-1)
+- `detailed_logging`: Enable detailed request/response logging (boolean)
+- `persistent_storage`: Enable file-based persistent storage (boolean)
+- `storage_file`: File to use for persistent storage (string)
+- `auth_required`: Require authentication (boolean)
+- `rate_limit`: Enable rate limiting (boolean)
+- `rate_limit_requests`: Number of requests allowed per minute (integer)
+- `simulate_db_lock`: Simulate database locks (boolean)
+- `lock_probability`: Lock probability per operation (float, 0-1)
+- `wapi_version`: WAPI version to simulate (string)
+
+### Example Client Usage
+
+The `examples` directory contains sample scripts demonstrating how to interact with the mock server:
+
+```python
+from examples.basic_client import InfobloxClient
+
+# Create client
+client = InfobloxClient(base_url="http://localhost:8080/wapi/v2.11")
+
+# Login
+client.login()
+
+# Get networks
+networks = client.get_objects("network")
+print(networks)
+
+# Create a host record
+host_data = {
+    "name": "test.example.com",
+    "ipv4addrs": [{"ipv4addr": "10.10.10.10"}]
+}
+host_ref = client.create_object("record:host", host_data)
+
+# Logout
+client.logout()
+```
+
+## Project Structure
+
+```
+infoblox_mock_server/
+â”œâ”€â”€ README.md
+â”œâ”€â”€ requirements.txt
+â”œâ”€â”€ run_server.py                # Main entry point
+â”œâ”€â”€ tests/                       # Test directory
+â”‚   â”œâ”€â”€ __init__.py
+â”‚   â””â”€â”€ test_server.py           # Basic test cases
+â”œâ”€â”€ infoblox_mock/               # Main package directory
+â”‚   â”œâ”€â”€ __init__.py              # Package initialization
+â”‚   â”œâ”€â”€ server.py                # Main Flask application
+â”‚   â”œâ”€â”€ config.py                # Configuration management
+â”‚   â”œâ”€â”€ db.py                    # Database operations
+â”‚   â”œâ”€â”€ middleware.py            # Decorators and middleware
+â”‚   â”œâ”€â”€ validators.py            # Data validation functions
+â”‚   â”œâ”€â”€ utils.py                 # Utility functions
+â”‚   â””â”€â”€ models/                  # Model definitions
+â”‚       â”œâ”€â”€ __init__.py
+â”‚       â”œâ”€â”€ base.py              # Base model functionality
+â”‚       â”œâ”€â”€ network.py           # Network-related models
+â”‚       â”œâ”€â”€ dns_records.py       # DNS record models
+â”‚       â”œâ”€â”€ dhcp.py              # DHCP-related models
+â”‚       â”œâ”€â”€ grid.py              # Grid and member models
+â”‚       â””â”€â”€ security.py          # Authentication and security models
+â”œâ”€â”€ examples/                    # Example scripts
+â”‚   â”œâ”€â”€ basic_client.py          # Basic operations
+â”‚   â”œâ”€â”€ dns_client.py            # DNS record operations
+â”‚   â””â”€â”€ dhcp_client.py           # DHCP operations
+â””â”€â”€ data/                        # Data directory (for persistent storage)
+    â””â”€â”€ .gitkeep
+```
+
+## Supported Features
+
+### DNS Records
+- A Records
+- AAAA Records (IPv6)
+- CNAME Records
+- MX Records
+- TXT Records
+- SRV Records
+- PTR Records
+- NS Records
+- SOA Records
+- DNSSEC Records (DNSKEY, RRSIG, DS, NSEC, NSEC3)
+- CAA Records
+
+### Network Management
+- Networks
+- Network Containers
+- Next available IP functionality
+- IP address management
+
+### DHCP
+- DHCP Ranges
+- Fixed Addresses
+- Leases
+
+### Grid and Members
+- Grid information
+- Member management
+- Session handling (login/logout)
+
+## Extending the Server
+
+The modular architecture makes it easy to add new features:
+
+1. Add new object types to the database structure in `db.py`
+2. Implement validation for new object types in `validators.py`
+3. Add any specific handling in the appropriate route in `routes.py`
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Infoblox for their excellent WAPI documentation
+- The Flask team for their lightweight web framework

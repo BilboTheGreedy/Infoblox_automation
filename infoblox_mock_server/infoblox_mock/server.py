@@ -2,14 +2,15 @@
 Main Flask application for Infoblox Mock Server
 """
 
-from flask import Flask
+from flask import Flask, request
 import logging
 import os
+import uuid
 
 from infoblox_mock.config import load_config, CONFIG
 from infoblox_mock.db import initialize_db, load_db_from_file
 from infoblox_mock import routes
-from infoblox_mock.mock_responses import load_mock_responses, find_mock_response, record_interaction
+from infoblox_mock.mock_responses import load_mock_responses, record_interaction
 from infoblox_mock.statistics import api_stats
 
 logger = logging.getLogger(__name__)
@@ -54,7 +55,7 @@ def create_app(config_file=None):
     # Add response recording if enabled
     if CONFIG.get('record_mode', False):
         @app.after_request
-        def record_response(response):
+        def record_response_wrapper(response):
             record_interaction(response)
             return response
     
