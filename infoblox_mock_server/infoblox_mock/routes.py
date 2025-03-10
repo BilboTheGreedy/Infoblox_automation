@@ -13,12 +13,484 @@ from infoblox_mock.db import (db, initialize_db, find_object_by_ref,
 from infoblox_mock.middleware import api_route
 from infoblox_mock.validators import validate_and_prepare_data
 from infoblox_mock.utils import generate_ref, find_next_available_ip, get_used_ips_in_db
+from infoblox_mock.config import is_feature_supported
+from infoblox_mock.mock_responses import find_mock_response
+from infoblox_mock.bulk import process_bulk_operation
+from infoblox_mock.statistics import api_stats
+import uuid
+from infoblox_mock.webhooks import webhook_manager
+from infoblox_mock.backup import BackupManager
+from infoblox_mock.swagger import generate_swagger_spec
+from flask import render_template_string
+from infoblox_mock.smart_folders import SmartFolderManager
+from infoblox_mock.certificates import CertificateManager
 
 logger = logging.getLogger(__name__)
 
 def register_routes(app):
     """Register all API routes"""
     
+    # Add a middleware to handle mock responses
+    @app.before_request
+    def check_mock_response():
+        """Check if a mock response exists for this request"""
+        mock_response = find_mock_response()
+        if mock_response:
+            # Return the mock response
+            status_code = mock_response.get('status_code', 200)
+            headers = mock_response.get('headers', {})
+            data = mock_response.get('data')
+            
+            # Create the response
+            response = jsonify(data) if data else ('', 204)
+            
+            # Add headers
+            if isinstance(response, tuple):
+                response = make_response(response)
+            
+            for header, value in headers.items():
+                response.headers[header] = value
+                
+            return response, status_code
+
+
+    @app.route('/wapi/stats', methods=['GET', 'POST'])
+    def api_statistics():
+        """Get or reset API usage statistics"""
+        # Require authentication
+        auth = request.authorization
+        if not auth or auth.username != 'admin':
+            response = jsonify({"Error": "Administrator access required"})
+            response.status_code = 401
+            response.headers['WWW-Authenticate'] = 'Basic realm="Infoblox Mock Server Statistics"'
+            return response
+        
+        # Handle reset request
+        if request.method == 'POST':
+            action = request.args.get('action', '')
+            if action == 'reset':
+                api_stats.reset_stats()
+                return jsonify({"status": "success", "message": "Statistics reset successfully"})
+            else:
+                return jsonify({"Error": "Invalid action"}), 400
+        
+        # Get statistics
+        stats = api_stats.get_stats()
+        
+        # Optional filtering
+        if 'filter' in request.args:
+            filter_key = request.args.get('filter')
+            if filter_key in stats:
+                return jsonify({filter_key: stats[filter_key]})
+        
+        return jsonify(stats)
+
+    # Add webhook routes
+    @app.route(f'/wapi/{CONFIG["wapi_version"]}/webhook', methods=['POST', 'DELETE', 'GET'])
+    @api_route
+    def webhook_management():
+        """Manage webhook registrations"""
+        # Require authentication
+        auth = request.authorization
+        if not auth or auth.username != 'admin':
+            response = jsonify({"Error": "Administrator access required"})
+            response.status_code = 401
+            response.headers['WWW-Authenticate'] = 'Basic realm="Infoblox Mock Server Webhooks"'
+            return response
+        
+        # Handle GET (list webhooks)
+        if request.method == 'GET':
+            event_type = request.args.get('event_type')
+            webhooks = webhook_manager.get_webhooks(event_type)
+            return jsonify(webhooks)
+        
+        # Handle POST (register webhook)
+        elif request.method == 'POST':
+            data = request.json
+            
+            # Validate request
+            if not data or 'event_type' not in data or 'url' not in data:
+                return jsonify({"Error": "Missing required fields: event_type, url"}), 400
+            
+            # Register webhook
+            result = webhook_manager.register_webhook(
+                data['event_type'],
+                data['url'],
+                data.get('headers')
+            )
+            
+            if result:
+                return jsonify({"status": "success", "message": "Webhook registered successfully"})
+            else:
+                return jsonify({"Error": "Failed to register webhook"}), 400
+        
+        # Handle DELETE (unregister webhook)
+        elif request.method == 'DELETE':
+            data = request.json
+            
+            # Validate request
+            if not data or 'event_type' not in data or 'url' not in data:
+                return jsonify({"Error": "Missing required fields: event_type, url"}), 400
+            
+            # Unregister webhook
+            result = webhook_manager.unregister_webhook(
+                data['event_type'],
+                data['url']
+            )
+            
+            if result:
+                return jsonify({"status": "success", "message": "Webhook unregistered successfully"})
+            else:
+                return jsonify({"Error": "Webhook not found"}), 404
+
+
+# Add certificate routes
+@app.route(f'/wapi/{CONFIG["wapi_version"]}/certificate', methods=['POST', 'GET'])
+@api_route
+def certificate():
+    """Handle certificate operations"""
+    # Handle GET (list certificates)
+    if request.method == 'GET':
+        certificates = CertificateManager.get_all_certificates()
+        return jsonify(certificates)
+    
+    # Handle POST (create/import certificate)
+    elif request.method == 'POST':
+        data = request.json
+        
+        # Validate request
+        if not data:
+            return jsonify({"Error": "Request body is required"}), 400
+        
+        # Check operation
+        operation = data.get('operation', 'generate')
+        
+        if operation == 'generate':
+            # Generate self-signed certificate
+            ref, error = CertificateManager.generate_self_signed_cert(
+                common_name=data.get('common_name', 'infoblox.example.com'),
+                days_valid=data.get('days_valid', 365),
+                organization=data.get('organization', 'Infoblox Mock'),
+                organizational_unit=data.get('organizational_unit', 'IT'),
+                locality=data.get('locality', 'San Francisco'),
+                state=data.get('state', 'CA'),
+                country=data.get('country', 'US'),
+                key_size=data.get('key_size', 2048)
+            )
+        elif operation == 'import':
+            # Import certificate
+            if 'certificate' not in data:
+                return jsonify({"Error": "Certificate data is required"}), 400
+            
+            ref, error = CertificateManager.import_certificate(
+                cert_data=data['certificate'],
+                private_key=data.get('private_key'),
+                passphrase=data.get('passphrase')
+            )
+        elif operation == 'import_ca':
+            # Import CA certificate
+            if 'certificate' not in data:
+                return jsonify({"Error": "Certificate data is required"}), 400
+            
+            ref, error = CertificateManager.import_ca_certificate(
+                cert_data=data['certificate']
+            )
+        else:
+            return jsonify({"Error": f"Unsupported operation: {operation}"}), 400
+        
+        if error:
+            return jsonify({"Error": error}), 400
+        
+        return jsonify(ref)
+
+@app.route(f'/wapi/{CONFIG["wapi_version"]}/certificate/<cert_id>', methods=['GET', 'PUT', 'DELETE'])
+@api_route
+def certificate_by_id(cert_id):
+    """Handle operations on a specific certificate"""
+    # Handle GET (get certificate)
+    if request.method == 'GET':
+        cert, error = CertificateManager.get_certificate(cert_id)
+        if error:
+            return jsonify({"Error": error}), 404
+        
+        return jsonify(cert)
+    
+    # Handle PUT (update certificate)
+    elif request.method == 'PUT':
+        data = request.json
+        
+        # Validate request
+        if not data:
+            return jsonify({"Error": "Request body is required"}), 400
+        
+        # Update certificate
+        ref, error = CertificateManager.update_certificate(cert_id, data)
+        if error:
+            return jsonify({"Error": error}), 404
+        
+        return jsonify(ref)
+    
+    # Handle DELETE (delete certificate)
+    elif request.method == 'DELETE':
+        ref, error = CertificateManager.delete_certificate(cert_id)
+        if error:
+            return jsonify({"Error": error}), 404
+        
+        return jsonify(ref)
+
+@app.route(f'/wapi/{CONFIG["wapi_version"]}/smartfolder', methods=['POST', 'GET'])
+@api_route
+def smart_folder():
+    """Handle Smart Folder operations"""
+    # Handle GET (list folders)
+    if request.method == 'GET':
+        # Get owner from query params
+        owner = request.args.get('owner')
+        # Get shared flag
+        shared = request.args.get('shared', 'true').lower() != 'false'
+        
+        # Get all folders
+        folders = SmartFolderManager.get_all_folders(owner, shared)
+        return jsonify(folders)
+    
+    # Handle POST (create folder)
+    elif request.method == 'POST':
+        data = request.json
+        
+        # Validate request
+        if not data:
+            return jsonify({"Error": "Request body is required"}), 400
+        
+        # Create folder
+        ref, error = SmartFolderManager.create_folder(data)
+        if error:
+            return jsonify({"Error": error}), 400
+        
+        return jsonify(ref)
+
+@app.route(f'/wapi/{CONFIG["wapi_version"]}/smartfolder/<folder_id>', methods=['GET', 'PUT', 'DELETE'])
+@api_route
+def smart_folder_by_id(folder_id):
+    """Handle operations on a specific Smart Folder"""
+    # Handle GET (get folder)
+    if request.method == 'GET':
+        folder, error = SmartFolderManager.get_folder(folder_id)
+        if error:
+            return jsonify({"Error": error}), 404
+        
+        return jsonify(folder)
+    
+    # Handle PUT (update folder)
+    elif request.method == 'PUT':
+        data = request.json
+        
+        # Validate request
+        if not data:
+            return jsonify({"Error": "Request body is required"}), 400
+        
+        # Update folder
+        ref, error = SmartFolderManager.update_folder(folder_id, data)
+        if error:
+            return jsonify({"Error": error}), 404
+        
+        return jsonify(ref)
+    
+    # Handle DELETE (delete folder)
+    elif request.method == 'DELETE':
+        ref, error = SmartFolderManager.delete_folder(folder_id)
+        if error:
+            return jsonify({"Error": error}), 404
+        
+        return jsonify(ref)
+
+@app.route(f'/wapi/{CONFIG["wapi_version"]}/smartfolder/<folder_id>/content', methods=['GET'])
+@api_route
+def smart_folder_content(folder_id):
+    """Get the contents of a Smart Folder"""
+    # Get folder contents
+    contents, error = SmartFolderManager.get_folder_contents(folder_id)
+    if error:
+        return jsonify({"Error": error}), 404
+    
+    return jsonify(contents)
+
+@app.route('/swagger', methods=['GET'])
+def swagger_ui():
+    """Swagger UI for API documentation"""
+    # Basic Swagger UI HTML template
+    swagger_html = '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Infoblox Mock Server API Documentation</title>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui.css">
+    </head>
+    <body>
+        <div id="swagger-ui"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.18.3/swagger-ui-bundle.js"></script>
+        <script>
+            window.onload = function() {
+                const ui = SwaggerUIBundle({
+                    url: "/swagger.json",
+                    dom_id: "#swagger-ui",
+                    presets: [
+                        SwaggerUIBundle.presets.apis,
+                        SwaggerUIBundle.SwaggerUIStandalonePreset
+                    ],
+                    layout: "BaseLayout",
+                    deepLinking: true
+                });
+            }
+        </script>
+    </body>
+    </html>
+    '''
+    return render_template_string(swagger_html)
+
+@app.route('/swagger.json', methods=['GET'])
+def swagger_json():
+    """Get Swagger/OpenAPI specification as JSON"""
+    return jsonify(generate_swagger_spec())
+
+@app.route(f'/wapi/{CONFIG["wapi_version"]}/grid/backup', methods=['POST', 'GET'])
+@api_route
+def grid_backup():
+    """Handle grid backup operations"""
+    # Handle GET (list backups)
+    if request.method == 'GET':
+        # Get backup ID from query params
+        backup_id = request.args.get('id')
+        if backup_id:
+            # Get specific backup
+            backup = BackupManager.get_backup(backup_id)
+            if not backup:
+                return jsonify({"Error": "Backup not found"}), 404
+            return jsonify(backup)
+        else:
+            # Get all backups
+            backups = BackupManager.get_all_backups()
+            return jsonify(list(backups.values()))
+    
+    # Handle POST (create backup)
+    elif request.method == 'POST':
+        data = request.json
+        
+        # Validate request
+        if not data or 'name' not in data:
+            return jsonify({"Error": "Missing required field: name"}), 400
+        
+        # Create backup
+        backup_id = BackupManager.create_backup(
+            name=data['name'],
+            backup_type=data.get('type', 'full'),
+            include_members=data.get('include_members'),
+            comment=data.get('comment')
+        )
+        
+        return jsonify({"id": backup_id})
+
+    @app.route(f'/wapi/{CONFIG["wapi_version"]}/grid/restore', methods=['POST', 'GET'])
+    @api_route
+    def grid_restore():
+        """Handle grid restore operations"""
+        # Handle GET (list restores)
+        if request.method == 'GET':
+            # Get restore ID from query params
+            restore_id = request.args.get('id')
+            if restore_id:
+                # Get specific restore
+                restore = BackupManager.get_restore(restore_id)
+                if not restore:
+                    return jsonify({"Error": "Restore not found"}), 404
+                return jsonify(restore)
+            else:
+                # Get all restores
+                restores = BackupManager.get_all_restores()
+                return jsonify(list(restores.values()))
+        
+        # Handle POST (restore backup)
+        elif request.method == 'POST':
+            data = request.json
+            
+            # Validate request
+            if not data or 'backup_id' not in data:
+                return jsonify({"Error": "Missing required field: backup_id"}), 400
+            
+            # Restore backup
+            restore_id, error = BackupManager.restore_backup(
+                backup_id=data['backup_id'],
+                include_members=data.get('include_members')
+            )
+            
+            if error:
+                return jsonify({"Error": error}), 400
+            
+            return jsonify({"id": restore_id})
+
+
+    @app.route(f'/wapi/{CONFIG["wapi_version"]}/bulkhost', methods=['POST'])
+    @api_route
+    def bulk_host():
+        """Handle bulk host operations"""
+        if not is_feature_supported('bulk_operations'):
+            return jsonify({"Error": "Function not available in this WAPI version"}), 400
+        
+        try:
+            data = request.json
+            
+            # Validate request
+            if not isinstance(data, dict) or 'hosts' not in data:
+                return jsonify({"Error": "Invalid request format, 'hosts' field required"}), 400
+            
+            hosts = data['hosts']
+            if not isinstance(hosts, list):
+                return jsonify({"Error": "'hosts' must be a list"}), 400
+            
+            # Add _object type to each host
+            for host in hosts:
+                host['_object'] = 'record:host'
+            
+            # Process the bulk operation
+            results = process_bulk_operation(hosts, "create")
+            
+            return jsonify(results)
+        
+        except Exception as e:
+            logger.error(f"Error in bulk host operation: {str(e)}")
+            return jsonify({"Error": str(e)}), 400
+
+    @app.route(f'/wapi/{CONFIG["wapi_version"]}/bulk', methods=['POST'])
+    @api_route
+    def bulk_operation():
+        """Handle generic bulk operations"""
+        if not is_feature_supported('bulk_operations'):
+            return jsonify({"Error": "Function not available in this WAPI version"}), 400
+        
+        try:
+            data = request.json
+            
+            # Validate request
+            if not isinstance(data, dict) or 'objects' not in data:
+                return jsonify({"Error": "Invalid request format, 'objects' field required"}), 400
+            
+            objects = data['objects']
+            if not isinstance(objects, list):
+                return jsonify({"Error": "'objects' must be a list"}), 400
+            
+            # Get operation type
+            operation = data.get('operation', 'create').lower()
+            if operation not in ['create', 'update', 'delete']:
+                return jsonify({"Error": f"Unsupported operation: {operation}"}), 400
+            
+            # Process the bulk operation
+            results = process_bulk_operation(objects, operation)
+            
+            return jsonify(results)
+        
+        except Exception as e:
+            logger.error(f"Error in bulk operation: {str(e)}")
+            return jsonify({"Error": str(e)}), 400    
+        
     # Handler for object collections (GET, POST)
     @app.route(f'/wapi/{CONFIG["wapi_version"]}/<obj_type>', methods=['GET', 'POST'])
     @api_route
@@ -245,6 +717,10 @@ def register_routes(app):
     @api_route
     def next_available_ipv6(network):
         """Get next available IPv6 in a network"""
+        # Check if IPv6 support is available in this WAPI version
+        if not is_feature_supported('ipv6_support'):
+            return jsonify({"Error": "Function not available in this WAPI version"}), 400
+        
         # Find network
         network_obj = None
         for net in db["ipv6network"]:

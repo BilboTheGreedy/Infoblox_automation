@@ -78,6 +78,26 @@ def get_used_ips_in_db(db):
     
     return used_ips
 
+def get_used_ipv6_in_db(db):
+    """Get all used IPv6 addresses from the database"""
+    used_ips = set()
+    
+    # Collect IPv6 addresses from various record types
+    for obj_type in ["record:host", "record:aaaa", "ipv6fixedaddress", "ipv6lease"]:
+        for obj in db.get(obj_type, []):
+            if obj_type == "record:host":
+                for addr in obj.get("ipv6addrs", []):
+                    used_ips.add(addr.get("ipv6addr", ""))
+            elif obj_type == "record:aaaa":
+                used_ips.add(obj.get("ipv6addr", ""))
+            elif obj_type == "ipv6fixedaddress" or obj_type == "ipv6lease":
+                used_ips.add(obj.get("ipv6addr", ""))
+    
+    # Remove empty strings
+    used_ips.discard("")
+    
+    return used_ips
+
 def is_ip_in_network(ip, network):
     """Check if an IP is within a given network"""
     try:

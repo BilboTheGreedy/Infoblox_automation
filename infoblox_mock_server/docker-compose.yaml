@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  infoblox-mock:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DEBUG=False
+      - CONFIG_FILE=
+    restart: unless-stopped

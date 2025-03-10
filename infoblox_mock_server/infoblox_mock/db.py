@@ -9,6 +9,7 @@ import threading
 from datetime import datetime
 
 from infoblox_mock.config import CONFIG
+from infoblox_mock.webhooks import webhook_manager
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +68,18 @@ db = {
 rate_limit_data = {
     'counters': {},  # Keeps track of requests by IP
     'windows': {}    # Keeps track of time windows by IP
+}
+
+# Add this near the top of db.py, after the db_lock definition
+# Database hooks for processing objects
+db_hooks = {
+    "pre_create": None,   # Function to run before creating an object
+    "post_create": None,  # Function to run after creating an object
+    "pre_update": None,   # Function to run before updating an object
+    "post_update": None,  # Function to run after updating an object
+    "pre_delete": None,   # Function to run before deleting an object
+    "post_delete": None,  # Function to run after deleting an object
+    "post_get": None      # Function to run after retrieving an object
 }
 
 def save_db_to_file():
@@ -376,20 +389,51 @@ def process_return_fields(results, return_fields):
 def add_object(obj_type, data):
     """Add a new object to the database"""
     with db_lock:
+        # Run pre-create hook if defined
+        if db_hooks["pre_create"]:
+            valid, error = db_hooks["pre_create"](obj_type, data)
+            if not valid:
+                logger.warning(f"Pre-create hook validation failed: {error}")
+                return None
+
         if obj_type not in db:
             db[obj_type] = []
         
         db[obj_type].append(data)
         save_db_to_file()
+        
+        # Run post-create hook if defined
+        if db_hooks["post_create"]:
+            db_hooks["post_create"](obj_type, data)
+        
+        # Send webhook notification
+        webhook_manager.notify_webhook('object:create', {
+            'object_type': obj_type,
+            'ref': data.get('_ref', ''),
+            'data': data
+        })
+            
         return data["_ref"]
-
+    
 def update_object(ref, data):
     """Update an existing object"""
     obj = find_object_by_ref(ref)
     if not obj:
         return None
     
+    obj_type = ref.split('/')[0]
+    
     with db_lock:
+        # Run pre-update hook if defined
+        if db_hooks["pre_update"]:
+            valid, error = db_hooks["pre_update"](obj_type, data)
+            if not valid:
+                logger.warning(f"Pre-update hook validation failed: {error}")
+                return None
+        
+        # Save the old state for webhook notification
+        old_state = obj.copy()
+        
         # Update object with new data
         for key, value in data.items():
             # Skip reserved fields
@@ -400,6 +444,19 @@ def update_object(ref, data):
         # Update timestamp
         obj["_modify_time"] = datetime.now().isoformat()
         save_db_to_file()
+        
+        # Run post-update hook if defined
+        if db_hooks["post_update"]:
+            db_hooks["post_update"](obj_type, obj)
+        
+        # Send webhook notification
+        webhook_manager.notify_webhook('object:update', {
+            'object_type': obj_type,
+            'ref': ref,
+            'old_data': old_state,
+            'new_data': obj
+        })
+            
         return ref
 
 def delete_object(ref):
@@ -419,10 +476,50 @@ def delete_object(ref):
         if not obj:
             return None
         
+        # Run pre-delete hook if defined
+        if db_hooks["pre_delete"]:
+            valid, error = db_hooks["pre_delete"](obj_type, obj)
+            if not valid:
+                logger.warning(f"Pre-delete hook validation failed: {error}")
+                return None
+        
+        # Store object data for webhook notification
+        deleted_data = obj.copy()
+        
         # Remove from database
         db[obj_type] = [o for o in db[obj_type] if o["_ref"] != ref]
         save_db_to_file()
+        
+        # Run post-delete hook if defined
+        if db_hooks["post_delete"]:
+            db_hooks["post_delete"](obj_type, obj)
+        
+        # Send webhook notification
+        webhook_manager.notify_webhook('object:delete', {
+            'object_type': obj_type,
+            'ref': ref,
+            'data': deleted_data
+        })
+            
         return ref
+
+def find_object_by_ref(ref):
+    """Find an object by its reference ID"""
+    obj_type = ref.split('/')[0]
+    if obj_type not in db:
+        return None
+    
+    with db_lock:
+        for obj in db[obj_type]:
+            if obj["_ref"] == ref:
+                result = obj
+                
+                # Run post_get hook if defined
+                if db_hooks["post_get"]:
+                    result = db_hooks["post_get"](result)
+                    
+                return result
+    return None
 
 def reset_db():
     """Reset the database to initial state"""

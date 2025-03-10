@@ -1,0 +1,25 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copy requirements first for better layer caching
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application
+COPY . /app/
+
+# Create a directory for persistent storage
+RUN mkdir -p /app/data
+
+# Set environment variables
+ENV HOST=0.0.0.0
+ENV PORT=8080
+ENV DEBUG=False
+ENV CONFIG_FILE=
+
+# Expose port 
+EXPOSE 8080
+
+# Run the server
+CMD ["python", "run-server.py", "--host", "${HOST}", "--port", "${PORT}", "--debug", "${DEBUG}", "--config", "${CONFIG_FILE}"]
