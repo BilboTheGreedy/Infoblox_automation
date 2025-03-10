@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Infoblox API Console{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="row">
+        <!-- Server Info Card -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card server-status-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">Server Status</h6>
+                            <h5 class="card-title mb-0" id="server-status-display">
+                                {% if server_status.status == 'online' %}
+                                    <span class="text-success">Online</span>
+                                {% elif server_status.status == 'offline' %}
+                                    <span class="text-danger">Offline</span>
+                                {% else %}
+                                    <span class="text-warning">Unknown</span>
+                                {% endif %}
+                            </h5>
+                        </div>
+                        <div class="status-icon">
+                            <i class="fas fa-server fa-2x {% if server_status.status == 'online' %}text-success{% elif server_status.status == 'offline' %}text-danger{% else %}text-warning{% endif %}"></i>
+                        </div>
+                    </div>
+                    <div class="server-details mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>URL:</span>
+                            <span class="text-truncate">{{ api_url }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Version:</span>
+                            <span>{{ server_status.version|default('Unknown') }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Uptime:</span>
+                            <span>{{ server_status.uptime|default('Unknown') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- API Console Section -->
+    <div class="row">
+        <div class="col-12 mb-4">
+            {% include 'components/console.html' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize charts
+        initRequestsChart();
+        
+        // Load endpoints
+        loadEndpoints();
+        
+        // Test connection button
+        $('#test-connection-btn').click(function() {
+            testConnection();
+        });
+        
+        // Reload endpoints button
+        $('#reload-endpoints-btn').click(function() {
+            loadEndpoints(true);
+        });
+        
+        // Export data button
+        $('#export-data-btn').click(function() {
+            exportRequestData();
+        });
+        
+        // Clear cache button
+        $('#clear-cache-btn').click(function() {
+            clearCache();
+        });
+        
+        // Update metrics periodically
+        updateMetrics();
+        setInterval(updateMetrics, 10000); // Update every 10 seconds
+    });
+    
+    function initRequestsChart() {
+        const ctx = document.getElementById('requests-chart').getContext('2d');
+        // Sample data - in a real app, this would come from the server
+        const data = {
+            labels: ['12am', '3am', '6am', '9am', '12pm', '3pm', '6pm', '9pm'],
+            datasets: [
+                {
+                    label: 'Success',
+                    data: [5, 10, 15, 25, 40, 35, 25, 15],
+                    backgroundColor: 'rgba(40, 167, 69, 0.2)',
+                    borderColor: 'rgba(40, 167, 69, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                },
+                {
+                    label: 'Error',
+                    data: [0, 2, 3, 4, 5, 3, 2, 1],
+                    backgroundColor: 'rgba(220, 53, 69, 0.2)',
+                    borderColor: 'rgba(220, 53, 69, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }
+            ]
+        };
+        
+        window.requestsChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    
+    function loadEndpoints(forceRefresh = false) {
+        $.get('/api/available-endpoints', function(data) {
+            if (data && Array.isArray(data)) {
+                let getCount = 0;
+                let postCount = 0;
+                let otherCount = 0;
+                
+                data.forEach(endpoint => {
+                    if (endpoint.methods.includes('GET')) getCount++;
+                    else if (endpoint.methods.includes('POST')) postCount++;
+                    else otherCount++;
+                });
+                
+                $('#endpoints-count').text(data.length);
+                $('#get-endpoints-count').text(getCount);
+                $('#post-endpoints-count').text(postCount);
+                $('#other-endpoints-count').text(otherCount);
+            }
+        });
+    }
+    
+    function testConnection() {
+        $('#test-connection-btn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Testing...');
+        
+        $.get('/api/server-status', function(data) {
+            if (data.status === 'online') {
+                showNotification('Connection successful!', 'success');
+            } else {
+                showNotification('Connection failed: ' + data.message, 'danger');
+            }
+        })
+        .fail(function() {
+            showNotification('Connection failed. Server may be offline.', 'danger');
+        })
+        .always(function() {
+            $('#test-connection-btn').prop('disabled', false).html('<i class="fas fa-plug"></i> Test Connection');
+        });
+    }
+    
+    function updateMetrics() {
+        // In a real app, this would fetch actual metrics from the server
+        // For now, we'll use sample data
+        $('#total-requests-count').text('156');
+        $('#success-requests-count').text('142');
+        $('#error-requests-count').text('14');
+        $('#avg-response-time').text('245 ms');
+    }
+    
+    function showNotification(message, type = 'info') {
+        const alertClass = `alert-${type}`;
+        const alert = $(`<div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`);
+        
+        $('.content-container').prepend(alert);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(function() {
+            alert.alert('close');
+        }, 5000);
+    }
+    
+    function exportRequestData() {
+        // In a real app, this would trigger a download of request data
+        showNotification('Exporting request data...', 'info');
+        
+        // Simulate download after delay
+        setTimeout(function() {
+            showNotification('Request data exported successfully!', 'success');
+        }, 1500);
+    }
+    
+    function clearCache() {
+        // In a real app, this would clear server-side cache
+        showNotification('Clearing cache...', 'info');
+        
+        // Simulate operation
+        setTimeout(function() {
+            showNotification('Cache cleared successfully!', 'success');
+        }, 1000);
+    }
+</script>
+{% endblock %}
+        
+        <!-- Request Metrics Card -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">Request Metrics</h6>
+                            <h5 class="card-title mb-0" id="total-requests-count">0</h5>
+                        </div>
+                        <div class="status-icon">
+                            <i class="fas fa-exchange-alt fa-2x text-info"></i>
+                        </div>
+                    </div>
+                    <div class="metrics-details mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Success (2xx):</span>
+                            <span id="success-requests-count">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Error (4xx/5xx):</span>
+                            <span id="error-requests-count">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Avg. Response Time:</span>
+                            <span id="avg-response-time">0 ms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Endpoints Card -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">Endpoints</h6>
+                            <h5 class="card-title mb-0" id="endpoints-count">{{ server_status.endpoints|default(0) }}</h5>
+                        </div>
+                        <div class="status-icon">
+                            <i class="fas fa-sitemap fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="endpoints-details mt-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>GET:</span>
+                            <span id="get-endpoints-count">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>POST:</span>
+                            <span id="post-endpoints-count">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Other:</span>
+                            <span id="other-endpoints-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actions Card -->
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-subtitle text-muted mb-1">Quick Actions</h6>
+                            <h5 class="card-title mb-0">Actions</h5>
+                        </div>
+                        <div class="status-icon">
+                            <i class="fas fa-bolt fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="actions-buttons mt-3">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <button class="btn btn-sm btn-outline-primary w-100" id="test-connection-btn">
+                                    <i class="fas fa-plug"></i> Test Connection
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-sm btn-outline-secondary w-100" id="reload-endpoints-btn">
+                                    <i class="fas fa-sync-alt"></i> Reload Endpoints
+                                </button>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <button class="btn btn-sm btn-outline-info w-100" id="export-data-btn">
+                                    <i class="fas fa-file-export"></i> Export Data
+                                </button>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <button class="btn btn-sm btn-outline-danger w-100" id="clear-cache-btn">
+                                    <i class="fas fa-trash-alt"></i> Clear Cache
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Request Stats Chart -->
+        <div class="col-lg-8 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Recent Requests</h5>
+                    <a href="{{ url_for('requests_page') }}" class="btn btn-sm btn-link">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="recent-requests-list" id="recent-requests-list">
+                        <div class="text-center p-4 text-muted">
+                            <i class="fas fa-history fa-2x mb-2"></i>
+                            <p>No recent requests</p>
+                        </div>
+                    </div>
+                </div> d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Request Statistics</h5>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary active" data-timeframe="day">Day</button>
+                        <button class="btn btn-outline-secondary" data-timeframe="week">Week</button>
+                        <button class="btn btn-outline-secondary" data-timeframe="month">Month</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="requests-chart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Requests -->
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header

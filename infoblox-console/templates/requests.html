@@ -1,0 +1,448 @@
+{% extends 'base.html' %}
+
+{% block title %}Request History - Infoblox API Console{% endblock %}
+
+{% block page_title %}Request History{% endblock %}
+
+{% block content %}
+<div class="request-history">
+    <!-- Filters & Controls -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="d-flex flex-wrap gap-2">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Method</span>
+                            <select class="form-select filter-method">
+                                <option value="">All</option>
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Status</span>
+                            <select class="form-select filter-status">
+                                <option value="">All</option>
+                                <option value="success">Success (2xx)</option>
+                                <option value="redirect">Redirect (3xx)</option>
+                                <option value="client-error">Client Error (4xx)</option>
+                                <option value="server-error">Server Error (5xx)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text">Endpoint</span>
+                            <input type="text" class="form-control filter-endpoint" placeholder="Filter by endpoint">
+                        </div>
+                        
+                        <button class="btn btn-sm btn-primary apply-filters-btn">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                        
+                        <button class="btn btn-sm btn-outline-secondary reset-filters-btn">
+                            <i class="fas fa-times"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 text-end">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary" id="export-history-btn">
+                            <i class="fas fa-file-export"></i> Export
+                        </button>
+                        <button class="btn btn-outline-danger" id="clear-history-btn">
+                            <i class="fas fa-trash-alt"></i> Clear History
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Request List -->
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover request-history-table">
+                    <thead>
+                        <tr>
+                            <th width="60">#</th>
+                            <th width="160">Time</th>
+                            <th width="80">Method</th>
+                            <th>Endpoint</th>
+                            <th width="100">Status</th>
+                            <th width="80">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="request-history-tbody">
+                        {% if requests %}
+                            {% for req in requests %}
+                            <tr data-request-id="{{ req.id }}">
+                                <td>{{ req.id }}</td>
+                                <td>{{ req.timestamp|default('N/A') }}</td>
+                                <td><span class="badge rounded-pill bg-{{ 'primary' if req.method == 'GET' else 'success' if req.method == 'POST' else 'info' if req.method == 'PUT' else 'danger' }}">{{ req.method }}</span></td>
+                                <td>{{ req.endpoint }}</td>
+                                <td>
+                                    <span class="badge rounded-pill bg-{{ 'success' if req.status|int < 300 else 'warning' if req.status|int < 400 else 'danger' }}">
+                                        {{ req.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-link p-0 view-request-btn" data-bs-toggle="tooltip" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-link p-0 replay-request-btn" data-bs-toggle="tooltip" title="Replay Request">
+                                            <i class="fas fa-redo-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center p-4">
+                                    <i class="fas fa-history fa-2x mb-2 text-muted"></i>
+                                    <p class="text-muted mb-0">No requests recorded yet</p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Request Detail Modal -->
+    <div class="modal fade" id="requestDetailModal" tabindex="-1" aria-labelledby="requestDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="requestDetailModalLabel">Request Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="detailTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="request-tab" data-bs-toggle="tab" data-bs-target="#request" type="button" role="tab" aria-controls="request" aria-selected="false">Request</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="response-tab" data-bs-toggle="tab" data-bs-target="#response" type="button" role="tab" aria-controls="response" aria-selected="false">Response</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3" id="detailTabsContent">
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <h6 class="fw-bold">General</h6>
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <th width="120">Request ID</th>
+                                                <td id="detail-id"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Timestamp</th>
+                                                <td id="detail-timestamp"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Method</th>
+                                                <td id="detail-method"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Endpoint</th>
+                                                <td id="detail-endpoint"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Status</th>
+                                                <td id="detail-status"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <h6 class="fw-bold">Timing</h6>
+                                        <table class="table table-sm">
+                                            <tr>
+                                                <th width="120">Total Time</th>
+                                                <td id="detail-total-time"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>DNS Lookup</th>
+                                                <td id="detail-dns-time"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Connection</th>
+                                                <td id="detail-connection-time"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>TLS Setup</th>
+                                                <td id="detail-tls-time"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>TTFB</th>
+                                                <td id="detail-ttfb-time"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="request" role="tabpanel" aria-labelledby="request-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="fw-bold">Headers</h6>
+                                    <div class="table-responsive mb-3">
+                                        <table class="table table-sm" id="detail-request-headers">
+                                            <thead>
+                                                <tr>
+                                                    <th width="200">Name</th>
+                                                    <th>Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Request headers will be inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <h6 class="fw-bold">Body</h6>
+                                    <div class="code-block mb-3">
+                                        <pre><code class="language-json" id="detail-request-body">No request body</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="response" role="tabpanel" aria-labelledby="response-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="fw-bold">Headers</h6>
+                                    <div class="table-responsive mb-3">
+                                        <table class="table table-sm" id="detail-response-headers">
+                                            <thead>
+                                                <tr>
+                                                    <th width="200">Name</th>
+                                                    <th>Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Response headers will be inserted here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                    <h6 class="fw-bold">Body</h6>
+                                    <div class="code-block mb-3">
+                                        <pre><code class="language-json" id="detail-response-body">No response body</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="replay-modal-btn">Replay Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        // Clear history button
+        $('#clear-history-btn').click(function() {
+            if (confirm('Are you sure you want to clear all request history?')) {
+                $.post('/api/clear-history', function(data) {
+                    if (data.status === 'success') {
+                        location.reload();
+                    } else {
+                        alert('Failed to clear history: ' + data.message);
+                    }
+                });
+            }
+        });
+        
+        // View request details
+        $('.view-request-btn').click(function() {
+            const requestId = $(this).closest('tr').data('request-id');
+            showRequestDetails(requestId);
+        });
+        
+        // Replay request
+        $('.replay-request-btn').click(function() {
+            const requestId = $(this).closest('tr').data('request-id');
+            replayRequest(requestId);
+        });
+        
+        // Apply filters
+        $('.apply-filters-btn').click(function() {
+            applyFilters();
+        });
+        
+        // Reset filters
+        $('.reset-filters-btn').click(function() {
+            $('.filter-method').val('');
+            $('.filter-status').val('');
+            $('.filter-endpoint').val('');
+            applyFilters();
+        });
+        
+        // Export history
+        $('#export-history-btn').click(function() {
+            exportHistory();
+        });
+        
+        // Modal replay button
+        $('#replay-modal-btn').click(function() {
+            const requestId = $('#requestDetailModal').data('request-id');
+            $('#requestDetailModal').modal('hide');
+            replayRequest(requestId);
+        });
+    });
+    
+    function showRequestDetails(requestId) {
+        // In a real app, this would fetch the request details from the server
+        // For now, we'll use sample data for the UI
+        const requestData = {
+            id: requestId,
+            timestamp: '2023-08-15T14:30:45.123Z',
+            method: 'GET',
+            endpoint: '/api/dns/record',
+            status: 200,
+            request: {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: { name: 'example.com', type: 'A' }
+            },
+            response: {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Server': 'Infoblox Mock Server'
+                },
+                body: {
+                    name: 'example.com',
+                    type: 'A',
+                    value: '192.168.1.1',
+                    ttl: 3600
+                }
+            },
+            timing: {
+                total: 245,
+                dns: 15,
+                connection: 30,
+                tls: 50,
+                ttfb: 150
+            }
+        };
+        
+        // Set modal data
+        const modal = $('#requestDetailModal');
+        modal.data('request-id', requestId);
+        
+        // Fill overview tab
+        $('#detail-id').text(requestData.id);
+        $('#detail-timestamp').text(new Date(requestData.timestamp).toLocaleString());
+        $('#detail-method').html(`<span class="badge rounded-pill bg-primary">${requestData.method}</span>`);
+        $('#detail-endpoint').text(requestData.endpoint);
+        $('#detail-status').html(`<span class="badge rounded-pill bg-success">${requestData.status}</span>`);
+        
+        // Fill timing data
+        $('#detail-total-time').text(`${requestData.timing.total} ms`);
+        $('#detail-dns-time').text(`${requestData.timing.dns} ms`);
+        $('#detail-connection-time').text(`${requestData.timing.connection} ms`);
+        $('#detail-tls-time').text(`${requestData.timing.tls} ms`);
+        $('#detail-ttfb-time').text(`${requestData.timing.ttfb} ms`);
+        
+        // Fill request tab
+        const requestHeadersTable = $('#detail-request-headers tbody');
+        requestHeadersTable.empty();
+        for (const [name, value] of Object.entries(requestData.request.headers)) {
+            requestHeadersTable.append(`<tr><td>${name}</td><td>${value}</td></tr>`);
+        }
+        
+        const requestBody = JSON.stringify(requestData.request.body, null, 2);
+        $('#detail-request-body').text(requestBody);
+        
+        // Fill response tab
+        const responseHeadersTable = $('#detail-response-headers tbody');
+        responseHeadersTable.empty();
+        for (const [name, value] of Object.entries(requestData.response.headers)) {
+            responseHeadersTable.append(`<tr><td>${name}</td><td>${value}</td></tr>`);
+        }
+        
+        const responseBody = JSON.stringify(requestData.response.body, null, 2);
+        $('#detail-response-body').text(responseBody);
+        
+        // Highlight code blocks
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+        
+        // Show modal
+        modal.modal('show');
+    }
+    
+    function replayRequest(requestId) {
+        // In a real app, this would fetch the request details and populate the console
+        // For demo purposes, we'll redirect to the console page
+        window.location.href = '/#console';
+    }
+    
+    function applyFilters() {
+        const methodFilter = $('.filter-method').val();
+        const statusFilter = $('.filter-status').val();
+        const endpointFilter = $('.filter-endpoint').val().toLowerCase();
+        
+        $('#request-history-tbody tr').each(function() {
+            const row = $(this);
+            const method = row.find('td:nth-child(3)').text();
+            const endpoint = row.find('td:nth-child(4)').text().toLowerCase();
+            const status = row.find('td:nth-child(5)').text();
+            
+            let showRow = true;
+            
+            if (methodFilter && method !== methodFilter) {
+                showRow = false;
+            }
+            
+            if (statusFilter) {
+                const statusCode = parseInt(status);
+                if (statusFilter === 'success' && (statusCode < 200 || statusCode >= 300)) showRow = false;
+                if (statusFilter === 'redirect' && (statusCode < 300 || statusCode >= 400)) showRow = false;
+                if (statusFilter === 'client-error' && (statusCode < 400 || statusCode >= 500)) showRow = false;
+                if (statusFilter === 'server-error' && statusCode < 500) showRow = false;
+            }
+            
+            if (endpointFilter && !endpoint.includes(endpointFilter)) {
+                showRow = false;
+            }
+            
+            row.toggleClass('d-none', !showRow);
+        });
+    }
+    
+    function exportHistory() {
+        alert('This would download the request history as a JSON file in a real application.');
+    }
+</script>
+{% endblock %}

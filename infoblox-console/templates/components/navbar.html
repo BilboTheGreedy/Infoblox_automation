@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <button class="btn btn-link d-md-none me-3" id="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <span class="navbar-title">{% block page_title %}{{ self.title() }}{% endblock %}</span>
+        
+        <div class="ms-auto d-flex align-items-center">
+            <!-- Search Box -->
+            <div class="search-box me-3">
+                <input type="text" class="form-control form-control-sm" id="global-search" placeholder="Search...">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <!-- Theme Toggle -->
+            <button class="btn btn-sm btn-icon me-2" id="theme-toggle" data-bs-toggle="tooltip" title="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <!-- Refresh Button -->
+            <button class="btn btn-sm btn-icon me-2" id="refresh-btn" data-bs-toggle="tooltip" title="Refresh">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            
+            <!-- Notifications Dropdown -->
+            <div class="dropdown me-2">
+                <button class="btn btn-sm btn-icon position-relative" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge d-none">
+                        0
+                    </span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+                    <li><h6 class="dropdown-header">Notifications</h6></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="notification-empty">
+                        <p class="text-muted mb-0 p-3 text-center">No new notifications</p>
+                    </li>
+                    <li class="dropdown-item"><a href="#" class="text-decoration-none">View all notifications</a></li>
+                </ul>
+            </div>
+            
+            <!-- Settings Dropdown -->
+            <div class="dropdown">
+                <button class="btn btn-sm btn-icon" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="{{ url_for('settings') }}"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                    <li><a class="dropdown-item" href="#" id="clear-history-btn"><i class="fas fa-trash me-2"></i> Clear History</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" id="about-btn"><i class="fas fa-info-circle me-2"></i> About</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

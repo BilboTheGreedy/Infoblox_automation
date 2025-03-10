@@ -1,0 +1,48 @@
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">
+            <i class="fas fa-network-wired"></i>
+            <span>Infoblox Console</span>
+        </div>
+        <button class="btn btn-link d-md-none sidebar-close" id="sidebar-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <div class="sidebar-content">
+        <nav class="sidebar-nav">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{{ url_for('index') }}">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/requests' %}active{% endif %}" href="{{ url_for('requests_page') }}">
+                        <i class="fas fa-history"></i> Request History
+                    </a>
+                </li>
+                <li class="nav-header">API Categories</li>
+                {% for category in config.API_CATEGORIES %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-category="{{ category.id }}">
+                        <i class="fas {{ category.icon }}"></i> {{ category.name }}
+                    </a>
+                </li>
+                {% endfor %}
+                <li class="nav-header">Settings</li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/settings' %}active{% endif %}" href="{{ url_for('settings') }}">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="sidebar-footer">
+        <div class="server-info">
+            <span class="server-url">{{ config.MOCK_SERVER_URL }}</span>
+        </div>
+    </div>
+</aside>

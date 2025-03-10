@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="{{ config.DEFAULT_THEME }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Infoblox API Console{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Highlight.js -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/theme.css') }}" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        {% include 'components/sidebar.html' %}
+        
+        <div class="main-content">
+            <!-- Navbar -->
+            {% include 'components/navbar.html' %}
+            
+            <!-- Page Content -->
+            <div class="content-container">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                {% block content %}
+                <!-- Page content goes here -->
+                {% endblock %}
+            </div>
+            
+            <!-- Footer -->
+            <footer class="footer mt-auto py-3">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span class="text-muted">Infoblox API Console v1.0.0</span>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <span class="text-muted server-status">
+                                Server: <span id="server-status-indicator" class="status-indicator"></span>
+                                <span id="server-status-text">Checking...</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    
+    <!-- Socket.IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+    
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/json.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/socket.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/console.js') }}"></script>
+    
+    {% block extra_js %}{% endblock %}
+    
+    <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        // Check server status periodically
+        function checkServerStatus() {
+            $.get('/api/server-status', function(data) {
+                updateServerStatus(data.status);
+            }).fail(function() {
+                updateServerStatus('offline');
+            });
+        }
+        
+        function updateServerStatus(status) {
+            const indicator = $('#server-status-indicator');
+            const text = $('#server-status-text');
+            
+            if (status === 'online') {
+                indicator.removeClass('status-offline status-warning').addClass('status-online');
+                text.text('Online');
+            } else if (status === 'warning') {
+                indicator.removeClass('status-online status-offline').addClass('status-warning');
+                text.text('Warning');
+            } else {
+                indicator.removeClass('status-online status-warning').addClass('status-offline');
+                text.text('Offline');
+            }
+        }
+        
+        // Initial status check and periodic refresh
+        $(document).ready(function() {
+            checkServerStatus();
+            // Check status every 30 seconds
+            setInterval(checkServerStatus, 30000);
+            
+            // Initialize code highlighting
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+            
+            // Toggle theme
+            $('#theme-toggle').click(function() {
+                const html = $('html');
+                if (html.attr('data-bs-theme') === 'dark') {
+                    html.attr('data-bs-theme', 'light');
+                    $(this).html('<i class="fas fa-moon"></i>');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    html.attr('data-bs-theme', 'dark');
+                    $(this).html('<i class="fas fa-sun"></i>');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+            
+            // Load saved theme preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                $('html').attr('data-bs-theme', savedTheme);
+                if (savedTheme === 'dark') {
+                    $('#theme-toggle').html('<i class="fas fa-sun"></i>');
+                } else {
+                    $('#theme-toggle').html('<i class="fas fa-moon"></i>');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

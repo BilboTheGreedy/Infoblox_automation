@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings - Infoblox API Console{% endblock %}
+
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="settings-page">
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="settings-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true">
+                        <i class="fas fa-cog me-1"></i> General
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="server-tab" data-bs-toggle="tab" data-bs-target="#server" type="button" role="tab" aria-controls="server" aria-selected="false">
+                        <i class="fas fa-server me-1"></i> Server
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="appearance-tab" data-bs-toggle="tab" data-bs-target="#appearance" type="button" role="tab" aria-controls="appearance" aria-selected="false">
+                        <i class="fas fa-palette me-1"></i> Appearance
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button" role="tab" aria-controls="notifications" aria-selected="false">
+                        <i class="fas fa-bell me-1"></i> Notifications
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false">
+                        <i class="fas fa-info-circle me-1"></i> About
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="settings-tab-content">
+                <!-- General Settings -->
+                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                    <h5 class="mb-4">General Settings</h5>
+                    
+                    <form action="{{ url_for('update_settings') }}" method="post">
+                        <div class="mb-3">
+                            <label for="refresh-interval" class="form-label">Data Refresh Interval</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="refresh-interval" name="refresh_interval" value="{{ config.REFRESH_INTERVAL // 1000 }}">
+                                <span class="input-group-text">seconds</span>
+                            </div>
+                            <div class="form-text">How often to automatically refresh data from the server</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="history-items" class="form-label">Maximum History Items</label>
+                            <input type="number" class="form-control" id="history-items" name="max_history_items" value="{{ config.MAX_HISTORY_ITEMS }}">
+                            <div class="form-text">Maximum number of request history items to keep</div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="enable-metrics" name="enable_metrics" {% if config.ENABLE_METRICS %}checked{% endif %}>
+                            <label class="form-check-label" for="enable-metrics">Enable Metrics Collection</label>
+                            <div class="form-text">Collect usage metrics (only stored locally)</div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="auto-save" name="auto_save" checked>
+                            <label class="form-check-label" for="auto-save">Auto-Save Requests</label>
+                            <div class="form-text">Automatically save successful requests for later use</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+                
+                <!-- Server Settings -->
+                <div class="tab-pane fade" id="server" role="tabpanel" aria-labelledby="server-tab">
+                    <h5 class="mb-4">Server Connection Settings</h5>
+                    
+                    <form action="{{ url_for('update_settings') }}" method="post">
+                        <div class="mb-3">
+                            <label for="server-url" class="form-label">Mock Server URL</label>
+                            <input type="url" class="form-control" id="server-url" name="server_url" value="{{ config.MOCK_SERVER_URL }}">
+                            <div class="form-text">URL of your Infoblox API mocking server</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="api-key" class="form-label">API Key (if required)</label>
+                            <input type="text" class="form-control" id="api-key" name="api_key" value="{{ config.MOCK_SERVER_API_KEY }}">
+                            <div class="form-text">API key for authentication with the mock server</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="timeout" class="form-label">Request Timeout</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="timeout" name="timeout" value="10">
+                                <span class="input-group-text">seconds</span>
+                            </div>
+                            <div class="form-text">Maximum time to wait for a response</div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="verify-ssl" name="verify_ssl" checked>
+                            <label class="form-check-label" for="verify-ssl">Verify SSL Certificate</label>
+                            <div class="form-text">Verify the server's SSL certificate when making HTTPS requests</div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-outline-primary ms-2" id="test-connection-settings">Test Connection</button>
+                    </form>
+                </div>
+                
+                <!-- Appearance Settings -->
+                <div class="tab-pane fade" id="appearance" role="tabpanel" aria-labelledby="appearance-tab">
+                    <h5 class="mb-4">Appearance Settings</h5>
+                    
+                    <form action="{{ url_for('update_settings') }}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Theme</label>
+                            <div class="theme-selector mb-3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="theme" id="theme-light" value="light" {% if config.DEFAULT_THEME == 'light' %}checked{% endif %}>
+                                    <label class="form-check-label" for="theme-light">Light</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="theme" id="theme-dark" value="dark" {% if config.DEFAULT_THEME == 'dark' %}checked{% endif %}>
+                                    <label class="form-check-label" for="theme-dark">Dark</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="theme" id="theme-auto" value="auto">
+                                    <label class="form-check-label" for="theme-auto">Auto (system preference)</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="font-size" class="form-label">Font Size</label>
+                            <select class="form-select" id="font-size" name="font_size">
+                                <option value="small">Small</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="compact-mode" name="compact_mode">
+                            <label class="form-check-label" for="compact-mode">Compact Mode</label>
+                            <div class="form-text">Reduce spacing to show more content</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="code-theme" class="form-label">Code Editor Theme</label>
+                            <select class="form-select" id="code-theme" name="code_theme">
+                                <option value="github">GitHub</option>
+                                <option value="monokai">Monokai</option>
+                                <option value="dracula">Dracula</option>
+                                <option value="solarized-light">Solarized Light</option>
+                                <option value="solarized-dark">Solarized Dark</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Apply Theme</button>
+                        <button type="button" class="btn btn-outline-secondary" id="reset-appearance">Reset to Defaults</button>
+                    </form>
+                </div>
+                
+                <!-- Notifications Settings -->
+                <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                    <h5 class="mb-4">Notification Settings</h5>
+                    
+                    <form action="{{ url_for('update_settings') }}" method="post">
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="enable-notifications" name="enable_notifications" {% if config.ENABLE_NOTIFICATIONS %}checked{% endif %}>
+                            <label class="form-check-label" for="enable-notifications">Enable Notifications</label>
+                            <div class="form-text">Show browser notifications for events</div>
+                        </div>
+                        
+                        <div class="notification-options mt-4">
+                            <h6>Notify me about:</h6>
+                            
+                            <div class="ms-3 mb-2 form-check">
+                                <input type="checkbox" class="form-check-input" id="notify-success" name="notify_success" checked>
+                                <label class="form-check-label" for="notify-success">Successful Requests</label>
+                            </div>
+                            
+                            <div class="ms-3 mb-2 form-check">
+                                <input type="checkbox" class="form-check-input" id="notify-error" name="notify_error" checked>
+                                <label class="form-check-label" for="notify-error">Failed Requests</label>
+                            </div>
+                            
+                            <div class="ms-3 mb-2 form-check">
+                                <input type="checkbox" class="form-check-input" id="notify-connection" name="notify_connection" checked>
+                                <label class="form-check-label" for="notify-connection">Connection Status Changes</label>
+                            </div>
+                            
+                            <div class="ms-3 mb-2 form-check">
+                                <input type="checkbox" class="form-check-input" id="notify-update" name="notify_update">
+                                <label class="form-check-label" for="notify-update">Server Updates</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary">Save Preferences</button>
+                            <button type="button" class="btn btn-outline-secondary ms-2" id="test-notification">Test Notification</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- About Tab -->
+                <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-network-wired fa-4x mb-3 text-primary"></i>
+                        <h4>Infoblox API Console</h4>
+                        <p class="text-muted">Version 1.0.0</p>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">About This Tool</h5>
+                            <p>
+                                The Infoblox API Console is a powerful web-based interface for interacting with your Infoblox API mocking server.
+                                It provides an intuitive interface for testing and exploring the API, viewing request history, and analyzing responses.
+                            </p>
+                            <p>
+                                This console runs independently from the mock server itself, communicating via HTTP/HTTPS.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Technology Stack</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Flask</span>
+                                <span class="badge bg-primary">Backend Framework</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Flask-SocketIO</span>
+                                <span class="badge bg-primary">Real-time Updates</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Bootstrap 5</span>
+                                <span class="badge bg-primary">UI Framework</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Chart.js</span>
+                                <span class="badge bg-primary">Data Visualization</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>highlight.js</span>
+                                <span class="badge bg-primary">Syntax Highlighting</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-muted">Created by API Console Team</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Test connection button
+        $('#test-connection-settings').click(function() {
+            const serverUrl = $('#server-url').val();
+            const apiKey = $('#api-key').val();
+            
+            $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Testing...');
+            
+            // Simulate a connection test
+            setTimeout(function() {
+                $('#test-connection-settings').prop('disabled', false).html('Test Connection');
+                showNotification('Connection successful!', 'success');
+            }, 1500);
+        });
+        
+        // Test notification button
+        $('#test-notification').click(function() {
+            if (!$('#enable-notifications').is(':checked')) {
+                alert('Notifications are disabled. Please enable them first.');
+                return;
+            }
+            
+            // Check browser notification permission
+            if (Notification.permission === 'granted') {
+                sendTestNotification();
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(function(permission) {
+                    if (permission === 'granted') {
+                        sendTestNotification();
+                    }
+                });
+            } else {
+                alert('Notification permission denied. Please enable notifications in your browser settings.');
+            }
+        });
+        
+        // Reset appearance button
+        $('#reset-appearance').click(function() {
+            $('#theme-light').prop('checked', true);
+            $('#font-size').val('medium');
+            $('#compact-mode').prop('checked', false);
+            $('#code-theme').val('github');
+        });
+        
+        // Enable/disable notification options based on main toggle
+        $('#enable-notifications').change(function() {
+            const isEnabled = $(this).is(':checked');
+            $('.notification-options input[type="checkbox"]').prop('disabled', !isEnabled);
+        });
+        
+        // Apply initial state
+        if (!$('#enable-notifications').is(':checked')) {
+            $('.notification-options input[type="checkbox"]').prop('disabled', true);
+        }
+    });
+    
+    function sendTestNotification() {
+        const notification = new Notification('Infoblox API Console', {
+            body: 'This is a test notification. If you can see this, notifications are working properly.',
+            icon: '/static/img/favicon.ico'
+        });
+        
+        notification.onclick = function() {
+            window.focus();
+            notification.close();
+        };
+    }
+    
+    function showNotification(message, type = 'info') {
+        const alertClass = `alert-${type}`;
+        const alert = $(`<div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>`);
+        
+        $('.content-container').prepend(alert);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(function() {
+            alert.alert('close');
+        }, 5000);
+    }
+</script>
+{% endblock %}

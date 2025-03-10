@@ -1,0 +1,168 @@
+/* Theme customization for Infoblox API Console */
+
+/* Light theme (default) */
+:root,
+[data-bs-theme=light] {
+    --console-primary: #3874ff;
+    --console-secondary: #6c757d;
+    --console-success: #198754;
+    --console-danger: #dc3545;
+    --console-warning: #ffc107;
+    --console-info: #0dcaf0;
+    --console-dark: #212529;
+    --console-light: #f8f9fa;
+    
+    --console-body-bg: #f8f9fa;
+    --console-body-color: #212529;
+    --console-card-bg: #ffffff;
+    --console-sidebar-bg: #f0f2f5;
+    --console-navbar-bg: #ffffff;
+    
+    --console-border-color: #dee2e6;
+    --console-input-bg: #ffffff;
+    --console-input-color: #212529;
+    
+    --console-code-bg: #f7f7f7;
+    --console-code-color: #212529;
+    
+    /* Custom colors */
+    --console-accent: #3874ff;
+    --console-accent-light: rgba(56, 116, 255, 0.1);
+    --console-accent-hover: rgba(56, 116, 255, 0.2);
+}
+
+/* Dark theme */
+[data-bs-theme=dark] {
+    --console-primary: #3874ff;
+    --console-secondary: #6c757d;
+    --console-success: #25c26e;
+    --console-danger: #f5385a;
+    --console-warning: #ffac11;
+    --console-info: #18cdee;
+    --console-dark: #212529;
+    --console-light: #f8f9fa;
+    
+    --console-body-bg: #121212;
+    --console-body-color: #e1e1e1;
+    --console-card-bg: #1e1e1e;
+    --console-sidebar-bg: #1a1a1a;
+    --console-navbar-bg: #1e1e1e;
+    
+    --console-border-color: #333333;
+    --console-input-bg: #2a2a2a;
+    --console-input-color: #e1e1e1;
+    
+    --console-code-bg: #252525;
+    --console-code-color: #e1e1e1;
+    
+    /* Custom colors */
+    --console-accent: #3874ff;
+    --console-accent-light: rgba(56, 116, 255, 0.15);
+    --console-accent-hover: rgba(56, 116, 255, 0.25);
+}
+
+/* Custom theme overrides */
+.sidebar {
+    background-color: var(--console-sidebar-bg);
+}
+
+.navbar {
+    background-color: var(--console-navbar-bg);
+}
+
+.footer {
+    background-color: var(--console-navbar-bg);
+}
+
+.card {
+    background-color: var(--console-card-bg);
+}
+
+.form-control, .form-select {
+    background-color: var(--console-input-bg);
+    color: var(--console-input-color);
+}
+
+.editor-container {
+    background-color: var(--console-code-bg);
+    color: var(--console-code-color);
+}
+
+.code-block {
+    background-color: var(--console-code-bg);
+    border-radius: 0.25rem;
+    border: 1px solid var(--console-border-color);
+}
+
+/* Method badges */
+.badge.bg-get {
+    background-color: var(--console-info) !important;
+}
+
+.badge.bg-post {
+    background-color: var(--console-success) !important;
+}
+
+.badge.bg-put {
+    background-color: var(--console-warning) !important;
+}
+
+.badge.bg-delete {
+    background-color: var(--console-danger) !important;
+}
+
+/* Status badges */
+.badge.bg-success {
+    background-color: var(--console-success) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--console-danger) !important;
+}
+
+.badge.bg-warning {
+    background-color: var(--console-warning) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--console-info) !important;
+}
+
+/* Dashboard cards */
+.server-status-card {
+    border-left: 4px solid var(--console-primary);
+}
+
+/* Hover states */
+.nav-link:hover {
+    background-color: var(--console-accent-light);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--console-accent);
+}
+
+/* Editor enhancements */
+pre code {
+    font-family: "Menlo", "Monaco", "Consolas", monospace;
+    font-size: 0.9rem;
+}
+
+/* Custom scrollbar for dark mode */
+[data-bs-theme=dark] ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+[data-bs-theme=dark] ::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+[data-bs-theme=dark] ::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+[data-bs-theme=dark] ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
