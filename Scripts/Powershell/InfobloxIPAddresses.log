@@ -869,3 +869,26 @@
 [2025-03-06 06:44:35] [INFO] Disconnecting from Infoblox
 [2025-03-06 06:44:35] [SUCCESS] Successfully disconnected from Infoblox
 [2025-03-06 06:44:35] [INFO] ======= Infoblox IP Address Management Script Completed =======
+[2025-03-06 07:22:30] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 07:22:30] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 07:22:30] [INFO] Action: NextAvailable
+[2025-03-06 07:22:33] [ERROR] Connection failed: You cannot call a method on a null-valued expression.
+[2025-03-06 07:22:33] [ERROR] ERROR: Connection Failed: You cannot call a method on a null-valued expression.
+[2025-03-06 07:22:39] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxIPAddresses.log
+[2025-03-06 07:22:39] [INFO] ======= Infoblox IP Address Management Script Started =======
+[2025-03-06 07:22:39] [INFO] Action: NextAvailable
+[2025-03-06 07:22:39] [INFO] Using default credentials for mock server
+[2025-03-06 07:22:42] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 07:22:42] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 07:22:42] [INFO] Finding next available IP address in network: 192.168.1.0/24
+[2025-03-06 07:22:42] [INFO] Validated IP address format: 192.168.1.0
+[2025-03-06 07:22:42] [INFO] Validated network format: 192.168.1.0/24
+[2025-03-06 07:22:42] [INFO] Infoblox connection is active
+[2025-03-06 07:22:42] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.1.0%2f24
+[2025-03-06 07:22:42] [INFO] Response: {"_create_time":"2025-03-06T06:56:58.387987","_modify_time":"2025-03-06T06:56:58.387987","_ref":"network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQ:192.168.1.0/24","comment":"Management network","extattrs":{},"network":"192.168.1.0/24","network_view":"default"}
+[2025-03-06 07:22:42] [INFO] Network 192.168.1.0/24 not found
+[2025-03-06 07:22:42] [ERROR] ERROR: Network 192.168.1.0/24 does not exist
+[2025-03-06 07:22:42] [INFO] Infoblox connection is active
+[2025-03-06 07:22:42] [INFO] Disconnecting from Infoblox
+[2025-03-06 07:22:42] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 07:22:42] [INFO] ======= Infoblox IP Address Management Script Completed =======

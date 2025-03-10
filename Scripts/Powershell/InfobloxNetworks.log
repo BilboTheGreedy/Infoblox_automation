@@ -368,3 +368,29 @@
 [2025-03-06 06:44:04] [INFO] Disconnecting from Infoblox
 [2025-03-06 06:44:04] [SUCCESS] Successfully disconnected from Infoblox
 [2025-03-06 06:44:04] [INFO] ======= Infoblox Network Management Script Completed =======
+[2025-03-06 07:23:36] [INFO] Logging initialized to C:\projects\Infoblox_API_Mock\Scripts\Powershell\InfobloxNetworks.log
+[2025-03-06 07:23:36] [INFO] ======= Infoblox Network Management Script Started =======
+[2025-03-06 07:23:36] [INFO] Action: Create
+[2025-03-06 07:23:40] [INFO] Using default credentials for mock server
+[2025-03-06 07:23:40] [SUCCESS] Successfully connected to Infoblox at http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 07:23:40] [SUCCESS] Connected to http://localhost:8080/wapi/v2.11 as admin
+[2025-03-06 07:23:40] [INFO] Creating network: 192.168.1.0/24
+[2025-03-06 07:23:40] [INFO] Validated IP address format: 192.168.1.0
+[2025-03-06 07:23:40] [INFO] Validated network format: 192.168.1.0/24
+[2025-03-06 07:23:40] [INFO] Infoblox connection is active
+[2025-03-06 07:23:40] [INFO] Sending GET request to http://localhost:8080/wapi/v2.11/network?network=192.168.1.0%2f24
+[2025-03-06 07:23:40] [INFO] Response: {"_create_time":"2025-03-06T06:56:58.387987","_modify_time":"2025-03-06T06:56:58.387987","_ref":"network/ZG5zLm5ldHdvcmskMTkyLjE2OC4xLjAvMjQ:192.168.1.0/24","comment":"Management network","extattrs":{},"network":"192.168.1.0/24","network_view":"default"}
+[2025-03-06 07:23:40] [INFO] Network 192.168.1.0/24 not found
+[2025-03-06 07:23:40] [INFO] Infoblox connection is active
+[2025-03-06 07:23:40] [INFO] Sending POST request to http://localhost:8080/wapi/v2.11/network
+[2025-03-06 07:23:40] [INFO] Request body: {
+    "network_view":  "default",
+    "comment":  "Development network",
+    "network":  "192.168.1.0/24"
+}
+[2025-03-06 07:23:40] [ERROR] Infoblox API request failed: @{Error=Network already exists: 192.168.1.0/24}
+[2025-03-06 07:23:40] [ERROR] ERROR: Infoblox API request failed: @{Error=Network already exists: 192.168.1.0/24}
+[2025-03-06 07:23:40] [INFO] Infoblox connection is active
+[2025-03-06 07:23:40] [INFO] Disconnecting from Infoblox
+[2025-03-06 07:23:40] [SUCCESS] Successfully disconnected from Infoblox
+[2025-03-06 07:23:40] [INFO] ======= Infoblox Network Management Script Completed =======

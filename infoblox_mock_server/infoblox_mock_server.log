@@ -747,3 +747,66 @@
  * Running on http://127.0.0.1:8080
  * Running on http://192.168.10.76:8080
 2025-03-06 06:56:58,417 [INFO] [33mPress CTRL+C to quit[0m
+2025-03-06 07:22:42,002 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 07:22:42,002 [INFO] 127.0.0.1 - - [06/Mar/2025 07:22:42] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 07:22:42,063 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 07:22:42,063 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 07:22:42,065 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 07:22:42,065 [INFO] GET grid info
+2025-03-06 07:22:42,065 [INFO] 127.0.0.1 - - [06/Mar/2025 07:22:42] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 07:22:42,091 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 07:22:42,091 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 07:22:42,091 [INFO] Query Params: ImmutableMultiDict([('network', '192.168.1.0/24')])
+2025-03-06 07:22:42,092 [INFO] GET network: Found 1 objects matching query
+2025-03-06 07:22:42,092 [INFO] 127.0.0.1 - - [06/Mar/2025 07:22:42] "GET /wapi/v2.11/network?network=192.168.1.0/24 HTTP/1.1" 200 -
+2025-03-06 07:22:42,119 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 07:22:42,120 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 07:22:42,120 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 07:22:42,120 [INFO] GET grid info
+2025-03-06 07:22:42,121 [INFO] 127.0.0.1 - - [06/Mar/2025 07:22:42] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 07:22:42,126 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 07:22:42,127 [INFO] 127.0.0.1 - - [06/Mar/2025 07:22:42] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-06 07:23:40,185 [INFO] User admin logged in from 127.0.0.1
+2025-03-06 07:23:40,185 [INFO] 127.0.0.1 - - [06/Mar/2025 07:23:40] "POST /wapi/v2.11/grid/session HTTP/1.1" 200 -
+2025-03-06 07:23:40,195 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 07:23:40,195 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 07:23:40,196 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 07:23:40,196 [INFO] GET grid info
+2025-03-06 07:23:40,196 [INFO] 127.0.0.1 - - [06/Mar/2025 07:23:40] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 07:23:40,200 [INFO] Request: GET /wapi/v2.11/network
+2025-03-06 07:23:40,200 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080'}
+2025-03-06 07:23:40,200 [INFO] Query Params: ImmutableMultiDict([('network', '192.168.1.0/24')])
+2025-03-06 07:23:40,201 [INFO] GET network: Found 1 objects matching query
+2025-03-06 07:23:40,201 [INFO] 127.0.0.1 - - [06/Mar/2025 07:23:40] "GET /wapi/v2.11/network?network=192.168.1.0/24 HTTP/1.1" 200 -
+2025-03-06 07:23:40,208 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 07:23:40,208 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 07:23:40,208 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 07:23:40,209 [INFO] GET grid info
+2025-03-06 07:23:40,209 [INFO] 127.0.0.1 - - [06/Mar/2025 07:23:40] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 07:23:40,222 [INFO] Request: POST /wapi/v2.11/network
+2025-03-06 07:23:40,222 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Content-Type': 'application/json', 'Host': 'localhost:8080', 'Content-Length': '111'}
+2025-03-06 07:23:40,223 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 07:23:40,223 [INFO] Body: {'network_view': 'default', 'comment': 'Development network', 'network': '192.168.1.0/24'}
+2025-03-06 07:23:40,224 [WARNING] Duplicate network: 192.168.1.0/24
+2025-03-06 07:23:40,224 [INFO] 127.0.0.1 - - [06/Mar/2025 07:23:40] "[31m[1mPOST /wapi/v2.11/network HTTP/1.1[0m" 400 -
+2025-03-06 07:23:40,248 [INFO] Request: GET /wapi/v2.11/grid
+2025-03-06 07:23:40,248 [INFO] Headers: {'Authorization': 'Basic YWRtaW46aW5mb2Jsb3g=', 'User-Agent': 'Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.2161', 'Host': 'localhost:8080'}
+2025-03-06 07:23:40,248 [INFO] Query Params: ImmutableMultiDict([])
+2025-03-06 07:23:40,248 [INFO] GET grid info
+2025-03-06 07:23:40,249 [INFO] 127.0.0.1 - - [06/Mar/2025 07:23:40] "GET /wapi/v2.11/grid HTTP/1.1" 200 -
+2025-03-06 07:23:40,253 [INFO] User admin logged out from 127.0.0.1
+2025-03-06 07:23:40,254 [INFO] 127.0.0.1 - - [06/Mar/2025 07:23:40] "[35m[1mDELETE /wapi/v2.11/grid/session HTTP/1.1[0m" 204 -
+2025-03-07 11:43:37,412 [INFO] Database initialized with default data
+2025-03-07 11:43:37,416 [INFO] Infoblox Mock Server initialized with config: {'simulate_delay': False, 'min_delay_ms': 50, 'max_delay_ms': 300, 'simulate_failures': False, 'failure_rate': 0.05, 'detailed_logging': True, 'persistent_storage': False, 'storage_file': 'data/infoblox_mock_db.json', 'auth_required': True, 'rate_limit': True, 'rate_limit_requests': 100, 'simulate_db_lock': False, 'lock_probability': 0.01, 'wapi_version': 'v2.11'}
+2025-03-07 11:43:37,441 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.76:8080
+2025-03-07 11:43:37,441 [INFO] [33mPress CTRL+C to quit[0m
+2025-03-10 11:23:37,266 [INFO] Database initialized with default data
+2025-03-10 11:23:37,269 [INFO] Infoblox Mock Server initialized with config: {'simulate_delay': False, 'min_delay_ms': 50, 'max_delay_ms': 300, 'simulate_failures': False, 'failure_rate': 0.05, 'detailed_logging': True, 'persistent_storage': False, 'storage_file': 'data/infoblox_mock_db.json', 'auth_required': True, 'rate_limit': True, 'rate_limit_requests': 100, 'simulate_db_lock': False, 'lock_probability': 0.01, 'wapi_version': 'v2.11'}
+2025-03-10 11:23:37,298 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.76:8080
+2025-03-10 11:23:37,298 [INFO] [33mPress CTRL+C to quit[0m
